@@ -3996,8 +3996,6 @@ function Invoke-WPFButton {
         "WPFclearWinget" {Invoke-WPFPresets -preset $null -imported $true -CheckBox "WPFInstall"}
         "WPFtweaksbutton" {Invoke-WPFtweaksbutton}
         "WPFOOSUbutton" {Invoke-WPFOOSU}
-        "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
-        "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
         "WPFundoall" {Invoke-WPFundoall}
         "WPFFeatureInstall" {Invoke-WPFFeatureInstall}
         "WPFPanelDISM" {Invoke-WPFPanelDISM}
@@ -4023,8 +4021,8 @@ function Invoke-WPFButton {
         "WPFMicrowin" {Invoke-WPFMicrowin}
         "WPFCloseButton" {Invoke-WPFCloseButton}
         "MicrowinScratchDirBT" {Invoke-ScratchDialog}
-        "WPFAddBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Enable"}
-        "WPFRemoveBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Disable"}
+        "WPFAddBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Enable"}
+        "WPFRemoveBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Disable"}
     }
 }
 function Invoke-WPFCloseButton {
