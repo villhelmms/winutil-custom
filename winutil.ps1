@@ -7411,12 +7411,16 @@ $sync.configs.preset = '{
     "Standard":  [
                      "WPFTweaksDeleteTempFiles",
                      "WPFTweaksConsumerFeatures",
+                     "WPFTweaksTele",
+                     "WPFTweaksAH",
                      "WPFTweaksDVR",
+                     "WPFTweaksHiber",
                      "WPFTweaksLoc",
                      "WPFTweaksWifi",
                      "WPFTweaksDiskCleanup",
                      "WPFTweaksPowershell7",
-                     "WPFTweaksPowershell7Tele"
+                     "WPFTweaksPowershell7Tele",
+                     "WPFTweaksServices"
                  ],
     "Minimal":  [
                     "WPFTweaksConsumerFeatures",
