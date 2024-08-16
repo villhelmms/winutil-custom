@@ -1,7 +1,11 @@
 {
-    "VJCG":{
+    "VJCG_R":{
         "Primary": "158.180.58.52",
         "Secondary": "192.168.1.1"
+    },
+    "VJCG_A":{
+        "Primary": "158.180.58.52",
+        "Secondary": "192.168.2.1"
     },
     "Google":{
         "Primary": "8.8.8.8",
