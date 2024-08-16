@@ -38,5 +38,6 @@ function Invoke-WPFToggle {
         "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
         "WPFToggleLSCustomization" {Invoke-WinUtilLSCustomization $(Get-WinUtilToggleStatus WPFToggleLSCustomization)}
         "WPFToggleColorCustomization" {Invoke-WinUtilColorCustomization $(Get-WinUtilToggleStatus WPFToggleColorCustomization)}
+        "WPFToggleSetThisPC" {Invoke-WinUtilSetThisPC $(Get-WinUtilToggleStatus WPFToggleSetThisPC)}
     }
 }

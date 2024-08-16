@@ -192,4 +192,13 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
+    if($ToggleSwitch -eq "WPFToggleSetThisPC") {
+        $explorer = (Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').LaunchTo
+        if($explorer -eq 1) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }

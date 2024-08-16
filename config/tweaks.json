@@ -2383,5 +2383,14 @@
     "Order": "a208_",
     "Type": "Toggle",
     "link": "https://example.com"
+  },
+  "WPFToggleSetThisPC": {
+    "Content": "Toggle Windows Explorer Start Page",
+    "Description": "NoDesc",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a209_",
+    "Type": "Toggle",
+    "link": "https://example.com"
   }
 }

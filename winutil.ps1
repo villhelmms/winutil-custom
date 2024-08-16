@@ -781,6 +781,15 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
+    if($ToggleSwitch -eq "WPFToggleSetThisPC") {
+        $explorer = (Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').LaunchTo
+        if($explorer -eq 1) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }
 function Get-WinUtilVariables {
 
@@ -2302,6 +2311,31 @@ function Invoke-WinUtilScript {
         Write-Warning $psitem.Exception.StackTrace
     }
 
+}
+function Invoke-WinUtilSetThisPC {
+  Param($Enabled)
+  try {
+    if ($Enabled -eq $false) {
+      Write-Host "Windows Explorer set to This PC"
+      $value = 1
+  }
+  else {
+      Write-Host "Windows Explorer set to Home"
+      $value = 0
+  }
+  $Path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+  Set-ItemProperty -Path $Path -Name "LaunchTo" -Value $value
+  }
+  Catch [System.Security.SecurityException] {
+    Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+  }
+  Catch [System.Management.Automation.ItemNotFoundException] {
+      Write-Warning $psitem.Exception.ErrorRecord
+  }
+  catch {
+      Write-Warning "Unable to set $Name due to unhandled exception"
+      Write-Warning $psitem.Exception.StackTrace
+  }
 }
 function Invoke-WinUtilShowExt {
     <#
@@ -5824,6 +5858,7 @@ function Invoke-WPFToggle {
         "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
         "WPFToggleLSCustomization" {Invoke-WinUtilLSCustomization $(Get-WinUtilToggleStatus WPFToggleLSCustomization)}
         "WPFToggleColorCustomization" {Invoke-WinUtilColorCustomization $(Get-WinUtilToggleStatus WPFToggleColorCustomization)}
+        "WPFToggleSetThisPC" {Invoke-WinUtilSetThisPC $(Get-WinUtilToggleStatus WPFToggleSetThisPC)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -10004,7 +10039,16 @@ $sync.configs.tweaks = '{
                                         "Order":  "a208_",
                                         "Type":  "Toggle",
                                         "link":  "https://example.com"
-                                    }
+                                    },
+    "WPFToggleSetThisPC":  {
+                               "Content":  "Toggle Windows Explorer Start Page",
+                               "Description":  "NoDesc",
+                               "category":  "Customize Preferences",
+                               "panel":  "2",
+                               "Order":  "a209_",
+                               "Type":  "Toggle",
+                               "link":  "https://example.com"
+                           }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11474,6 +11518,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleColorCustomization" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Toggle Color Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleSetThisPC" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Windows Explorer Start Page" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
                         </DockPanel>
                                 </StackPanel>
                             </Border>
