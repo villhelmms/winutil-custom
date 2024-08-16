@@ -30,8 +30,8 @@ function Invoke-WPFButton {
         "WPFclearWinget" {Invoke-WPFPresets -preset $null -imported $true -CheckBox "WPFInstall"}
         "WPFtweaksbutton" {Invoke-WPFtweaksbutton}
         "WPFOOSUbutton" {Invoke-WPFOOSU}
-<#         "WPFAddBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Enable"}
-        "WPFRemoveBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Disable"} #>
+        "WPFAddBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Enable"}
+        "WPFRemoveBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Disable"}
         "WPFundoall" {Invoke-WPFundoall}
         "WPFFeatureInstall" {Invoke-WPFFeatureInstall}
         "WPFPanelDISM" {Invoke-WPFPanelDISM}
