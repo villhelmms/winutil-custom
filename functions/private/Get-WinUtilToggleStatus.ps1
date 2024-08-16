@@ -148,4 +148,12 @@ Function Get-WinUtilToggleStatus {
             return $true
         }
     }
+    if($ToggleSwitch -eq "WPFToggleExecutionPolicy") {
+        $currentPolicy = Get-ExecutionPolicy
+        if($currentPolicy -eq "Restricted") {
+            return $false
+        } else {
+            return $true
+        }
+      }
 }

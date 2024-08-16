@@ -737,6 +737,14 @@ Function Get-WinUtilToggleStatus {
             return $true
         }
     }
+    if($ToggleSwitch -eq "WPFToggleExecutionPolicy") {
+        $currentPolicy = Get-ExecutionPolicy
+        if($currentPolicy -eq "Restricted") {
+            return $false
+        } else {
+            return $true
+        }
+      }
 }
 function Get-WinUtilVariables {
 
@@ -1242,6 +1250,24 @@ Function Invoke-WinUtilDetailedBSoD {
         Write-Warning $psitem.Exception.ErrorRecord
     } catch {
         Write-Warning "Unable to set $Name due to unhandled exception"
+        Write-Warning $psitem.Exception.StackTrace
+    }
+}
+function Invoke-WinUtilExecutionPolicy {
+
+    Param($Enabled)
+    try {
+        if ($Enabled -eq $false) {
+            Write-Host "Execution Policy set to Unrestricted"
+            Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
+        } else {
+            Write-Host "Execution Policy set to Restricted"
+            Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force
+        }
+    } catch [System.Security.SecurityException] {
+        Write-Warning "Unable to set execution policy due to a Security Exception"
+    } catch {
+        Write-Warning "Unable to set execution policy due to unhandled exception"
         Write-Warning $psitem.Exception.StackTrace
     }
 }
@@ -5631,6 +5657,7 @@ function Invoke-WPFToggle {
         "WPFToggleHiddenFiles" {Invoke-WinUtilHiddenFiles $(Get-WinUtilToggleStatus WPFToggleHiddenFiles)}
         "WPFToggleTaskbarAlignment" {Invoke-WinUtilTaskbarAlignment $(Get-WinUtilToggleStatus WPFToggleTaskbarAlignment)}
         "WPFToggleDetailedBSoD" {Invoke-WinUtilDetailedBSoD $(Get-WinUtilToggleStatus WPFToggleDetailedBSoD)}
+        "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -9762,6 +9789,15 @@ $sync.configs.tweaks = '{
                                      "Type":  "Button",
                                      "ButtonWidth":  "300",
                                      "link":  "https://christitustech.github.io/winutil/dev/tweaks/Performance-Plans/RemoveUltPerf"
+                                 },
+    "WPFToggleExecutionPolicy":  {
+                                     "Content":  "Toggle Execution Policy",
+                                     "Description":  "NoDesc",
+                                     "category":  "Customize Preferences",
+                                     "panel":  "2",
+                                     "Order":  "a099_",
+                                     "Type":  "Toggle",
+                                     "link":  "https://example.com"
                                  }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
@@ -11177,6 +11213,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
 
                             <Label Name="WPFLabelCustomizePreferences" Content="Customize Preferences" FontSize="{FontSizeHeading}" FontFamily="{HeaderFontFamily}"/>
 
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleExecutionPolicy" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Execution Policy" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleDarkMode" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Dark Theme for Windows" ToolTip="Enable/Disable Dark Mode." HorizontalAlignment="Left" FontSize="{FontSize}"/>
