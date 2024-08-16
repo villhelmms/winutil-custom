@@ -2356,5 +2356,14 @@
     "Order": "a205_",
     "Type": "Toggle",
     "link": "https://example.com"
+  },
+  "WPFToggleThemes": {
+    "Content": "Toggle Theme Customization",
+    "Description": "NoDesc",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a206_",
+    "Type": "Toggle",
+    "link": "https://example.com"
   }
 }

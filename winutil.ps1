@@ -754,6 +754,15 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
+    if($ToggleSwitch -eq "WPFToggleThemes") {
+        $themesOff = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer').NoThemesTab
+        if($themesOff -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }
 function Get-WinUtilVariables {
 
@@ -2518,6 +2527,37 @@ function Invoke-WinUtilTaskView {
         Write-Warning "Unable to set $Name due to unhandled exception"
         Write-Warning $psitem.Exception.StackTrace
     }
+}
+function Invoke-WinUtilToggleThemes {
+  <#
+  .SYNOPSIS
+      Disables/Enables Themes
+  .PARAMETER Enabled
+      Indicates whether to enable or disable themes
+  #>
+  Param($Enabled)
+  try {
+      if ($Enabled -eq $false) {
+          Write-Host "Enabling Themes"
+          $value = 0
+      }
+      else {
+          Write-Host "Disabling Themes"
+          $value = 1
+      }
+      $Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+      Set-ItemProperty -Path $Path -Name NoThemesTab -Value $value
+  }
+  Catch [System.Security.SecurityException] {
+      Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+  }
+  Catch [System.Management.Automation.ItemNotFoundException] {
+      Write-Warning $psitem.Exception.ErrorRecord
+  }
+  catch {
+      Write-Warning "Unable to set $Name due to unhandled exception"
+      Write-Warning $psitem.Exception.StackTrace
+  }
 }
 function Invoke-WinUtilTweaks {
     <#
@@ -5701,6 +5741,7 @@ function Invoke-WPFToggle {
         "WPFToggleDetailedBSoD" {Invoke-WinUtilDetailedBSoD $(Get-WinUtilToggleStatus WPFToggleDetailedBSoD)}
         "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
         "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
+        "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -9850,7 +9891,16 @@ $sync.configs.tweaks = '{
                                "Order":  "a205_",
                                "Type":  "Toggle",
                                "link":  "https://example.com"
-                           }
+                           },
+    "WPFToggleThemes":  {
+                            "Content":  "Toggle Theme Customization",
+                            "Description":  "NoDesc",
+                            "category":  "Customize Preferences",
+                            "panel":  "2",
+                            "Order":  "a206_",
+                            "Type":  "Toggle",
+                            "link":  "https://example.com"
+                        }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11308,6 +11358,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleWallpaper" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Toggle Wallpaper Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleThemes" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Theme Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
                         </DockPanel>
                                 </StackPanel>
                             </Border>

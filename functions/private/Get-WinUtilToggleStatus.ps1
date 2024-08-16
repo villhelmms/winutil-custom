@@ -165,4 +165,14 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
+    if($ToggleSwitch -eq "WPFToggleThemes") {
+        $themesOff = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer').NoThemesTab
+        if($themesOff -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
+    
 }

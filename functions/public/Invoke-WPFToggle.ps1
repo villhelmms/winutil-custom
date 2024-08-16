@@ -24,7 +24,7 @@ function Invoke-WPFToggle {
         "WPFToggleShowExt" {Invoke-WinUtilShowExt $(Get-WinUtilToggleStatus WPFToggleShowExt)}
         "WPFToggleSnapWindow" {Invoke-WinUtilSnapWindow $(Get-WinUtilToggleStatus WPFToggleSnapWindow)}
         "WPFToggleSnapFlyout" {Invoke-WinUtilSnapFlyout $(Get-WinUtilToggleStatus WPFToggleSnapFlyout)}
-        "WPFToggleSnapSuggestion"c {Invoke-WinUtilSnapSuggestion $(Get-WinUtilToggleStatus WPFToggleSnapSuggestion)}
+        "WPFToggleSnapSuggestion" {Invoke-WinUtilSnapSuggestion $(Get-WinUtilToggleStatus WPFToggleSnapSuggestion)}
         "WPFToggleMouseAcceleration" {Invoke-WinUtilMouseAcceleration $(Get-WinUtilToggleStatus WPFToggleMouseAcceleration)}
         "WPFToggleStickyKeys" {Invoke-WinUtilStickyKeys $(Get-WinUtilToggleStatus WPFToggleStickyKeys)}
         "WPFToggleTaskbarWidgets" {Invoke-WinUtilTaskbarWidgets $(Get-WinUtilToggleStatus WPFToggleTaskbarWidgets)}
@@ -35,5 +35,6 @@ function Invoke-WPFToggle {
         "WPFToggleDetailedBSoD" {Invoke-WinUtilDetailedBSoD $(Get-WinUtilToggleStatus WPFToggleDetailedBSoD)}
         "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
         "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
+        "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
     }
 }
