@@ -744,7 +744,16 @@ Function Get-WinUtilToggleStatus {
         } else {
             return $true
         }
-      }
+    }
+    if($ToggleSwitch -eq "WPFToggleWallpaper") {
+        $Transparency = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop').NoChangingWallPaper
+        if($Transparency -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }
 function Get-WinUtilVariables {
 
@@ -2632,6 +2641,39 @@ function Invoke-WinUtilVerboseLogon {
         Write-Warning "Unable to set $Name due to unhandled exception"
         Write-Warning $psitem.Exception.StackTrace
     }
+}
+function Invoke-WinUtilWallpaper {
+  <#
+  .SYNOPSIS
+      Disables/Enables Wallpaper
+  .PARAMETER Enabled
+      Indicates whether to enable or disable wallpaper
+  #>
+  Param($Enabled)
+  try {
+      if ($Enabled -eq $false) {
+          Write-Host "Enabling Wallpaper"
+          $value = 0
+      }
+      else {
+          Write-Host "Disabling Wallpaper"
+          $value = 1
+      }
+      $Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop"
+      Set-ItemProperty -Path $Path -Name NoAddingComponents -Value $value
+      Set-ItemProperty -Path $Path -Name NoChangingWallPaper -Value $value
+      Set-ItemProperty -Path $Path -Name NoComponents -Value $value
+  }
+  Catch [System.Security.SecurityException] {
+      Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+  }
+  Catch [System.Management.Automation.ItemNotFoundException] {
+      Write-Warning $psitem.Exception.ErrorRecord
+  }
+  catch {
+      Write-Warning "Unable to set $Name due to unhandled exception"
+      Write-Warning $psitem.Exception.StackTrace
+  }
 }
 Function Invoke-WinUtilWingetProgram {
     <#
@@ -5658,6 +5700,7 @@ function Invoke-WPFToggle {
         "WPFToggleTaskbarAlignment" {Invoke-WinUtilTaskbarAlignment $(Get-WinUtilToggleStatus WPFToggleTaskbarAlignment)}
         "WPFToggleDetailedBSoD" {Invoke-WinUtilDetailedBSoD $(Get-WinUtilToggleStatus WPFToggleDetailedBSoD)}
         "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
+        "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -9798,7 +9841,16 @@ $sync.configs.tweaks = '{
                                      "Order":  "a099_",
                                      "Type":  "Toggle",
                                      "link":  "https://example.com"
-                                 }
+                                 },
+    "WPFToggleWallpaper":  {
+                               "Content":  "Toggle Wallpaper Customization",
+                               "Description":  "NoDesc",
+                               "category":  "Customize Preferences",
+                               "panel":  "2",
+                               "Order":  "a205_",
+                               "Type":  "Toggle",
+                               "link":  "https://example.com"
+                           }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11252,6 +11304,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleTaskbarWidgets" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Widgets Button in Taskbar" ToolTip="If Enabled then Widgets Button in Taskbar will be shown." HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleWallpaper" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Wallpaper Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
                         </DockPanel>
                                 </StackPanel>
                             </Border>

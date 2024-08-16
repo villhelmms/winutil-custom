@@ -2347,5 +2347,14 @@
     "Order": "a099_",
     "Type": "Toggle",
     "link": "https://example.com"
+  },
+  "WPFToggleWallpaper": {
+    "Content": "Toggle Wallpaper Customization",
+    "Description": "NoDesc",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a205_",
+    "Type": "Toggle",
+    "link": "https://example.com"
   }
 }

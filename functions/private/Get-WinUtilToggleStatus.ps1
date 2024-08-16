@@ -155,5 +155,14 @@ Function Get-WinUtilToggleStatus {
         } else {
             return $true
         }
-      }
+    }
+    if($ToggleSwitch -eq "WPFToggleWallpaper") {
+        $Transparency = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\ActiveDesktop').NoChangingWallPaper
+        if($Transparency -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }
