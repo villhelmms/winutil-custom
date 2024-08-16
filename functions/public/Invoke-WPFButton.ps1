@@ -57,7 +57,7 @@ function Invoke-WPFButton {
         "WPFMicrowin" {Invoke-WPFMicrowin}
         "WPFCloseButton" {Invoke-WPFCloseButton}
         "MicrowinScratchDirBT" {Invoke-ScratchDialog}
-        "WPFAddBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Enable"}
-        "WPFRemoveBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Disable"}
+        "WPFAddBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Enable"}
+        "WPFRemoveBrowserPolicies" {Invoke-WPFBrowserPolicies -State "Disable"}
     }
 }
