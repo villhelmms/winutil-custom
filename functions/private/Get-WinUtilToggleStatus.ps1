@@ -183,5 +183,13 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
-
+    if($ToggleSwitch -eq "WPFToggleColorCustomization") {
+        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
+        if($tasklockscreen -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }

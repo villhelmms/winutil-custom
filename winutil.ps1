@@ -772,7 +772,15 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
-
+    if($ToggleSwitch -eq "WPFToggleColorCustomization") {
+        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
+        if($tasklockscreen -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
 }
 function Get-WinUtilVariables {
 
@@ -1115,6 +1123,37 @@ function Invoke-WinUtilBingSearch {
         Write-Warning $psitem.Exception.StackTrace
     }
 }
+function Invoke-WinUtilColorCustomization {
+    <#
+    .SYNOPSIS
+        Disables/Enables Color Customization
+    .PARAMETER Enabled
+        Indicates whether to enable or disable color customization
+    #>
+    Param($Enabled)
+    try {
+        if ($Enabled -eq $false) {
+            Write-Host "Enabling Color Customization"
+            $value = 0
+        }
+        else {
+            Write-Host "Disabling Color Customization"
+            $value = 1
+        }
+        $Path = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+        Set-ItemProperty -Path $Path -Name NoDispAppearancePage -Value $value
+    }
+    Catch [System.Security.SecurityException] {
+        Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+    }
+    Catch [System.Management.Automation.ItemNotFoundException] {
+        Write-Warning $psitem.Exception.ErrorRecord
+    }
+    catch {
+        Write-Warning "Unable to set $Name due to unhandled exception"
+        Write-Warning $psitem.Exception.StackTrace
+    }
+  }
 Function Invoke-WinUtilCurrentSystem {
 
     <#
@@ -5784,6 +5823,7 @@ function Invoke-WPFToggle {
         "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
         "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
         "WPFToggleLSCustomization" {Invoke-WinUtilLSCustomization $(Get-WinUtilToggleStatus WPFToggleLSCustomization)}
+        "WPFToggleColorCustomization" {Invoke-WinUtilColorCustomization $(Get-WinUtilToggleStatus WPFToggleColorCustomization)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -9951,7 +9991,16 @@ $sync.configs.tweaks = '{
                                      "Order":  "a207_",
                                      "Type":  "Toggle",
                                      "link":  "https://example.com"
-                                 }
+                                 },
+    "WPFToggleColorCustomization":  {
+                                        "Content":  "Toggle Color Customization",
+                                        "Description":  "NoDesc",
+                                        "category":  "Customize Preferences",
+                                        "panel":  "2",
+                                        "Order":  "a208_",
+                                        "Type":  "Toggle",
+                                        "link":  "https://example.com"
+                                    }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11417,6 +11466,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleLSCustomization" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Toggle Lock Screen Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleColorCustomization" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Color Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
                         </DockPanel>
                                 </StackPanel>
                             </Border>

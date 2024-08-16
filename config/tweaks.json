@@ -2374,5 +2374,14 @@
     "Order": "a207_",
     "Type": "Toggle",
     "link": "https://example.com"
+  },
+  "WPFToggleColorCustomization": {
+    "Content": "Toggle Color Customization",
+    "Description": "NoDesc",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a208_",
+    "Type": "Toggle",
+    "link": "https://example.com"
   }
 }
