@@ -36,5 +36,6 @@ function Invoke-WPFToggle {
         "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
         "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
         "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
+        "WPFToggleLSCustomization" {Invoke-WinUtilLSCustomization $(Get-WinUtilToggleStatus WPFToggleLSCustomization)}
     }
 }

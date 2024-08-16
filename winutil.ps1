@@ -763,6 +763,16 @@ Function Get-WinUtilToggleStatus {
             return $false
         }
     }
+    if($ToggleSwitch -eq "WPFToggleLSCustomization") {
+        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
+        if($tasklockscreen -eq 0) {
+            return $true
+        }
+        else{
+            return $false
+        }
+    }
+
 }
 function Get-WinUtilVariables {
 
@@ -1394,6 +1404,37 @@ function Invoke-WinUtilHiddenFiles {
         Write-Warning "Unable to set $Name due to unhandled exception"
         Write-Warning $psitem.Exception.StackTrace
     }
+}
+function Invoke-WinUtilLSCustomization {
+  <#
+  .SYNOPSIS
+      Disables/Enables Lock Screen Customization
+  .PARAMETER Enabled
+      Indicates whether to enable or disable themes
+  #>
+  Param($Enabled)
+  try {
+      if ($Enabled -eq $false) {
+          Write-Host "Enabling Lock Screen Customization"
+          $value = 0
+      }
+      else {
+          Write-Host "Disabling Lock Screen Customization"
+          $value = 1
+      }
+      $Path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+      Set-ItemProperty -Path $Path -Name NoChangingLockScreen -Value $value
+  }
+  Catch [System.Security.SecurityException] {
+      Write-Warning "Unable to set $Path\$Name to $Value due to a Security Exception"
+  }
+  Catch [System.Management.Automation.ItemNotFoundException] {
+      Write-Warning $psitem.Exception.ErrorRecord
+  }
+  catch {
+      Write-Warning "Unable to set $Name due to unhandled exception"
+      Write-Warning $psitem.Exception.StackTrace
+  }
 }
 function Test-CompatibleImage() {
     <#
@@ -5742,6 +5783,7 @@ function Invoke-WPFToggle {
         "WPFToggleExecutionPolicy" {Invoke-WinUtilExecutionPolicy $(Get-WinUtilToggleStatus WPFToggleExecutionPolicy)}
         "WPFToggleWallpaper" {Invoke-WinUtilWallpaper $(Get-WinUtilToggleStatus WPFToggleWallpaper)}
         "WPFToggleThemes" {Invoke-WinUtilToggleThemes $(Get-WinUtilToggleStatus WPFToggleThemes)}
+        "WPFToggleLSCustomization" {Invoke-WinUtilLSCustomization $(Get-WinUtilToggleStatus WPFToggleLSCustomization)}
     }
 }
 function Invoke-WPFTweakPS7{
@@ -9900,7 +9942,16 @@ $sync.configs.tweaks = '{
                             "Order":  "a206_",
                             "Type":  "Toggle",
                             "link":  "https://example.com"
-                        }
+                        },
+    "WPFToggleLSCustomization":  {
+                                     "Content":  "Toggle Lock Screen Customization",
+                                     "Description":  "NoDesc",
+                                     "category":  "Customize Preferences",
+                                     "panel":  "2",
+                                     "Order":  "a207_",
+                                     "Type":  "Toggle",
+                                     "link":  "https://example.com"
+                                 }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -11362,6 +11413,10 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                         <DockPanel LastChildFill="True">
                             <CheckBox Name="WPFToggleThemes" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
                             <Label Content="Toggle Theme Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
+                        </DockPanel>
+                        <DockPanel LastChildFill="True">
+                            <CheckBox Name="WPFToggleLSCustomization" Style="{StaticResource ColorfulToggleSwitchStyle}" Margin="4,0" HorizontalAlignment="Right" FontSize="{FontSize}"/>
+                            <Label Content="Toggle Lock Screen Customization" ToolTip="NoDesc" HorizontalAlignment="Left" FontSize="{FontSize}"/>
                         </DockPanel>
                                 </StackPanel>
                             </Border>
