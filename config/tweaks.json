@@ -2320,5 +2320,23 @@
     "Order": "a042_",
     "Type": "Button",
     "link": "https://christitustech.github.io/winutil/dev/tweaks/z--Advanced-Tweaks---CAUTION/Undoall"
+  },
+  "WPFAddBrowserPolicies": {
+    "Content": "Add Browser policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a080_",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "link": "https://christitustech.github.io/winutil/dev/tweaks/Performance-Plans/AddUltPerf"
+  },
+  "WPFRemoveBrowserPolicies": {
+    "Content": "Remove Browser policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a081_",
+    "Type": "Button",
+    "ButtonWidth": "300",
+    "link": "https://christitustech.github.io/winutil/dev/tweaks/Performance-Plans/RemoveUltPerf"
   }
 }

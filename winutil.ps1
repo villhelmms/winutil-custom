@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 24.08.15
+    Version        : 24.08.16
 #>
 param (
     [switch]$Debug,
@@ -45,7 +45,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "24.08.15"
+$sync.version = "24.08.16"
 $sync.configs = @{}
 $sync.ProcessRunning = $false
 
@@ -3715,6 +3715,255 @@ function Invoke-ScratchDialog {
        $sync.MicrowinScratchDirBox.Text =  Join-Path $filePath "\"
 
 }
+Function Invoke-WPFBrowserPolicies {
+  <#
+  .SYNOPSIS
+      Enables or disables browser policies for Chrome and Microsoft Edge
+
+  .PARAMETER State
+      Indicates whether to enable or disable the browser policies
+
+  #>
+  param($State)
+
+    try {
+        Write-Host "-----> Google Chrome: Testing path..." -ForegroundColor Yellow
+        # Chrome policies
+        $chromePath = "HKLM:\SOFTWARE\Policies\Google\Chrome"
+        if (!(Test-Path $chromePath)) {
+            Write-Host "-----> Google Chrome: New path created" -ForegroundColor Green
+            New-Item -Path $chromePath -Force
+        } else {
+            Write-Host "-----> Google Chrome: path already exists" -ForegroundColor Green
+        }
+
+        $chromeProperties = @{
+            #"BrowserGuestModeEnforced" = $null
+            "NTPCustomBackgroundEnabled" = $null
+            "BrowserThemeColor" = $null
+            "BrowserSignin" = $null
+            "PasswordManagerEnabled" = $null
+            "PasswordSharingEnabled" = $null
+            "BrowserAddPersonEnabled" = $null
+            "SyncDisabled" = $null
+            "DefaultBrowserSettingEnabled" = $null
+            "PaymentMethodQueryEnabled" = $null
+            "AutofillAddressEnabled" = $null
+            "ForceGoogleSafeSearch" = $null
+            "PrintingEnabled" = $null
+            "AutofillCreditCardEnabled" = $null
+        }
+
+        if ($State -eq "Enable") {
+            $chromeValues = @{
+                #"BrowserGuestModeEnforced" = 1
+                "NTPCustomBackgroundEnabled" = 0
+                "BrowserThemeColor" = "#060606"
+                "BrowserSignin" = 0
+                "PasswordManagerEnabled" = 0
+                "PasswordSharingEnabled" = 0
+                "BrowserAddPersonEnabled" = 0
+                "SyncDisabled" = 1
+                "DefaultBrowserSettingEnabled" = 0
+                "PaymentMethodQueryEnabled" = 0
+                "AutofillAddressEnabled" = 0
+                "ForceGoogleSafeSearch" = 1
+                "PrintingEnabled" = 0
+                "AutofillCreditCardEnabled" = 0
+            }
+        } elseif ($State -eq "Disable") {
+            $chromeValues = @{
+                #"BrowserGuestModeEnforced" = 0
+                "NTPCustomBackgroundEnabled" = $null
+                "BrowserThemeColor" = $null
+                "BrowserSignin" = $null
+                "PasswordManagerEnabled" = $null
+                "PasswordSharingEnabled" = $null
+                "BrowserAddPersonEnabled" = $null
+                "SyncDisabled" = $null
+                "DefaultBrowserSettingEnabled" = $null
+                "PaymentMethodQueryEnabled" = $null
+                "AutofillAddressEnabled" = $null
+                "ForceGoogleSafeSearch" = $null
+                "PrintingEnabled" = $null
+                "AutofillCreditCardEnabled" = $null
+            }
+        }
+        Write-Host "-----> Google Chrome: setting properties..." -ForegroundColor Yellow
+        foreach ($property in $chromeProperties.GetEnumerator()) {
+            if ($chromeValues.ContainsKey($property.Name)) {
+                $value = $chromeValues[$property.Name]
+                if ($value -eq $null) {
+                    Remove-ItemProperty -Path $chromePath -Name $property.Name -ErrorAction SilentlyContinue
+                    Write-Host "-----> Google Chrome: properties deleted" -ForegroundColor Green
+                } else {
+                    New-ItemProperty -Path $chromePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
+                    Write-Host "-----> Google Chrome: properties created" -ForegroundColor Green
+                }
+            }
+        }
+        Write-Host "-----> Google Chrome: properties are set" -ForegroundColor Green
+
+        # Microsoft Edge policies
+        $edgePaths = @(
+            "HKLM:\SOFTWARE\Policies\Microsoft\Edge"
+            "HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate"
+        )
+        Write-Host "-----> Edge: Testing path..." -ForegroundColor Yellow
+
+        foreach ($pathEdge in $edgePaths) {
+            if (-not (Test-Path $pathEdge)) {
+                New-Item -Path $pathEdge -Force
+                Write-Host "-----> Edge: New path created" -ForegroundColor Green
+            }
+        }
+
+        $edgeProperties = @{
+            "NewTabPageContentEnabled" = $null
+            "NewTabPageQuickLinksEnabled" = $null
+            "SpotlightExperiencesAndRecommendationsEnabled" = $null
+            "NewTabPageAllowedBackgroundTypes" = $null
+            "ShowCastIconInToolbar" = $null
+            "EnableMediaRouter" = $null
+            "GamerModeEnabled" = $null
+            "PasswordManagerEnabled" = $null
+            "AutofillAddressEnabled" = $null
+            "BrowserSignin" = $null
+            "CryptoWalletEnabled" = $null
+            "EdgeCollectionsEnabled" = $null
+            "EdgeEDropEnabled" = $null
+            "EdgeFollowEnabled" = $null
+            "EdgeShoppingAssistantEnabled" = $null
+            "EdgeWalletCheckoutEnabled" = $null
+            "EdgeWalletEtreeEnabled" = $null
+            "HubsSidebarEnabled" = $null
+            "ShowMicrosoftRewards" = $null
+            "SyncDisabled" = $null
+            "NewTabPageBingChatEnabled" = $null
+            "WalletDonationEnabled" = $null
+            "BrowserAddProfileEnabled" = $null
+            "EdgeDefaultProfileEnabled" = $null
+            "MSAWebSiteSSOUsingThisProfileAllowed" = $null
+            "AIGenThemesEnabled" = $null
+            "PinBrowserEssentialsToolbarButton" = $null
+            "SplitScreenEnabled" = $null
+            "AutofillCreditCardEnabled" = $null
+            "ImportPaymentInfo" = $null
+            "PrintingEnabled" = $null
+            "HideFirstRunExperience" = $null
+            "DefaultBrowserSettingEnabled" = $null
+            "CreateDesktopShortcutDefault" = $null
+            "PersonalizationReportingEnabled" = $null
+            "ShowRecommendationsEnabled" = $null
+            "ConfigureDoNotTrack" = $null
+            "DiagnosticData" = $null
+            "EdgeAssetDeliveryServiceEnabled" = $null
+        }
+
+        if ($State -eq "Enable") {
+            $edgeValues = @{
+                "NewTabPageContentEnabled" = 0
+                "NewTabPageQuickLinksEnabled" = 0
+                "SpotlightExperiencesAndRecommendationsEnabled" = 0
+                "NewTabPageAllowedBackgroundTypes" = 3
+                "ShowCastIconInToolbar" = 0
+                "EnableMediaRouter" = 0
+                "GamerModeEnabled" = 0
+                "PasswordManagerEnabled" = 0
+                "AutofillAddressEnabled" = 0
+                "BrowserSignin" = 0
+                "CryptoWalletEnabled" = 0
+                "EdgeCollectionsEnabled" = 0
+                "EdgeEDropEnabled" = 0
+                "EdgeFollowEnabled" = 0
+                "EdgeShoppingAssistantEnabled" = 0
+                "EdgeWalletCheckoutEnabled" = 0
+                "EdgeWalletEtreeEnabled" = 0
+                "HubsSidebarEnabled" = 0
+                "ShowMicrosoftRewards" = 0
+                "SyncDisabled" = 1
+                "NewTabPageBingChatEnabled" = 0
+                "WalletDonationEnabled" = 0
+                "BrowserAddProfileEnabled" = 0
+                "EdgeDefaultProfileEnabled" = "Skolens"
+                "MSAWebSiteSSOUsingThisProfileAllowed" = 0
+                "AIGenThemesEnabled" = 0
+                "PinBrowserEssentialsToolbarButton" = 0
+                "SplitScreenEnabled" = 0
+                "AutofillCreditCardEnabled" = 0
+                "ImportPaymentInfo" = 0
+                "PrintingEnabled" = 0
+                "HideFirstRunExperience" = 1
+                "DefaultBrowserSettingEnabled" = 0
+                "CreateDesktopShortcutDefault" = 0
+                "PersonalizationReportingEnabled" = 0
+                "ShowRecommendationsEnabled" = 0
+                "ConfigureDoNotTrack" = 1
+                "DiagnosticData" = 0
+                "EdgeAssetDeliveryServiceEnabled" = 0
+            }
+        } elseif ($State -eq "Disable") {
+            $edgeValues = @{
+                "NewTabPageContentEnabled" = $null
+                "NewTabPageQuickLinksEnabled" = $null
+                "SpotlightExperiencesAndRecommendationsEnabled" = $null
+                "NewTabPageAllowedBackgroundTypes" = $null
+                "ShowCastIconInToolbar" = $null
+                "EnableMediaRouter" = $null
+                "GamerModeEnabled" = $null
+                "PasswordManagerEnabled" = $null
+                "AutofillAddressEnabled" = $null
+                "BrowserSignin" = $null
+                "CryptoWalletEnabled" = $null
+                "EdgeCollectionsEnabled" = $null
+                "EdgeEDropEnabled" = $null
+                "EdgeFollowEnabled" = $null
+                "EdgeShoppingAssistantEnabled" = $null
+                "EdgeWalletCheckoutEnabled" = $null
+                "EdgeWalletEtreeEnabled" = $null
+                "HubsSidebarEnabled" = $null
+                "ShowMicrosoftRewards" = $null
+                "SyncDisabled" = $null
+                "NewTabPageBingChatEnabled" = $null
+                "WalletDonationEnabled" = $null
+                "BrowserAddProfileEnabled" = $null
+                "EdgeDefaultProfileEnabled" = $null
+                "MSAWebSiteSSOUsingThisProfileAllowed" = $null
+                "AIGenThemesEnabled" = $null
+                "PinBrowserEssentialsToolbarButton" = $null
+                "SplitScreenEnabled" = $null
+                "AutofillCreditCardEnabled" = $null
+                "ImportPaymentInfo" = $null
+                "PrintingEnabled" = $null
+                "HideFirstRunExperience" = $null
+                "DefaultBrowserSettingEnabled" = $null
+                "CreateDesktopShortcutDefault" = $null
+                "PersonalizationReportingEnabled" = $null
+                "ShowRecommendationsEnabled" = $null
+                "ConfigureDoNotTrack" = $null
+                "DiagnosticData" = $null
+                "EdgeAssetDeliveryServiceEnabled" = $null
+            }
+        }
+        Write-Host "-----> Edge: setting properties..." -ForegroundColor Yellow
+        foreach ($edgePath in $edgePaths) {
+            foreach ($property in $edgeProperties.GetEnumerator()) {
+                if ($edgeValues.ContainsKey($property.Name)) {
+                    $value = $edgeValues[$property.Name]
+                    if ($value -eq $null) {
+                        Remove-ItemProperty -Path $edgePath -Name $property.Name -ErrorAction SilentlyContinue
+                        Write-Host "-----> Edge: properties deleted" -ForegroundColor Green
+                    } else {
+                        New-ItemProperty -Path $edgePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
+                        Write-Host "-----> Edge: properties created" -ForegroundColor Green
+                    }
+                }
+            }
+        }
+    } catch {
+      Write-Warning $psitem.Exception.Message
+    }
+}
 function Invoke-WPFButton {
 
     <#
@@ -3774,6 +4023,8 @@ function Invoke-WPFButton {
         "WPFMicrowin" {Invoke-WPFMicrowin}
         "WPFCloseButton" {Invoke-WPFCloseButton}
         "MicrowinScratchDirBT" {Invoke-ScratchDialog}
+        "WPFAddBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Enable"}
+        "WPFRemoveBrowserPolicies" {Invoke-WPFUltimatePerformance -State "Disable"}
     }
 }
 function Invoke-WPFCloseButton {
@@ -4190,26 +4441,6 @@ Function Invoke-WPFFormVariables {
     #>
     #If ($global:ReadmeDisplay -ne $true) { Write-Host "If you need to reference this display again, run Get-FormVariables" -ForegroundColor Yellow; $global:ReadmeDisplay = $true }
 
-
-    Write-Host ""
-    Write-Host "    CCCCCCCCCCCCCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT   "
-    Write-Host " CCC::::::::::::CT:::::::::::::::::::::TT:::::::::::::::::::::T   "
-    Write-Host "CC:::::::::::::::CT:::::::::::::::::::::TT:::::::::::::::::::::T  "
-    Write-Host "C:::::CCCCCCCC::::CT:::::TT:::::::TT:::::TT:::::TT:::::::TT:::::T "
-    Write-Host "C:::::C       CCCCCCTTTTTT  T:::::T  TTTTTTTTTTTT  T:::::T  TTTTTT"
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C                     T:::::T                T:::::T        "
-    Write-Host "C:::::C       CCCCCC        T:::::T                T:::::T        "
-    Write-Host "C:::::CCCCCCCC::::C      TT:::::::TT            TT:::::::TT       "
-    Write-Host "CC:::::::::::::::C       T:::::::::T            T:::::::::T       "
-    Write-Host "CCC::::::::::::C         T:::::::::T            T:::::::::T       "
-    Write-Host "  CCCCCCCCCCCCC          TTTTTTTTTTT            TTTTTTTTTTT       "
-    Write-Host ""
-    Write-Host "====Chris Titus Tech====="
     Write-Host "=====Windows Toolbox====="
 
     #====DEBUG GUI Elements====
@@ -9515,7 +9746,25 @@ $sync.configs.tweaks = '{
                        "Order":  "a042_",
                        "Type":  "Button",
                        "link":  "https://christitustech.github.io/winutil/dev/tweaks/z--Advanced-Tweaks---CAUTION/Undoall"
-                   }
+                   },
+    "WPFAddBrowserPolicies":  {
+                                  "Content":  "Add Browser policies",
+                                  "category":  "Browser Policies",
+                                  "panel":  "2",
+                                  "Order":  "a080_",
+                                  "Type":  "Button",
+                                  "ButtonWidth":  "300",
+                                  "link":  "https://christitustech.github.io/winutil/dev/tweaks/Performance-Plans/AddUltPerf"
+                              },
+    "WPFRemoveBrowserPolicies":  {
+                                     "Content":  "Remove Browser policies",
+                                     "category":  "Browser Policies",
+                                     "panel":  "2",
+                                     "Order":  "a081_",
+                                     "Type":  "Button",
+                                     "ButtonWidth":  "300",
+                                     "link":  "https://christitustech.github.io/winutil/dev/tweaks/Performance-Plans/RemoveUltPerf"
+                                 }
 }' | convertfrom-json
 $inputXML =  '<Window x:Class="WinUtility.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10922,6 +11171,11 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                             </Border>
                         <Border Grid.Row="1" Grid.Column="1">
                             <StackPanel Background="{MainBackgroundColor}" SnapsToDevicePixels="True">
+
+                            <Label Name="WPFLabelBrowserPolicies" Content="Browser Policies" FontSize="{FontSizeHeading}" FontFamily="{HeaderFontFamily}"/>
+
+                            <Button Name="WPFAddBrowserPolicies" Content="Add Browser policies" HorizontalAlignment="Left" Margin="5" Padding="20,5" Width="300"/>
+                            <Button Name="WPFRemoveBrowserPolicies" Content="Remove Browser policies" HorizontalAlignment="Left" Margin="5" Padding="20,5" Width="300"/>
 
                             <Label Name="WPFLabelCustomizePreferences" Content="Customize Preferences" FontSize="{FontSizeHeading}" FontFamily="{HeaderFontFamily}"/>
 
