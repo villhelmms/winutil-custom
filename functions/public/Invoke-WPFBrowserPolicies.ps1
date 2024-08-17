@@ -56,7 +56,7 @@ Function Invoke-WPFBrowserPolicies {
             }
         } elseif ($State -eq "Disable") {
             $chromeValues = @{
-                #"BrowserGuestModeEnforced" = 0
+                #"BrowserGuestModeEnforced" = $null
                 "NTPCustomBackgroundEnabled" = $null
                 "BrowserThemeColor" = $null
                 "BrowserSignin" = $null
@@ -72,22 +72,25 @@ Function Invoke-WPFBrowserPolicies {
                 "AutofillCreditCardEnabled" = $null
             }
         }
+
         Write-Host "-----> Google Chrome: setting properties..." -ForegroundColor Yellow
         foreach ($property in $chromeProperties.GetEnumerator()) {
             if ($chromeValues.ContainsKey($property.Name)) {
                 $value = $chromeValues[$property.Name]
-                if ($value -eq $null) {
+                if ($null -eq $value) {
                     Remove-ItemProperty -Path $chromePath -Name $property.Name -ErrorAction SilentlyContinue
-                    Write-Host "-----> Google Chrome: properties deleted" -ForegroundColor Green
                 } else {
                     New-ItemProperty -Path $chromePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
-                    Write-Host "-----> Google Chrome: properties created" -ForegroundColor Green
                 }
             }
         }
-        Write-Host "-----> Google Chrome: properties are set" -ForegroundColor Green
+        if ($null -eq $value) {
+            Write-Host "-----> Google Chrome: properties deleted" -ForegroundColor Green
+        } else {
+            Write-Host "-----> Google Chrome: properties created" -ForegroundColor Green
+        }
 
-        # Microsoft Edge policies
+        # Microsoft Edge policiess
         $edgePaths = @(
             "HKLM:\SOFTWARE\Policies\Microsoft\Edge"
             "HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate"
@@ -233,15 +236,18 @@ Function Invoke-WPFBrowserPolicies {
             foreach ($property in $edgeProperties.GetEnumerator()) {
                 if ($edgeValues.ContainsKey($property.Name)) {
                     $value = $edgeValues[$property.Name]
-                    if ($value -eq $null) {
+                    if ($null -eq $value) {
                         Remove-ItemProperty -Path $edgePath -Name $property.Name -ErrorAction SilentlyContinue
-                        Write-Host "-----> Edge: properties deleted" -ForegroundColor Green
                     } else {
                         New-ItemProperty -Path $edgePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
-                        Write-Host "-----> Edge: properties created" -ForegroundColor Green
                     }
                 }
             }
+        }
+        if ($null -eq $value) {
+            Write-Host "-----> Edge: properties deleted" -ForegroundColor Green
+        } else {
+            Write-Host "-----> Edge Chrome: properties created" -ForegroundColor Green
         }
     } catch {
       Write-Warning $psitem.Exception.Message

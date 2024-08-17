@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 24.08.16
+    Version        : 24.08.17
 #>
 param (
     [switch]$Debug,
@@ -45,7 +45,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "24.08.16"
+$sync.version = "24.08.17"
 $sync.configs = @{}
 $sync.ProcessRunning = $false
 
@@ -3995,7 +3995,7 @@ Function Invoke-WPFBrowserPolicies {
             }
         } elseif ($State -eq "Disable") {
             $chromeValues = @{
-                #"BrowserGuestModeEnforced" = 0
+                #"BrowserGuestModeEnforced" = $null
                 "NTPCustomBackgroundEnabled" = $null
                 "BrowserThemeColor" = $null
                 "BrowserSignin" = $null
@@ -4011,22 +4011,25 @@ Function Invoke-WPFBrowserPolicies {
                 "AutofillCreditCardEnabled" = $null
             }
         }
+
         Write-Host "-----> Google Chrome: setting properties..." -ForegroundColor Yellow
         foreach ($property in $chromeProperties.GetEnumerator()) {
             if ($chromeValues.ContainsKey($property.Name)) {
                 $value = $chromeValues[$property.Name]
-                if ($value -eq $null) {
+                if ($null -eq $value) {
                     Remove-ItemProperty -Path $chromePath -Name $property.Name -ErrorAction SilentlyContinue
-                    Write-Host "-----> Google Chrome: properties deleted" -ForegroundColor Green
                 } else {
                     New-ItemProperty -Path $chromePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
-                    Write-Host "-----> Google Chrome: properties created" -ForegroundColor Green
                 }
             }
         }
-        Write-Host "-----> Google Chrome: properties are set" -ForegroundColor Green
+        if ($null -eq $value) {
+            Write-Host "-----> Google Chrome: properties deleted" -ForegroundColor Green
+        } else {
+            Write-Host "-----> Google Chrome: properties created" -ForegroundColor Green
+        }
 
-        # Microsoft Edge policies
+        # Microsoft Edge policiess
         $edgePaths = @(
             "HKLM:\SOFTWARE\Policies\Microsoft\Edge"
             "HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate"
@@ -4172,15 +4175,18 @@ Function Invoke-WPFBrowserPolicies {
             foreach ($property in $edgeProperties.GetEnumerator()) {
                 if ($edgeValues.ContainsKey($property.Name)) {
                     $value = $edgeValues[$property.Name]
-                    if ($value -eq $null) {
+                    if ($null -eq $value) {
                         Remove-ItemProperty -Path $edgePath -Name $property.Name -ErrorAction SilentlyContinue
-                        Write-Host "-----> Edge: properties deleted" -ForegroundColor Green
                     } else {
                         New-ItemProperty -Path $edgePath -Name $property.Name -Value $value -PropertyType $(if ($value -is [string]) { "String" } else { "Dword" }) -Force | Out-Null
-                        Write-Host "-----> Edge: properties created" -ForegroundColor Green
                     }
                 }
             }
+        }
+        if ($null -eq $value) {
+            Write-Host "-----> Edge: properties deleted" -ForegroundColor Green
+        } else {
+            Write-Host "-----> Edge Chrome: properties created" -ForegroundColor Green
         }
     } catch {
       Write-Warning $psitem.Exception.Message
@@ -9587,28 +9593,6 @@ $sync.configs.tweaks = '{
                                        ],
                           "link":  "https://christitustech.github.io/winutil/dev/tweaks/Essential-Tweaks/Wifi"
                       },
-    "WPFTweaksRemoveHomeGallery":  {
-                                       "Content":  "Remove Home and Gallery from explorer",
-                                       "Description":  "Removes the Home and Gallery from explorer and sets This PC as default",
-                                       "category":  "z__Advanced Tweaks - CAUTION",
-                                       "panel":  "1",
-                                       "Order":  "a029_",
-                                       "InvokeScript":  [
-                                                            "
-      REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /f
-      REG DELETE \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /f
-      REG ADD \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\" /t REG_DWORD /d \"1\"
-      "
-                                                        ],
-                                       "UndoScript":  [
-                                                          "
-      REG ADD \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /f /ve /t REG_SZ /d \"{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\"
-      REG ADD \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /f /ve /t REG_SZ /d \"CLSID_MSGraphHomeFolder\"
-      REG DELETE \"HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /f /v \"LaunchTo\"
-      "
-                                                      ],
-                                       "link":  "https://christitustech.github.io/winutil/dev/tweaks/z--Advanced-Tweaks---CAUTION/RemoveHomeGallery"
-                                   },
     "WPFTweaksPowershell7":  {
                                  "Content":  "Change Windows Terminal default: PowerShell 5 -\u0026#62; PowerShell 7",
                                  "Description":  "This will edit the config file of the Windows Terminal replacing PowerShell 5 with PowerShell 7 and installing PS7 if necessary",
@@ -11429,10 +11413,6 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox Name="WPFTweaksRightClickMenu" Content="Set Classic Right-Click Menu " ToolTip="Great Windows 11 tweak to bring back good context menus when right clicking things in explorer." Margin="0,0,2,0"/>
                                 <TextBlock Name="WPFTweaksRightClickMenuLink" Style="{StaticResource HoverTextBlockStyle}" Text="(?)" ToolTip="https://christitustech.github.io/winutil/dev/tweaks/z--Advanced-Tweaks---CAUTION/RightClickMenu"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <CheckBox Name="WPFTweaksRemoveHomeGallery" Content="Remove Home and Gallery from explorer" ToolTip="Removes the Home and Gallery from explorer and sets This PC as default" Margin="0,0,2,0"/>
-                                <TextBlock Name="WPFTweaksRemoveHomeGalleryLink" Style="{StaticResource HoverTextBlockStyle}" Text="(?)" ToolTip="https://christitustech.github.io/winutil/dev/tweaks/z--Advanced-Tweaks---CAUTION/RemoveHomeGallery"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox Name="WPFTweaksRemoveOnedrive" Content="Remove OneDrive" ToolTip="Moves OneDrive files to Default Home Folders and Uninstalls it." Margin="0,0,2,0"/>
