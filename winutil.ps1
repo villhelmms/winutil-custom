@@ -768,6 +768,7 @@ Function Get-WinUtilToggleStatus {
         $tasklockscreen = (Get-ItemProperty -path $tasklockscreenPath).NoChangingLockScreen
         if (!(Test-Path $tasklockscreenPath)) {
             New-Item -Path $tasklockscreenPath -Force
+            Set-ItemProperty -Path $tasklockscreenPath -Name NoChangingLockScreen -Value 1
         }
         if($tasklockscreen -eq 0) {
             return $true
@@ -781,6 +782,7 @@ Function Get-WinUtilToggleStatus {
         $colorcustomization = (Get-ItemProperty -path $colorcustomizationPath).NoDispAppearancePage
         if (!(Test-Path $colorcustomizationPath)) {
             New-Item -Path $colorcustomizationPath -Force
+            Set-ItemProperty -Path $colorcustomizationPath -Name NoDispAppearancePage -Value 1
         }
         if($colorcustomization -eq 0) {
             return $true
