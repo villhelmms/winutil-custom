@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 24.08.18
+    Version        : 24.08.19
 #>
 param (
     [switch]$Debug,
@@ -45,7 +45,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "24.08.18"
+$sync.version = "24.08.19"
 $sync.configs = @{}
 $sync.ProcessRunning = $false
 
@@ -764,7 +764,11 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleLSCustomization") {
-        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
+        $tasklockscreenPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+        $tasklockscreen = (Get-ItemProperty -path $tasklockscreenPath).NoChangingLockScreen
+        if (!(Test-Path $tasklockscreenPath)) {
+            New-Item -Path $tasklockscreenPath -Force
+        }
         if($tasklockscreen -eq 0) {
             return $true
         }
@@ -773,8 +777,12 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleColorCustomization") {
-        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
-        if($tasklockscreen -eq 0) {
+        $colorcustomizationPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+        $colorcustomization = (Get-ItemProperty -path $colorcustomizationPath).NoDispAppearancePage
+        if (!(Test-Path $colorcustomizationPath)) {
+            New-Item -Path $colorcustomizationPath -Force
+        }
+        if($colorcustomization -eq 0) {
             return $true
         }
         else{
@@ -11794,14 +11802,14 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Settings" Visibility="Collapsed" Name="WPFTab6">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <!-- <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!-- <Border Grid.Row="0" Grid.Column="0">
+                    <Border Grid.Row="0" Grid.Column="0">
                         <StackPanel Background="{MainBackgroundColor}" SnapsToDevicePixels="True">
                             <Button Name="WPFUpdatesdefault" FontSize="{ConfigTabButtonFontSize}" Height="Auto" Width="Auto" Content="Default (Out of Box) Settings" Margin="20,4,20,10" Padding="10"/>
                             <TextBlock Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" MaxWidth="300">This is the default settings that come with Windows. <LineBreak/><LineBreak/> No modifications are made and will remove any custom windows update settings.<LineBreak/><LineBreak/>Note: If you still encounter update errors, reset all updates in the config tab. That will restore ALL Microsoft Update Services from their servers and reinstall them to default settings.</TextBlock>
@@ -11819,9 +11827,9 @@ $inputXML =  '<Window x:Class="WinUtility.MainWindow"
                             <TextBlock Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" MaxWidth="300">This completely disables ALL Windows Updates and is NOT RECOMMENDED.<LineBreak/><LineBreak/> However, it can be suitable if you use your system for a select purpose and do not actively browse the internet. <LineBreak/><LineBreak/>Note: Your system will be easier to hack and infect without security updates.</TextBlock>
                             <TextBlock Text=" " Margin="20,0,20,0" Padding="10" TextWrapping="WrapWithOverflow" MaxWidth="300"/>
                         </StackPanel>
-                        </Border> -->
+                        </Border>
                     </Grid>
-                </ScrollViewer>
+                </ScrollViewer> -->
             </TabItem>
         </TabControl>
     </Grid>

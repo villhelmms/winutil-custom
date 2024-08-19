@@ -1022,9 +1022,8 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <!-- New Tab for Settings Page -->
             <TabItem Header="Settings" Visibility="Collapsed" Name="WPFTab6">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <!-- <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid Background="Transparent">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -1051,7 +1050,7 @@
                         </StackPanel>
                         </Border>
                     </Grid>
-                </ScrollViewer>
+                </ScrollViewer> -->
             </TabItem>
         </TabControl>
     </Grid>
