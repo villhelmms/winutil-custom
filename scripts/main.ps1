@@ -204,6 +204,12 @@ $commonKeyEvents = {
         if ($_.SystemKey -eq "M") {
             Invoke-WPFButton "WPFTab5BT"
         }
+        if ($_.SystemKey -eq "M") {
+            Invoke-WPFButton "WPFTab5BT"
+        }
+        if ($_.SystemKey -eq "S") {
+            Invoke-WPFButton "WPFTab6BT"
+        }
         if ($_.SystemKey -eq "P") {
             Write-Host "Your Windows Product Key: $((Get-WmiObject -query 'select * from SoftwareLicensingService').OA3xOriginalProductKey)"
         }

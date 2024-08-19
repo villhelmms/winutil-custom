@@ -175,7 +175,11 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleLSCustomization") {
-        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
+        $tasklockscreenPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
+        $tasklockscreen = (Get-ItemProperty -path $tasklockscreenPath).NoChangingLockScreen
+        if (!(Test-Path $tasklockscreenPath)) {
+            New-Item -Path $tasklockscreenPath -Force
+        }
         if($tasklockscreen -eq 0) {
             return $true
         }
@@ -184,8 +188,12 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleColorCustomization") {
-        $tasklockscreen = (Get-ItemProperty -path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization').NoChangingLockScreen
-        if($tasklockscreen -eq 0) {
+        $colorcustomizationPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+        $colorcustomization = (Get-ItemProperty -path $colorcustomizationPath).NoDispAppearancePage
+        if (!(Test-Path $colorcustomizationPath)) {
+            New-Item -Path $colorcustomizationPath -Force
+        }
+        if($colorcustomization -eq 0) {
             return $true
         }
         else{
