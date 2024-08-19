@@ -942,5 +942,21 @@
         "description": "Windows Firewall Control is a powerful tool which extends the functionality of Windows Firewall and provides new extra features which makes Windows Firewall better.",
         "link": "https://www.binisoft.org/wfc",
         "winget": "BiniSoft.WindowsFirewallControl"
+    },
+    "anaconda3": {
+        "category": "Development",
+        "choco": "anaconda3",
+        "content": "Anaconda",
+        "description": "Anaconda is a distribution of the Python and R programming languages for scientific computing.",
+        "link": "https://www.anaconda.com/products/distribution",
+        "winget": "Anaconda.Anaconda3"
+    },
+    "python3": {
+        "category": "Development",
+        "choco": "python",
+        "content": "Python3",
+        "description": "Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.",
+        "link": "https://www.python.org/",
+        "winget": "Python.Python.3.12"
     }
 }
