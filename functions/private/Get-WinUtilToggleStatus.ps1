@@ -178,8 +178,9 @@ Function Get-WinUtilToggleStatus {
         $tasklockscreenPath = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization'
         $tasklockscreen = (Get-ItemProperty -path $tasklockscreenPath).NoChangingLockScreen
         if (!(Test-Path $tasklockscreenPath)) {
-            New-Item -Path $tasklockscreenPath -Force
-            Set-ItemProperty -Path $tasklockscreenPath -Name NoChangingLockScreen -Value 1
+            New-Item -Path $tasklockscreenPath -Force | Out-Null
+            Set-ItemProperty -Path $tasklockscreenPath -Name 'NoChangingLockScreen' -Value 1 -Force | Out-Null
+            Write-Host 'Created Path for NoChangingLockScreen'
         }
         if($tasklockscreen -eq 0) {
             return $true
@@ -192,8 +193,9 @@ Function Get-WinUtilToggleStatus {
         $colorcustomizationPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
         $colorcustomization = (Get-ItemProperty -path $colorcustomizationPath).NoDispAppearancePage
         if (!(Test-Path $colorcustomizationPath)) {
-            New-Item -Path $colorcustomizationPath -Force
-            Set-ItemProperty -Path $colorcustomizationPath -Name NoDispAppearancePage -Value 1
+            New-Item -Path $colorcustomizationPath -Force | Out-Null
+            Set-ItemProperty -Path $colorcustomizationPath -Name 'NoDispAppearancePage' -Value 1 -Force | Out-Null
+            Write-Host 'Created Path for NoDispAppearancePage'
         }
         if($colorcustomization -eq 0) {
             return $true
@@ -203,7 +205,13 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleSetThisPC") {
-        $explorer = (Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced').LaunchTo
+        $explorerPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+        $explorer = (Get-ItemProperty -path $explorerPath).LaunchTo
+        if (!(Test-Path $explorerPath)) {
+            New-Item -Path $explorerPath -Force | Out-Null
+            Set-ItemProperty -Path $explorerPath -Name 'LaunchTo' -Value 0 -Force | Out-Null
+            Write-Host 'Created Path for LaunchTo'
+        }
         if($explorer -eq 1) {
             return $true
         }
