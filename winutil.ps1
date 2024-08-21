@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 24.08.19
+    Version        : 24.08.21
 #>
 param (
     [switch]$Debug,
@@ -45,7 +45,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "24.08.19"
+$sync.version = "24.08.21"
 $sync.configs = @{}
 $sync.ProcessRunning = $false
 
@@ -612,7 +612,13 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleBingSearch") {
-        $bingsearch = (Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled
+        $bingsearchPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+        $bingsearch = (Get-ItemProperty -path $bingsearchPath).BingSearchEnabled
+        if (!(Test-Path $bingsearchPath)) {
+            New-Item -Path $bingsearch -Force | Out-Null
+            Set-ItemProperty -Path $bingsearchPath -Name 'BingSearchEnabled' -Value 0 -Force | Out-Null
+            Write-Host 'Created Path for BingSearchEnabled'
+        }
         if($bingsearch -eq 0) {
             return $false
         } else {

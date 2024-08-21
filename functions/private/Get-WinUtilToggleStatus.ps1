@@ -23,7 +23,13 @@ Function Get-WinUtilToggleStatus {
         }
     }
     if($ToggleSwitch -eq "WPFToggleBingSearch") {
-        $bingsearch = (Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search').BingSearchEnabled
+        $bingsearchPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+        $bingsearch = (Get-ItemProperty -path $bingsearchPath).BingSearchEnabled
+        if (!(Test-Path $bingsearchPath)) {
+            New-Item -Path $bingsearch -Force | Out-Null
+            Set-ItemProperty -Path $bingsearchPath -Name 'BingSearchEnabled' -Value 0 -Force | Out-Null
+            Write-Host 'Created Path for BingSearchEnabled'
+        }
         if($bingsearch -eq 0) {
             return $false
         } else {
