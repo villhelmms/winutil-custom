@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 24.08.21
+    Version        : 24.09.05
 #>
 param (
     [switch]$Debug,
@@ -45,7 +45,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "24.08.21"
+$sync.version = "24.09.05"
 $sync.configs = @{}
 $sync.ProcessRunning = $false
 
@@ -4014,7 +4014,7 @@ Function Invoke-WPFBrowserPolicies {
                 "PaymentMethodQueryEnabled" = 0
                 "AutofillAddressEnabled" = 0
                 "ForceGoogleSafeSearch" = 1
-                "PrintingEnabled" = 0
+                "PrintingEnabled" = 1
                 "AutofillCreditCardEnabled" = 0
             }
         } elseif ($State -eq "Disable") {
@@ -4141,7 +4141,7 @@ Function Invoke-WPFBrowserPolicies {
                 "SplitScreenEnabled" = 0
                 "AutofillCreditCardEnabled" = 0
                 "ImportPaymentInfo" = 0
-                "PrintingEnabled" = 0
+                "PrintingEnabled" = 1
                 "HideFirstRunExperience" = 1
                 "DefaultBrowserSettingEnabled" = 0
                 "CreateDesktopShortcutDefault" = 0
