@@ -51,7 +51,7 @@ Function Invoke-WPFBrowserPolicies {
                 "PaymentMethodQueryEnabled" = 0
                 "AutofillAddressEnabled" = 0
                 "ForceGoogleSafeSearch" = 1
-                "PrintingEnabled" = 0
+                "PrintingEnabled" = 1
                 "AutofillCreditCardEnabled" = 0
             }
         } elseif ($State -eq "Disable") {
@@ -178,7 +178,7 @@ Function Invoke-WPFBrowserPolicies {
                 "SplitScreenEnabled" = 0
                 "AutofillCreditCardEnabled" = 0
                 "ImportPaymentInfo" = 0
-                "PrintingEnabled" = 0
+                "PrintingEnabled" = 1
                 "HideFirstRunExperience" = 1
                 "DefaultBrowserSettingEnabled" = 0
                 "CreateDesktopShortcutDefault" = 0
