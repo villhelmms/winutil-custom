@@ -2720,25 +2720,6 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/numlock"
   },
-  "WPFToggleVerboseLogon": {
-    "Content": "Verbose Messages During Logon",
-    "Description": "Show detailed messages during the login process for troubleshooting and diagnostics.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a103_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
-        "Name": "VerboseStatus",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "false",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/verboselogon"
-  },
   "WPFToggleStartMenuRecommendations": {
     "Content": "Recommendations in Start Menu",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
@@ -3056,33 +3037,6 @@
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
-  },
-  "WPFToggleDetailedBSoD": {
-    "Content": "Detailed BSoD",
-    "Description": "If Enabled then you will see a detailed Blue Screen of Death (BSOD) with more information.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a205_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
-        "Name": "DisplayParameters",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "false",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\CrashControl",
-        "Name": "DisableEmoticon",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "false",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/detailedbsod"
   },
   "WPFOOSUbutton": {
     "Content": "Run OO Shutup 10",
