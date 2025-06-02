@@ -2631,6 +2631,24 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/dvr"
   },
+  "WPFToggleExecutionPolicy": {
+    "Content": "Toggle Execution Policy",
+    "Description": "NoDesc",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a099_",
+    "Type": "Toggle",
+    "InvokeScript": [
+      "
+      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force
+      "
+    ],
+    "UndoScript": [
+      "
+      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force
+      "
+    ],
+  },
   "WPFToggleDarkMode": {
     "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
@@ -2692,33 +2710,6 @@
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
-  },
-  "WPFToggleNumLock": {
-    "Content": "NumLock on Startup",
-    "Description": "Toggle the Num Lock key state when your computer starts.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a102_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKU:\\.Default\\Control Panel\\Keyboard",
-        "Name": "InitialKeyboardIndicators",
-        "Value": "2",
-        "OriginalValue": "0",
-        "DefaultState": "false",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Keyboard",
-        "Name": "InitialKeyboardIndicators",
-        "Value": "2",
-        "OriginalValue": "0",
-        "DefaultState": "false",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/numlock"
   },
   "WPFToggleStartMenuRecommendations": {
     "Content": "Recommendations in Start Menu",
@@ -2990,6 +2981,90 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarwidgets"
   },
+  "WPFToggleWallpaper": {
+    "Content": "Toggle Wallpaper Customization",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a205_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
+        "Name": "NoAddingComponents",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
+        "Name": "NoChangingWallPaper",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
+        "Name": "NoComponents",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
+  "WPFToggleThemes": {
+    "Content": "Toggle Theme Customization",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a206_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "Name": "NoThemesTab",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
+  "WPFToggleLSCustomization": {
+    "Content": "Toggle Lock Screen Customization",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a207_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+        "Name": "NoChangingLockScreen",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
+  "WPFToggleColorCustomization": {
+    "Content": "Toggle Color Customization",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a208_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "NoDispAppearancePage",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
   "WPFToggleTaskbarAlignment": {
     "Content": "Center Taskbar Items",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
@@ -3009,6 +3084,112 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
+  "WPFBrowserPolicies": {
+    "Content": "Browser Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a080_",
+    "Type": "Toggle",
+    "ButtonWidth": "300",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "NTPCustomBackgroundEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "BrowserThemeColor",
+        "Type": "String",
+        "Value": "#060606",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "BrowserSignin",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "PasswordManagerEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "PasswordSharingEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "BrowserAddPersonEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "SyncDisabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultBrowserSettingEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "PaymentMethodQueryEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "AutofillAddressEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "ForceGoogleSafeSearch",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "AutofillCreditCardEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ],
+  },
   "WPFOOSUbutton": {
     "Content": "Run OO Shutup 10",
     "category": "z__Advanced Tweaks - CAUTION",
@@ -3025,24 +3206,6 @@
     "Type": "Combobox",
     "ComboItems": "Default DHCP VJCG_Block_DNS Cloudflare Cloudflare_Malware_Adult",
     "link": "https://winutil.christitus.com/dev/tweaks/z--advanced-tweaks---caution/changedns"
-  },
-  "WPFAddUltPerf": {
-    "Content": "Add and Activate Ultimate Performance Profile",
-    "category": "Performance Plans",
-    "panel": "2",
-    "Order": "a080_",
-    "Type": "Button",
-    "ButtonWidth": "300",
-    "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/addultperf"
-  },
-  "WPFRemoveUltPerf": {
-    "Content": "Remove Ultimate Performance Profile",
-    "category": "Performance Plans",
-    "panel": "2",
-    "Order": "a081_",
-    "Type": "Button",
-    "ButtonWidth": "300",
-    "link": "https://winutil.christitus.com/dev/tweaks/performance-plans/removeultperf"
   },
   "WPFTweaksDisableExplorerAutoDiscovery": {
     "Content": "Disable Explorer Automatic Folder Discovery",
