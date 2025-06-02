@@ -15,7 +15,8 @@
     "WPFTweaksDeleteTempFiles",
     "WPFTweaksEndTaskOnTaskbar",
     "WPFTweaksRestorePoint",
-    "WPFTweaksPowershell7Tele"
+    "WPFTweaksPowershell7Tele",
+    "WPFTweaksRemoveCopilot"
   ],
   "Minimal": [
     "WPFTweaksConsumerFeatures",
