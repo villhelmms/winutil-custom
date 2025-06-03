@@ -3084,13 +3084,12 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
-  "WPFBrowserPolicies": {
-    "Content": "Browser Policies",
+  "WPFToggleChromePolicies": {
+    "Content": "Google Chrome Policies",
     "category": "Browser Policies",
     "panel": "2",
     "Order": "a080_",
     "Type": "Toggle",
-    "ButtonWidth": "300",
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
@@ -3188,6 +3187,392 @@
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
+    ],
+  },
+  "WPFToggleEdgePolicies": {
+    "Content": "Microsoft Edge Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a081_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+        "Name": "CreateDesktopShortcutDefault",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "PersonalizationReportingEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ShowRecommendationsEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "HideFirstRunExperience",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "UserFeedbackAllowed",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ConfigureDoNotTrack",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AlternateErrorPagesEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeCollectionsEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeShoppingAssistantEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "MicrosoftEdgeInsiderPromotionEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ShowMicrosoftRewards",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "WebWidgetAllowed",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "DiagnosticData",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeAssetDeliveryServiceEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "CryptoWalletEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "WalletDonationEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "NewTabPageContentEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "NewTabPageQuickLinksEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "SpotlightExperiencesAndRecommendationsEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "NewTabPageAllowedBackgroundTypes",
+        "Type": "DWord",
+        "Value": "3",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ShowCastIconInToolbar",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EnableMediaRouter",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "GamerModeEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "PasswordManagerEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AutofillAddressEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "BrowserSignin",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeEDropEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeFollowEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeWalletCheckoutEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeWalletEtreeEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "HubsSidebarEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "SyncDisabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "NewTabPageBingChatEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "BrowserAddProfileEnabled",
+        "Type": "String",
+        "Value": "Skolens",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AIGenThemesEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "PinBrowserEssentialsToolbarButton",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "SplitScreenEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AutofillCreditCardEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "ImportPaymentInfo",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "PrintingEnabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "DefaultBrowserSettingEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "CreateDesktopShortcutDefault",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ],
+  },
+  "WPFToggleFirefoxPolicies": {
+    "Content": "Mozilla Forefox Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a082_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\DNSOverHTTPS",
+        "Name": "Enabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\DNSOverHTTPS",
+        "Name": "Locked",
+        "Type": "DWord",
+        "Value": "0x1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox",
+        "Name": "AutofillAddressEnabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox",
+        "Name": "AutofillCreditCardEnabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
     ],
   },
   "WPFOOSUbutton": {
