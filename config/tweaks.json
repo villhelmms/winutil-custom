@@ -3065,6 +3065,57 @@
       }
     ],
   },
+  "WPFToggleDesktopIconSettings": {
+    "Content": "Toggle Desktop Icon Settings",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a209_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "NoDispBackgroundPage",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
+  "WPFToggleCursorSettings": {
+    "Content": "Toggle Cursor Settings",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a210_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+        "Name": "NoChangingMousePointers",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ],
+  },
+  "WPFToggleMSStore": {
+    "Content": "Toggle Microsoft Store",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a211_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\Software\\Policies\\Microsoft\\WindowsStore",
+        "Name": "RemoveWindowsStore",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ],
+  },
   "WPFToggleTaskbarAlignment": {
     "Content": "Center Taskbar Items",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
@@ -3186,7 +3237,71 @@
         "Value": "0",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
-      }
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "UserAvatarCustomizationSelectorsEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "UserDisplayName",
+        "Type": "String",
+        "Value": "Skolens",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderEnabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderName",
+        "Type": "String",
+        "Value": "Google Web Search",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderKeyword",
+        "Type": "String",
+        "Value": "@google",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderSearchURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderSuggestURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderNewTabURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
     ],
   },
   "WPFToggleEdgePolicies": {
@@ -3574,6 +3689,14 @@
         "DefaultState": "false"
       },
     ],
+  },
+  "WPFCreateUser": {
+    "Content": "Create New User",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a070_",
+    "Type": "Button",
+    "ButtonWidth": "300",
   },
   "WPFOOSUbutton": {
     "Content": "Run OO Shutup 10",

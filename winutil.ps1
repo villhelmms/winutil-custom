@@ -5600,6 +5600,7 @@ function Invoke-WPFButton {
         "WPFWinUtilUninstallPSProfile" {Invoke-WinUtilUninstallPSProfile}
         "WPFWinUtilSSHServer" {Invoke-WPFSSHServer}
         "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
+        "WPFCreateUser" {Invoke-WPFCreateUser}
     }
 }
 function Invoke-WPFCloseButton {
@@ -5638,6 +5639,30 @@ function Invoke-WPFControlPanel {
         "WPFPanelGodMode" {Start-Process "shell:::{ED7BA470-8E54-465E-825C-99712043E01C}"}
     }
 }
+# Enter new account username and password
+$UsernameNew = "Skolens"
+$PasswordNew = ""
+
+$adsi = [ADSI]"WinNT://$env:COMPUTERNAME"
+$existing = $adsi.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameNew }
+
+# Check if the user exists
+if ($null -eq $existing) {
+    # If user does not exist
+    # create new user
+    Write-Host "-----> Creating user "$UsernameNew"..." -ForegroundColor Yellow
+    & NET USER $UsernameNew $PasswordNew /add /y /expires:never | Out-Null
+    Write-Host "-----> User "$UsernameNew" created successfully!" -ForegroundColor Green
+} else {
+    # Set password if user already exists
+    Write-Host "-----> Setting password for existing user "$UsernameNew"..." -ForegroundColor Yellow
+    $existing.SetPassword($PasswordNew)
+    Write-Host "-----> Password for existing user "$UsernameNew" has been set successfully!" -ForegroundColor Green
+}
+# Set user password to never expire
+Write-Host "-----> Ensuring password for "$UsernameNew" never expires..." -ForegroundColor Yellow
+& WMIC USERACCOUNT WHERE "Name='$UsernameNew'" SET PasswordExpires=FALSE | Out-Null
+Write-Host "-----> Password for "$UsernameNew" has beed set to never expire!" -ForegroundColor Green
 function Invoke-WPFFeatureInstall {
     <#
 
@@ -11139,6 +11164,57 @@ $sync.configs.tweaks = @'
       }
     ]
   },
+  "WPFToggleDesktopIconSettings": {
+    "Content": "Toggle Desktop Icon Settings",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a209_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "NoDispBackgroundPage",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ]
+  },
+  "WPFToggleCursorSettings": {
+    "Content": "Toggle Cursor Settings",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a210_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+        "Name": "NoChangingMousePointers",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ]
+  },
+  "WPFToggleMSStore": {
+    "Content": "Toggle Microsoft Store",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a211_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\Software\\Policies\\Microsoft\\WindowsStore",
+        "Name": "RemoveWindowsStore",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ]
+  },
   "WPFToggleTaskbarAlignment": {
     "Content": "Center Taskbar Items",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
@@ -11258,6 +11334,70 @@ $sync.configs.tweaks = @'
         "Name": "AutofillCreditCardEnabled",
         "Type": "DWord",
         "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "UserAvatarCustomizationSelectorsEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "UserDisplayName",
+        "Type": "String",
+        "Value": "Skolens",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderEnabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderName",
+        "Type": "String",
+        "Value": "Google Web Search",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderKeyword",
+        "Type": "String",
+        "Value": "@google",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderSearchURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderSuggestURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DefaultSearchProviderNewTabURL",
+        "Type": "String",
+        "Value": "https://www.google.com/search?udm=14&q=%s",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
@@ -11648,6 +11788,14 @@ $sync.configs.tweaks = @'
         "DefaultState": "false"
       }
     ]
+  },
+  "WPFCreateUser": {
+    "Content": "Create New User",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a070_",
+    "Type": "Button",
+    "ButtonWidth": "300"
   },
   "WPFOOSUbutton": {
     "Content": "Run OO Shutup 10",
