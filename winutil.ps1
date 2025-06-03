@@ -5601,6 +5601,7 @@ function Invoke-WPFButton {
         "WPFWinUtilSSHServer" {Invoke-WPFSSHServer}
         "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
         "WPFCreateUser" {Invoke-WPFCreateUser}
+        "WPFDeleteUser" {Invoke-WPFDeleteUser}
     }
 }
 function Invoke-WPFCloseButton {
@@ -5639,30 +5640,55 @@ function Invoke-WPFControlPanel {
         "WPFPanelGodMode" {Start-Process "shell:::{ED7BA470-8E54-465E-825C-99712043E01C}"}
     }
 }
-# Enter new account username and password
-$UsernameNew = "Skolens"
-$PasswordNew = ""
+function Invoke-WPFCreateUser {
+    # Enter new account username and password
+    $UsernameNew = "Skolens"
+    $PasswordNew = ""
 
-$adsi = [ADSI]"WinNT://$env:COMPUTERNAME"
-$existing = $adsi.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameNew }
+    $adsi = [ADSI]"WinNT://$env:COMPUTERNAME"
+    $existing = $adsi.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameNew }
 
-# Check if the user exists
-if ($null -eq $existing) {
-    # If user does not exist
-    # create new user
-    Write-Host "-----> Creating user "$UsernameNew"..." -ForegroundColor Yellow
-    & NET USER $UsernameNew $PasswordNew /add /y /expires:never | Out-Null
-    Write-Host "-----> User "$UsernameNew" created successfully!" -ForegroundColor Green
-} else {
-    # Set password if user already exists
-    Write-Host "-----> Setting password for existing user "$UsernameNew"..." -ForegroundColor Yellow
-    $existing.SetPassword($PasswordNew)
-    Write-Host "-----> Password for existing user "$UsernameNew" has been set successfully!" -ForegroundColor Green
+    # Check if the user exists
+    if ($null -eq $existing) {
+        # If user does not exist
+        # create new user
+        Write-Host "-----> Creating user "$UsernameNew"..." -ForegroundColor Yellow
+        & NET USER $UsernameNew $PasswordNew /add /y /expires:never | Out-Null
+        Write-Host "-----> User "$UsernameNew" created successfully!" -ForegroundColor Green
+    } else {
+        # Set password if user already exists
+        Write-Host "-----> Setting password for existing user "$UsernameNew"..." -ForegroundColor Yellow
+        $existing.SetPassword($PasswordNew)
+        Write-Host "-----> Password for existing user "$UsernameNew" has been set successfully!" -ForegroundColor Green
+    }
+    # Set user password to never expire
+    Write-Host "-----> Ensuring password for "$UsernameNew" never expires..." -ForegroundColor Yellow
+    Set-LocalUser -Name $UsernameNew -PasswordNeverExpires $true
+    Write-Host "-----> Password for "$UsernameNew" has been set to never expire!" -ForegroundColor Green
+    Write-Host "----------------------------------------------"
+    Write-Host "----- User $UsernameNew has been created -----"
+    Write-Host "----------------------------------------------"
 }
-# Set user password to never expire
-Write-Host "-----> Ensuring password for "$UsernameNew" never expires..." -ForegroundColor Yellow
-& WMIC USERACCOUNT WHERE "Name='$UsernameNew'" SET PasswordExpires=FALSE | Out-Null
-Write-Host "-----> Password for "$UsernameNew" has beed set to never expire!" -ForegroundColor Green
+function Invoke-WPFDeleteUser {
+    # Enter existing account username
+    $UsernameDelete = "Skolens"
+
+    $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
+    $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
+
+    # Check if the user exists
+    if ($null -ne $existingDelete) {
+        # If user exists
+        # delete old user
+        Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
+        & NET USER $UsernameDelete /delete | Out-Null
+        Write-Host "-----> User "$UsernameDelete" deleted successfully!" -ForegroundColor Green
+
+    # If user does not exist
+    } else {
+        Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
+}
+}
 function Invoke-WPFFeatureInstall {
     <#
 
@@ -11794,6 +11820,14 @@ $sync.configs.tweaks = @'
     "category": "Users",
     "panel": "2",
     "Order": "a070_",
+    "Type": "Button",
+    "ButtonWidth": "300"
+  },
+  "WPFDeleteUser": {
+    "Content": "Delete User",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a069_",
     "Type": "Button",
     "ButtonWidth": "300"
   },

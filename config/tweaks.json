@@ -3698,6 +3698,14 @@
     "Type": "Button",
     "ButtonWidth": "300",
   },
+  "WPFDeleteUser": {
+    "Content": "Delete User",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a069_",
+    "Type": "Button",
+    "ButtonWidth": "300",
+  },
   "WPFOOSUbutton": {
     "Content": "Run OO Shutup 10",
     "category": "z__Advanced Tweaks - CAUTION",
