@@ -11224,11 +11224,28 @@ $sync.configs.tweaks = @'
       }
     ]
   },
+  "WPFToggleSoundSettings": {
+    "Content": "Toggle Sound Settings",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a211_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+        "Name": "NoChangingSoundScheme",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      }
+    ]
+  },
   "WPFToggleMSStore": {
     "Content": "Toggle Microsoft Store",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a211_",
+    "Order": "a212_",
     "Type": "Toggle",
     "registry": [
       {
@@ -11237,6 +11254,23 @@ $sync.configs.tweaks = @'
         "Value": "1",
         "OriginalValue": "0",
         "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ]
+  },
+  "WPFToggleScreenSaver": {
+    "Content": "Toggle Screen Saver",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a213_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Control Panel\\Desktop",
+        "Name": "ScreenSaveActive",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "false",
         "Type": "DWord"
       }
     ]
