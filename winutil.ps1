@@ -11630,6 +11630,22 @@ $sync.configs.tweaks = @'
         "Value": "0x1",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox",
+        "Name": "AutofillAddressEnabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox",
+        "Name": "AutofillCreditCardEnabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
       }
     ]
   },
