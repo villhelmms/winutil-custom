@@ -11106,8 +11106,8 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarwidgets"
   },
-  "WPFToggleWallpaper": {
-    "Content": "Toggle Wallpaper Customization",
+  "WPFToggleCustomization": {
+    "Content": "Toggle Customization Settings",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a205_",
@@ -11136,16 +11136,7 @@ $sync.configs.tweaks = @'
         "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleThemes": {
-    "Content": "Toggle Theme Customization",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a206_",
-    "Type": "Toggle",
-    "registry": [
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
         "Name": "NoThemesTab",
@@ -11153,16 +11144,7 @@ $sync.configs.tweaks = @'
         "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleLSCustomization": {
-    "Content": "Toggle Lock Screen Customization",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a207_",
-    "Type": "Toggle",
-    "registry": [
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
         "Name": "NoChangingLockScreen",
@@ -11170,16 +11152,7 @@ $sync.configs.tweaks = @'
         "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleColorCustomization": {
-    "Content": "Toggle Color Customization",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a208_",
-    "Type": "Toggle",
-    "registry": [
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
         "Name": "NoDispAppearancePage",
@@ -11187,16 +11160,7 @@ $sync.configs.tweaks = @'
         "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleDesktopIconSettings": {
-    "Content": "Toggle Desktop Icon Settings",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a209_",
-    "Type": "Toggle",
-    "registry": [
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
         "Name": "NoDispBackgroundPage",
@@ -11204,21 +11168,20 @@ $sync.configs.tweaks = @'
         "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleCursorSettings": {
-    "Content": "Toggle Cursor Settings",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a210_",
-    "Type": "Toggle",
-    "registry": [
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
         "Name": "NoChangingMousePointers",
         "Value": "1",
         "OriginalValue": "0",
+        "DefaultState": "false",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Control Panel\\Desktop",
+        "Name": "ScreenSaveActive",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       }
@@ -11254,23 +11217,6 @@ $sync.configs.tweaks = @'
         "Value": "1",
         "OriginalValue": "0",
         "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleScreenSaver": {
-    "Content": "Toggle Screen Saver",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a213_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Control Panel\\Desktop",
-        "Name": "ScreenSaveActive",
-        "Value": "0",
-        "OriginalValue": "1",
-        "DefaultState": "false",
         "Type": "DWord"
       }
     ]
