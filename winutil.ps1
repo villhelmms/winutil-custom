@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.06.03
+    Version        : 25.06.04
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.06.03"
+$sync.version = "25.06.04"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -7995,7 +7995,7 @@ $sync.configs.dns = @'
   },
   "VJCG_Block_DNS": {
     "Primary": "157.180.69.116",
-    "Secondary": ""
+    "Secondary": "129.159.30.106"
   }
 }
 '@ | ConvertFrom-Json
@@ -11272,6 +11272,23 @@ $sync.configs.tweaks = @'
         "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
+      }
+    ]
+  },
+  "WPFToggleHideSettings": {
+    "Content": "Remove Settings Pages",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a214_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "Name": "SettingsPageVisibility",
+        "Type": "String",
+        "Value": "hide:home;personalization-background;personalization-colors;themes;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;emailandaccounts;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
       }
     ]
   },
