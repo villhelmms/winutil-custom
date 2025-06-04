@@ -3299,6 +3299,14 @@
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "PrintingEnabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
     ],
   },
   "WPFToggleEdgePolicies": {
@@ -3659,7 +3667,7 @@
         "Value": "0",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
-      }
+      },
     ],
   },
   "WPFToggleFirefoxPolicies": {
