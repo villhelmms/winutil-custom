@@ -11707,6 +11707,22 @@ $sync.configs.tweaks = @'
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeDefaultProfileEnabled",
+        "Type": "String",
+        "Value": "Skolens",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "MSAWebSiteSSOUsingThisProfileAllowed",
+        "Type": "Dword",
+        "Value": "<RemoveEntry>",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
         "Name": "AIGenThemesEnabled",
         "Type": "DWord",
         "Value": "0",
