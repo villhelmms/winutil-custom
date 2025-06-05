@@ -2650,7 +2650,7 @@
     ],
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows [WIN11 (?)]",
+    "Content": "Dark Theme for Windows [WIN11 (Reboot?)]",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2712,7 +2712,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu [WIN11 (?)]",
+    "Content": "Recommendations in Start Menu [RELOG]",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2746,27 +2746,8 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
   },
-  "WPFToggleSnapWindow": {
-    "Content": "Snap Window",
-    "Description": "If enabled you can align windows by dragging them. | Relogin Required",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a106_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Control Panel\\Desktop",
-        "Name": "WindowArrangementActive",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "String"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapwindow"
-  },
   "WPFToggleSnapFlyout": {
-    "Content": "Snap Assist Flyout",
+    "Content": "Snap Assist Flyout [BROKEN ON WIN10]",
     "Description": "If enabled then Snap preview is disabled when maximize button is hovered.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2795,7 +2776,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapflyout"
   },
   "WPFToggleSnapSuggestion": {
-    "Content": "Snap Assist Suggestion",
+    "Content": "Snap Assist Suggestion [BROKEN ON WIN10]",
     "Description": "If enabled then you will get suggestions to snap other applications in the left over spaces.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2822,41 +2803,6 @@
       "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapsuggestion"
-  },
-  "WPFToggleMouseAcceleration": {
-    "Content": "Mouse Acceleration",
-    "Description": "If Enabled then Cursor movement is affected by the speed of your physical mouse movements.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a109_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseSpeed",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseThreshold1",
-        "Value": "6",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseThreshold2",
-        "Value": "10",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/mouseacceleration"
   },
   "WPFToggleStickyKeys": {
     "Content": "Sticky Keys",
@@ -3096,7 +3042,7 @@
     ]
   },
   "WPFToggleTaskbarAlignment": {
-    "Content": "Center Taskbar Items",
+    "Content": "Center Taskbar Items [WIN11]",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
     "category": "Customize Preferences",
     "panel": "2",
