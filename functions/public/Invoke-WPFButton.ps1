@@ -64,5 +64,6 @@ function Invoke-WPFButton {
         "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
+        "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
     }
 }

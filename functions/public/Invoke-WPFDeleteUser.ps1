@@ -12,9 +12,12 @@ function Invoke-WPFDeleteUser {
         Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
         & NET USER $UsernameDelete /delete | Out-Null
         Write-Host "-----> User "$UsernameDelete" deleted successfully!" -ForegroundColor Green
+        Write-Host "----------------------------------------------"
+        Write-Host "----- User $UsernameDelete has been deleted -----"
+        Write-Host "----------------------------------------------"
 
     # If user does not exist
     } else {
         Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
-}
+    }
 }

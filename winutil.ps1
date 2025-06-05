@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.06.04
+    Version        : 25.06.05
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.06.04"
+$sync.version = "25.06.05"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -5602,6 +5602,7 @@ function Invoke-WPFButton {
         "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
+        "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
     }
 }
 function Invoke-WPFCloseButton {
@@ -5669,6 +5670,57 @@ function Invoke-WPFCreateUser {
     Write-Host "----- User $UsernameNew has been created -----"
     Write-Host "----------------------------------------------"
 }
+function Invoke-WPFDeleteCreateUser {
+    # Enter existing account username
+    $UsernameDelete = "Skolens"
+    $UsernameNew = "Skolens"
+    $PasswordNew = ""
+
+    $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
+    $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
+
+    # Check if the user exists
+    if ($null -ne $existingDelete) {
+        # If user exists
+        # delete old user
+        Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
+        & NET USER $UsernameDelete /delete | Out-Null
+        Write-Host "----------------------------------------------"
+        Write-Host "----- User $UsernameDelete has been Deleted -----"
+        Write-Host "----------------------------------------------"
+
+    # If user does not exist
+    } else {
+        Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
+        Write-Host "-----> New User "$UsernameNew" HAS NOT BEEN CREATED!" -ForegroundColor Red
+        Write-Host "-----> Script Stopped!" -ForegroundColor Red
+        Break
+    }
+
+    $adsi = [ADSI]"WinNT://$env:COMPUTERNAME"
+    $existing = $adsi.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameNew }
+
+    # Check if the user exists
+    if ($null -eq $existing) {
+        # If user does not exist
+        # create new user
+        Write-Host "-----> Creating user "$UsernameNew"..." -ForegroundColor Yellow
+        & NET USER $UsernameNew $PasswordNew /add /y /expires:never | Out-Null
+        Write-Host "-----> User "$UsernameNew" created successfully!" -ForegroundColor Green
+    } else {
+        # Set password if user already exists
+        Write-Host "-----> Setting password for existing user "$UsernameNew"..." -ForegroundColor Yellow
+        $existing.SetPassword($PasswordNew)
+        Write-Host "-----> Password for existing user "$UsernameNew" has been set successfully!" -ForegroundColor Green
+    }
+    # Set user password to never expire
+    Write-Host "-----> Ensuring password for "$UsernameNew" never expires..." -ForegroundColor Yellow
+    Set-LocalUser -Name $UsernameNew -PasswordNeverExpires $true
+    Write-Host "-----> Password for "$UsernameNew" has been set to never expire!" -ForegroundColor Green
+    Write-Host "----------------------------------------------"
+    Write-Host "----- User $UsernameNew has been created -----"
+    Write-Host "----------------------------------------------"
+}
 function Invoke-WPFDeleteUser {
     # Enter existing account username
     $UsernameDelete = "Skolens"
@@ -5687,7 +5739,7 @@ function Invoke-WPFDeleteUser {
     # If user does not exist
     } else {
         Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
-}
+    }
 }
 function Invoke-WPFFeatureInstall {
     <#
@@ -10783,7 +10835,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/dvr"
   },
   "WPFToggleExecutionPolicy": {
-    "Content": "Toggle Execution Policy",
+    "Content": "Toggle Execution Policy [BROKEN]",
     "Description": "NoDesc",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10797,7 +10849,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows",
+    "Content": "Dark Theme for Windows [WIN11 (?)]",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10849,7 +10901,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu",
+    "Content": "Recommendations in Start Menu [WIN11 (?)]",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10882,24 +10934,6 @@ $sync.configs.tweaks = @'
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
-  },
-  "WPFToggleHideSettingsHome": {
-    "Content": "Remove Settings Home Page",
-    "Description": "Removes the Home page in the Windows Settings app.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a105_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-        "Name": "SettingsPageVisibility",
-        "Type": "String",
-        "Value": "hide:home",
-        "OriginalValue": "show:home",
-        "DefaultState": "false"
-      }
-    ]
   },
   "WPFToggleSnapWindow": {
     "Content": "Snap Window",
@@ -11423,6 +11457,14 @@ $sync.configs.tweaks = @'
         "Value": "https://www.google.com/search?udm=14&q=%s",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "PrintingEnabled",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
       }
     ]
   },
@@ -11829,7 +11871,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFCreateUser": {
-    "Content": "Create New User",
+    "Content": "Create New User (Skolens)",
     "category": "Users",
     "panel": "2",
     "Order": "a070_",
@@ -11837,10 +11879,18 @@ $sync.configs.tweaks = @'
     "ButtonWidth": "300"
   },
   "WPFDeleteUser": {
-    "Content": "Delete User",
+    "Content": "Delete User (Skolens)",
     "category": "Users",
     "panel": "2",
     "Order": "a069_",
+    "Type": "Button",
+    "ButtonWidth": "300"
+  },
+  "WPFDeleteCreateUser": {
+    "Content": "Delete and Create User (Skolens)",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a070_",
     "Type": "Button",
     "ButtonWidth": "300"
   },

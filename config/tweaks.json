@@ -2632,7 +2632,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/dvr"
   },
   "WPFToggleExecutionPolicy": {
-    "Content": "Toggle Execution Policy",
+    "Content": "Toggle Execution Policy [BROKEN]",
     "Description": "NoDesc",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2650,7 +2650,7 @@
     ],
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows",
+    "Content": "Dark Theme for Windows [WIN11 (?)]",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2712,7 +2712,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu",
+    "Content": "Recommendations in Start Menu [WIN11 (?)]",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2745,24 +2745,6 @@
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
-  },
-  "WPFToggleHideSettingsHome": {
-    "Content": "Remove Settings Home Page",
-    "Description": "Removes the Home page in the Windows Settings app.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a105_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-        "Name": "SettingsPageVisibility",
-        "Type": "String",
-        "Value": "hide:home",
-        "OriginalValue": "show:home",
-        "DefaultState": "false"
-      }
-    ]
   },
   "WPFToggleSnapWindow": {
     "Content": "Snap Window",
@@ -3712,7 +3694,7 @@
     ],
   },
   "WPFCreateUser": {
-    "Content": "Create New User",
+    "Content": "Create New User (Skolens)",
     "category": "Users",
     "panel": "2",
     "Order": "a070_",
@@ -3720,10 +3702,18 @@
     "ButtonWidth": "300",
   },
   "WPFDeleteUser": {
-    "Content": "Delete User",
+    "Content": "Delete User (Skolens)",
     "category": "Users",
     "panel": "2",
     "Order": "a069_",
+    "Type": "Button",
+    "ButtonWidth": "300",
+  },
+  "WPFDeleteCreateUser": {
+    "Content": "Delete and Create User (Skolens)",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a070_",
     "Type": "Button",
     "ButtonWidth": "300",
   },
