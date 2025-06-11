@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.06.05
+    Version        : 25.06.11
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.06.05"
+$sync.version = "25.06.11"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -5686,7 +5686,7 @@ function Invoke-WPFDeleteCreateUser {
         Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
         & NET USER $UsernameDelete /delete | Out-Null
         Write-Host "----------------------------------------------"
-        Write-Host "----- User $UsernameDelete has been Deleted -----"
+        Write-Host "----- User $UsernameDelete has been deleted -----"
         Write-Host "----------------------------------------------"
 
     # If user does not exist
@@ -5718,7 +5718,7 @@ function Invoke-WPFDeleteCreateUser {
     Set-LocalUser -Name $UsernameNew -PasswordNeverExpires $true
     Write-Host "-----> Password for "$UsernameNew" has been set to never expire!" -ForegroundColor Green
     Write-Host "----------------------------------------------"
-    Write-Host "----- User $UsernameNew has been created -----"
+    Write-Host "----- New User $UsernameNew has been created -----"
     Write-Host "----------------------------------------------"
 }
 function Invoke-WPFDeleteUser {
@@ -5735,6 +5735,9 @@ function Invoke-WPFDeleteUser {
         Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
         & NET USER $UsernameDelete /delete | Out-Null
         Write-Host "-----> User "$UsernameDelete" deleted successfully!" -ForegroundColor Green
+        Write-Host "----------------------------------------------"
+        Write-Host "----- User $UsernameDelete has been deleted -----"
+        Write-Host "----------------------------------------------"
 
     # If user does not exist
     } else {
@@ -10849,7 +10852,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows [WIN11 (?)]",
+    "Content": "Dark Theme for Windows [WIN11 (Reboot?)]",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10901,7 +10904,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu [WIN11 (?)]",
+    "Content": "Recommendations in Start Menu [RELOG]",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10935,27 +10938,8 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
   },
-  "WPFToggleSnapWindow": {
-    "Content": "Snap Window",
-    "Description": "If enabled you can align windows by dragging them. | Relogin Required",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a106_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Control Panel\\Desktop",
-        "Name": "WindowArrangementActive",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "String"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapwindow"
-  },
   "WPFToggleSnapFlyout": {
-    "Content": "Snap Assist Flyout",
+    "Content": "Snap Assist Flyout [BROKEN ON WIN10]",
     "Description": "If enabled then Snap preview is disabled when maximize button is hovered.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10980,7 +10964,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapflyout"
   },
   "WPFToggleSnapSuggestion": {
-    "Content": "Snap Assist Suggestion",
+    "Content": "Snap Assist Suggestion [BROKEN ON WIN10]",
     "Description": "If enabled then you will get suggestions to snap other applications in the left over spaces.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -11003,41 +10987,6 @@ $sync.configs.tweaks = @'
       "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapsuggestion"
-  },
-  "WPFToggleMouseAcceleration": {
-    "Content": "Mouse Acceleration",
-    "Description": "If Enabled then Cursor movement is affected by the speed of your physical mouse movements.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a109_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseSpeed",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseThreshold1",
-        "Value": "6",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Control Panel\\Mouse",
-        "Name": "MouseThreshold2",
-        "Value": "10",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/mouseacceleration"
   },
   "WPFToggleStickyKeys": {
     "Content": "Sticky Keys",
@@ -11273,7 +11222,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFToggleTaskbarAlignment": {
-    "Content": "Center Taskbar Items",
+    "Content": "Center Taskbar Items [WIN11]",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -11290,6 +11239,39 @@ $sync.configs.tweaks = @'
       }
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
+  },
+  "WPFToggleNotifications": {
+    "Content": "Toggle Annoying Notifications",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a204_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+        "Name": "ScoobeSystemSettingEnabled",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.ActionCenter.SmartOptOut",
+        "Name": "Enabled",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+        "Name": "DisableNotificationCenter",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ]
   },
   "WPFToggleChromePolicies": {
     "Content": "Google Chrome Policies",
