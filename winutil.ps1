@@ -11215,7 +11215,7 @@ $sync.configs.tweaks = @'
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
         "Name": "SettingsPageVisibility",
         "Type": "String",
-        "Value": "hide:home;personalization-background;personalization-colors;themes;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;emailandaccounts;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
+        "Value": "hide:home;personalization-background;personalization-colors;lockscreen;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;emailandaccounts;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
@@ -11241,7 +11241,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
   "WPFToggleNotifications": {
-    "Content": "Toggle Annoying Notifications",
+    "Content": "Toggle Annoying Notifications [WIN11 ?]",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a204_",
