@@ -5679,6 +5679,38 @@ function Invoke-WPFDeleteCreateUser {
     $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
     $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
 
+    # Define the path to the Users directory
+    $usersPath = "C:\Users"
+
+    # Get all folders that start with "Skolens"
+    $foldersToDelete = Get-ChildItem -Path $usersPath -Directory | Where-Object { $_.Name -like "$UsernameDelete*" }
+
+    # Check if there are any folders to delete
+    if ($foldersToDelete.Count -gt 0) {
+        Write-Host "The following folders will be deleted:"
+        $foldersToDelete | ForEach-Object { Write-Host $_.Name }
+
+        # Ask for confirmation before proceeding
+        $confirmation = Read-Host "Are you sure you want to delete these folders? (Y/N)"
+        if ($confirmation -eq "Y" -or $confirmation -eq "y") {
+            # Loop through each folder and delete it
+            foreach ($folder in $foldersToDelete) {
+                try {
+                    Remove-Item -Path $folder.FullName -Recurse -Force
+                    Write-Host "Deleted folder: $($folder.Name)"
+                } catch {
+                    Write-Host "Failed to delete folder: $($folder.Name). Error: $_"
+                }
+            }
+        } else {
+            Write-Host "Deletion cancelled by user."
+        }
+    } else {
+        Write-Host "No folders starting with 'Skolens' found in $usersPath."
+    }
+
+    Write-Host "Script completed."
+
     # Check if the user exists
     if ($null -ne $existingDelete) {
         # If user exists
@@ -7550,23 +7582,6 @@ Function Show-CTTLogo {
     #>
 
     $asciiArt = @"
-    CCCCCCCCCCCCCTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
- CCC::::::::::::CT:::::::::::::::::::::TT:::::::::::::::::::::T
-CC:::::::::::::::CT:::::::::::::::::::::TT:::::::::::::::::::::T
-C:::::CCCCCCCC::::CT:::::TT:::::::TT:::::TT:::::TT:::::::TT:::::T
-C:::::C       CCCCCCTTTTTT  T:::::T  TTTTTTTTTTTT  T:::::T  TTTTTT
-C:::::C                     T:::::T                T:::::T
-C:::::C                     T:::::T                T:::::T
-C:::::C                     T:::::T                T:::::T
-C:::::C                     T:::::T                T:::::T
-C:::::C                     T:::::T                T:::::T
-C:::::C                     T:::::T                T:::::T
-C:::::C       CCCCCC        T:::::T                T:::::T
-C:::::CCCCCCCC::::C      TT:::::::TT            TT:::::::TT
-CC:::::::::::::::C       T:::::::::T            T:::::::::T
-CCC::::::::::::C         T:::::::::T            T:::::::::T
-  CCCCCCCCCCCCC          TTTTTTTTTTT            TTTTTTTTTTT
-
 ====Chris Titus Tech=====
 =====Windows Toolbox=====
 "@
@@ -10885,7 +10900,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/darkmode"
   },
   "WPFToggleBingSearch": {
-    "Content": "Bing Search in Start Menu",
+    "Content": "Bing Search in Start Menu [BROKEN - REG NOT CREATED]",
     "Description": "If enable then includes web search results from Bing in your Start Menu search.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -11215,7 +11230,7 @@ $sync.configs.tweaks = @'
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
         "Name": "SettingsPageVisibility",
         "Type": "String",
-        "Value": "hide:home;personalization-background;personalization-textinput;fonts;personalization-lighting;personalization-colors;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;emailandaccounts;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
+        "Value": "hide:home;personalization-background;personalization-textinput;fonts;personalization-lighting;personalization-colors;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;otherusers;emailandaccounts;sync;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }

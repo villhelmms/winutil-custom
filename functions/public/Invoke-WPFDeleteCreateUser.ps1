@@ -7,6 +7,38 @@ function Invoke-WPFDeleteCreateUser {
     $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
     $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
 
+    # Define the path to the Users directory
+    $usersPath = "C:\Users"
+
+    # Get all folders that start with "Skolens"
+    $foldersToDelete = Get-ChildItem -Path $usersPath -Directory | Where-Object { $_.Name -like "$UsernameDelete*" }
+
+    # Check if there are any folders to delete
+    if ($foldersToDelete.Count -gt 0) {
+        Write-Host "The following folders will be deleted:"
+        $foldersToDelete | ForEach-Object { Write-Host $_.Name }
+
+        # Ask for confirmation before proceeding
+        $confirmation = Read-Host "Are you sure you want to delete these folders? (Y/N)"
+        if ($confirmation -eq "Y" -or $confirmation -eq "y") {
+            # Loop through each folder and delete it
+            foreach ($folder in $foldersToDelete) {
+                try {
+                    Remove-Item -Path $folder.FullName -Recurse -Force
+                    Write-Host "Deleted folder: $($folder.Name)"
+                } catch {
+                    Write-Host "Failed to delete folder: $($folder.Name). Error: $_"
+                }
+            }
+        } else {
+            Write-Host "Deletion cancelled by user."
+        }
+    } else {
+        Write-Host "No folders starting with 'Skolens' found in $usersPath."
+    }
+
+    Write-Host "Script completed."
+
     # Check if the user exists
     if ($null -ne $existingDelete) {
         # If user exists
