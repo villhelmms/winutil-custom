@@ -2842,11 +2842,35 @@
     ],
     "InvokeScript": [
       "
+      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+      if ($windowsVersion -like \"*Windows 11*\") {
+        # Execute the command for Windows 11
+        Write-Host \"Windows 11 detected.\"
+        Invoke-WinUtilExplorerUpdate -action \"restart\"
+      } elseif ($windowsVersion -like \"*Windows 10*\") {
+        # Do nothing for Windows 10
+        Write-Host \"Windows 10 detected. No action taken.\"
+      } else {
+        # Handle other versions or unexpected output
+        Write-Host \"Unsupported Windows version detected: $windowsVersion\"
+      }
       Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],
     "UndoScript": [
       "
+      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+      if ($windowsVersion -like \"*Windows 11*\") {
+        # Execute the command for Windows 11
+        Write-Host \"Windows 11 detected.\"
+        Invoke-WinUtilExplorerUpdate -action \"restart\"
+      } elseif ($windowsVersion -like \"*Windows 10*\") {
+        # Do nothing for Windows 10
+        Write-Host \"Windows 10 detected. No action taken.\"
+      } else {
+        # Handle other versions or unexpected output
+        Write-Host \"Unsupported Windows version detected: $windowsVersion\"
+      }
       Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],

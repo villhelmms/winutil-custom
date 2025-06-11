@@ -11040,10 +11040,10 @@ $sync.configs.tweaks = @'
       }
     ],
     "InvokeScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
+      "\r\n      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption\r\n      if ($windowsVersion -like \"*Windows 11*\") {\r\n        # Execute the command for Windows 11\r\n        Write-Host \"Windows 11 detected.\"\r\n        Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      } elseif ($windowsVersion -like \"*Windows 10*\") {\r\n        # Do nothing for Windows 10\r\n        Write-Host \"Windows 10 detected. No action taken.\"\r\n      } else {\r\n        # Handle other versions or unexpected output\r\n        Write-Host \"Unsupported Windows version detected: $windowsVersion\"\r\n      }\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
     ],
     "UndoScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
+      "\r\n      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption\r\n      if ($windowsVersion -like \"*Windows 11*\") {\r\n        # Execute the command for Windows 11\r\n        Write-Host \"Windows 11 detected.\"\r\n        Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      } elseif ($windowsVersion -like \"*Windows 10*\") {\r\n        # Do nothing for Windows 10\r\n        Write-Host \"Windows 10 detected. No action taken.\"\r\n      } else {\r\n        # Handle other versions or unexpected output\r\n        Write-Host \"Unsupported Windows version detected: $windowsVersion\"\r\n      }\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
   },
