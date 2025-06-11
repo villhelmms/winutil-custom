@@ -2854,7 +2854,6 @@
         # Handle other versions or unexpected output
         Write-Host \"Unsupported Windows version detected: $windowsVersion\"
       }
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],
     "UndoScript": [
@@ -2871,7 +2870,6 @@
         # Handle other versions or unexpected output
         Write-Host \"Unsupported Windows version detected: $windowsVersion\"
       }
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
