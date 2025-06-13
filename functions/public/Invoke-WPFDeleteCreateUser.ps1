@@ -3,6 +3,7 @@ function Invoke-WPFDeleteCreateUser {
     $UsernameDelete = "Skolens"
     $UsernameNew = "Skolens"
     $PasswordNew = ""
+    $GroupAdmin = "Administrators"
 
     $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
     $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
@@ -52,7 +53,7 @@ function Invoke-WPFDeleteCreateUser {
     # If user does not exist
     } else {
         Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
-        Write-Host "-----> New User "$UsernameNew" HAS NOT BEEN CREATED!" -ForegroundColor Red
+        Write-Host "-----> New User "$UsernameNew" HAS NOT BEEN DELETED!" -ForegroundColor Red
         Write-Host "-----> Script Stopped!" -ForegroundColor Red
         Break
     }
@@ -66,6 +67,7 @@ function Invoke-WPFDeleteCreateUser {
         # create new user
         Write-Host "-----> Creating user "$UsernameNew"..." -ForegroundColor Yellow
         & NET USER $UsernameNew $PasswordNew /add /y /expires:never | Out-Null
+        & NET LOCALGROUP $GroupAdmin $UsernameNew /add | Out-Null
         Write-Host "-----> User "$UsernameNew" created successfully!" -ForegroundColor Green
     } else {
         # Set password if user already exists

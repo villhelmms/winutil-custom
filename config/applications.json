@@ -38,13 +38,6 @@
         "link": "https://www.arduino.cc/",
         "winget": "ArduinoSA.IDE.stable"
     },
-    "netbeans": {
-        "category": "Development",
-        "choco": "netbeans",
-        "content": "NetBeans",
-        "link": "https://netbeans.apache.org/",
-        "winget": "Apache.NetBeans"
-    },
     "audacity": {
         "category": "Multimedia Tools",
         "choco": "audacity",
