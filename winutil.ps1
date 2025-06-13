@@ -7623,6 +7623,20 @@ $sync.configs.applications = @'
     "link": "https://anydesk.com/",
     "winget": "AnyDeskSoftwareGmbH.AnyDesk"
   },
+  "WPFInstallarduino": {
+    "category": "Development",
+    "choco": "arduino",
+    "content": "Arduino",
+    "link": "https://www.arduino.cc/",
+    "winget": "ArduinoSA.IDE.stable"
+  },
+  "WPFInstallnetbeans": {
+    "category": "Development",
+    "choco": "netbeans",
+    "content": "NetBeans",
+    "link": "https://netbeans.apache.org/",
+    "winget": "Apache.NetBeans"
+  },
   "WPFInstallaudacity": {
     "category": "Multimedia Tools",
     "choco": "audacity",
