@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.06.11
+    Version        : 25.06.13
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.06.11"
+$sync.version = "25.06.13"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -10867,7 +10867,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows [WIN11 (Reboot?)]",
+    "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10900,7 +10900,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/darkmode"
   },
   "WPFToggleBingSearch": {
-    "Content": "Bing Search in Start Menu [BROKEN - REG NOT CREATED]",
+    "Content": "Bing Search in Start Menu",
     "Description": "If enable then includes web search results from Bing in your Start Menu search.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -10953,56 +10953,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
   },
-  "WPFToggleSnapFlyout": {
-    "Content": "Snap Assist Flyout [BROKEN ON WIN10]",
-    "Description": "If enabled then Snap preview is disabled when maximize button is hovered.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a107_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "EnableSnapAssistFlyout",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "InvokeScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapflyout"
-  },
-  "WPFToggleSnapSuggestion": {
-    "Content": "Snap Assist Suggestion [BROKEN ON WIN10]",
-    "Description": "If enabled then you will get suggestions to snap other applications in the left over spaces.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a108_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "SnapAssist",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "InvokeScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapsuggestion"
-  },
   "WPFToggleStickyKeys": {
     "Content": "Sticky Keys",
     "Description": "If Enabled then Sticky Keys is activated - Sticky keys is an accessibility feature of some graphical user interfaces which assists users who have physical disabilities or help users reduce repetitive strain injury.",
@@ -11040,10 +10990,10 @@ $sync.configs.tweaks = @'
       }
     ],
     "InvokeScript": [
-      "\r\n      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption\r\n      if ($windowsVersion -like \"*Windows 11*\") {\r\n        # Execute the command for Windows 11\r\n        Write-Host \"Windows 11 detected.\"\r\n        Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      } elseif ($windowsVersion -like \"*Windows 10*\") {\r\n        # Do nothing for Windows 10\r\n        Write-Host \"Windows 10 detected. No action taken.\"\r\n      } else {\r\n        # Handle other versions or unexpected output\r\n        Write-Host \"Unsupported Windows version detected: $windowsVersion\"\r\n      }\r\n      "
+      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
     ],
     "UndoScript": [
-      "\r\n      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption\r\n      if ($windowsVersion -like \"*Windows 11*\") {\r\n        # Execute the command for Windows 11\r\n        Write-Host \"Windows 11 detected.\"\r\n        Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      } elseif ($windowsVersion -like \"*Windows 10*\") {\r\n        # Do nothing for Windows 10\r\n        Write-Host \"Windows 10 detected. No action taken.\"\r\n      } else {\r\n        # Handle other versions or unexpected output\r\n        Write-Host \"Unsupported Windows version detected: $windowsVersion\"\r\n      }\r\n      "
+      "\r\n      Invoke-WinUtilExplorerUpdate -action \"restart\"\r\n      "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
   },
@@ -11086,7 +11036,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskview"
   },
   "WPFToggleTaskbarWidgets": {
-    "Content": "Widgets Button in Taskbar",
+    "Content": "Widgets Button in Taskbar [BROKEN]",
     "Description": "If Enabled then Widgets Button in Taskbar will be shown.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -11203,7 +11153,7 @@ $sync.configs.tweaks = @'
     ]
   },
   "WPFToggleMSStore": {
-    "Content": "Toggle Microsoft Store",
+    "Content": "Toggle Microsoft Store [BROKEN]",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a212_",
@@ -11256,7 +11206,7 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
   "WPFToggleNotifications": {
-    "Content": "Toggle Annoying Notifications [WIN11 ?]",
+    "Content": "Toggle Annoying Notifications [RELOG]",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a204_",
@@ -11283,6 +11233,22 @@ $sync.configs.tweaks = @'
         "Name": "DisableNotificationCenter",
         "Value": "1",
         "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-310093Enabled",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+        "Name": "ToastEnabled",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "true",
         "Type": "DWord"
       }

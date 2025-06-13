@@ -2650,7 +2650,7 @@
     ],
   },
   "WPFToggleDarkMode": {
-    "Content": "Dark Theme for Windows [WIN11 (Reboot?)]",
+    "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2693,7 +2693,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/darkmode"
   },
   "WPFToggleBingSearch": {
-    "Content": "Bing Search in Start Menu [BROKEN - REG NOT CREATED]",
+    "Content": "Bing Search in Start Menu",
     "Description": "If enable then includes web search results from Bing in your Start Menu search.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -2746,64 +2746,6 @@
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/wpftogglestartmenurecommendations"
   },
-  "WPFToggleSnapFlyout": {
-    "Content": "Snap Assist Flyout [BROKEN ON WIN10]",
-    "Description": "If enabled then Snap preview is disabled when maximize button is hovered.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a107_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "EnableSnapAssistFlyout",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "InvokeScript": [
-      "
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
-      "
-    ],
-    "UndoScript": [
-      "
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
-      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapflyout"
-  },
-  "WPFToggleSnapSuggestion": {
-    "Content": "Snap Assist Suggestion [BROKEN ON WIN10]",
-    "Description": "If enabled then you will get suggestions to snap other applications in the left over spaces.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a108_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "SnapAssist",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "InvokeScript": [
-      "
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
-      "
-    ],
-    "UndoScript": [
-      "
-      Invoke-WinUtilExplorerUpdate -action \"restart\"
-      "
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/snapsuggestion"
-  },
   "WPFToggleStickyKeys": {
     "Content": "Sticky Keys",
     "Description": "If Enabled then Sticky Keys is activated - Sticky keys is an accessibility feature of some graphical user interfaces which assists users who have physical disabilities or help users reduce repetitive strain injury.",
@@ -2842,34 +2784,12 @@
     ],
     "InvokeScript": [
       "
-      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
-      if ($windowsVersion -like \"*Windows 11*\") {
-        # Execute the command for Windows 11
-        Write-Host \"Windows 11 detected.\"
-        Invoke-WinUtilExplorerUpdate -action \"restart\"
-      } elseif ($windowsVersion -like \"*Windows 10*\") {
-        # Do nothing for Windows 10
-        Write-Host \"Windows 10 detected. No action taken.\"
-      } else {
-        # Handle other versions or unexpected output
-        Write-Host \"Unsupported Windows version detected: $windowsVersion\"
-      }
+      Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],
     "UndoScript": [
       "
-      $windowsVersion = (Get-CimInstance -ClassName Win32_OperatingSystem).Caption
-      if ($windowsVersion -like \"*Windows 11*\") {
-        # Execute the command for Windows 11
-        Write-Host \"Windows 11 detected.\"
-        Invoke-WinUtilExplorerUpdate -action \"restart\"
-      } elseif ($windowsVersion -like \"*Windows 10*\") {
-        # Do nothing for Windows 10
-        Write-Host \"Windows 10 detected. No action taken.\"
-      } else {
-        # Handle other versions or unexpected output
-        Write-Host \"Unsupported Windows version detected: $windowsVersion\"
-      }
+      Invoke-WinUtilExplorerUpdate -action \"restart\"
       "
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
@@ -2913,7 +2833,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskview"
   },
   "WPFToggleTaskbarWidgets": {
-    "Content": "Widgets Button in Taskbar",
+    "Content": "Widgets Button in Taskbar [BROKEN]",
     "Description": "If Enabled then Widgets Button in Taskbar will be shown.",
     "category": "Customize Preferences",
     "panel": "2",
@@ -3030,7 +2950,7 @@
     ],
   },
   "WPFToggleMSStore": {
-    "Content": "Toggle Microsoft Store",
+    "Content": "Toggle Microsoft Store [BROKEN]",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a212_",
@@ -3083,7 +3003,7 @@
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
   },
   "WPFToggleNotifications": {
-    "Content": "Toggle Annoying Notifications [WIN11 ?]",
+    "Content": "Toggle Annoying Notifications [RELOG]",
     "category": "Customize Preferences",
     "panel": "2",
     "Order": "a204_",
@@ -3110,6 +3030,22 @@
         "Name": "DisableNotificationCenter",
         "Value": "1",
         "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-310093Enabled",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+        "Name": "ToastEnabled",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "true",
         "Type": "DWord"
       }
