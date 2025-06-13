@@ -5603,6 +5603,7 @@ function Invoke-WPFButton {
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
         "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
+        "WPFVJCGWallpaper" {Invoke-WPFVJCGWallpaper}
     }
 }
 function Invoke-WPFCloseButton {
@@ -7567,6 +7568,28 @@ function Invoke-WPFUpdatessecurity {
         Write-Host "================================="
         Write-Host "-- Updates Set to Recommended ---"
         Write-Host "================================="
+}
+function Invoke-WPFVJCGWallpaper {
+   # Define the URL of the wallpaper
+    $wallpaperUrl = "https://www.vjcgimnazija.lv/wp-content/uploads/2025/06/vjcg_fons.png"
+
+    # Define the path where the wallpaper will be saved
+    $wallpaperPath = "$env:TEMP\vjcg_fons.jpg"
+
+    # Create a temporary directory item to store the wallpaper
+    $tempFile = New-Item -ItemType File -Path $wallpaperPath -Force
+
+    # Download the wallpaper from the URL
+    Invoke-WebRequest -Uri $wallpaperUrl -OutFile $tempFile.FullName
+
+    # Set the wallpaper using the Windows Registry
+    $regPath = "HKCU:Control Panel\Desktop"
+    Set-ItemProperty -Path $regPath -Name Wallpaper -Value $tempFile.FullName
+    Set-ItemProperty -Path $regPath -Name WallpaperStyle -Value "10" # Fill
+    Set-ItemProperty -Path $regPath -Name TileWallpaper -Value "0" # No tiling
+
+    # Notify Windows to update the wallpaper
+    rundll32.exe user32.dll, UpdatePerUserSystemParameters
 }
 Function Show-CTTLogo {
     <#
@@ -11846,6 +11869,14 @@ $sync.configs.tweaks = @'
         "DefaultState": "false"
       }
     ]
+  },
+  "WPFVJCGWallpaper": {
+    "Content": "Set VJCG Wallpaper",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a070_",
+    "Type": "Button",
+    "ButtonWidth": "300"
   },
   "WPFCreateUser": {
     "Content": "Create New User (Skolens)",
