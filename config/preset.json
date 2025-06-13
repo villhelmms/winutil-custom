@@ -1,22 +1,17 @@
 {
   "Standard": [
-    "WPFTweaksAH",
+    "WPFTweaksDeleteTempFiles",
     "WPFTweaksConsumerFeatures",
+    "WPFTweaksTele",
     "WPFTweaksDisableExplorerAutoDiscovery",
     "WPFTweaksDVR",
     "WPFTweaksHiber",
-    "WPFTweaksHome",
     "WPFTweaksLoc",
-    "WPFTweaksServices",
-    "WPFTweaksStorage",
-    "WPFTweaksTele",
     "WPFTweaksWifi",
-    "WPFTweaksDiskCleanup",
-    "WPFTweaksDeleteTempFiles",
-    "WPFTweaksEndTaskOnTaskbar",
-    "WPFTweaksRestorePoint",
     "WPFTweaksPowershell7Tele",
-    "WPFTweaksRemoveCopilot"
+    "WPFTweaksRecallOff",
+    "WPFTweaksServices",
+    "WPFTweaksRemoveOnedrive"
   ],
   "Minimal": [
     "WPFTweaksConsumerFeatures",
