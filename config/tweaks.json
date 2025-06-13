@@ -3630,6 +3630,14 @@
       },
     ],
   },
+  "WPFVJCGWallpaper": {
+    "Content": "Set VJCG Wallpaper",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a070_",
+    "Type": "Button",
+    "ButtonWidth": "300",
+  },
   "WPFCreateUser": {
     "Content": "Create New User (Skolens)",
     "category": "Users",
