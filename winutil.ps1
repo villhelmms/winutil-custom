@@ -8467,23 +8467,18 @@ $sync.configs.feature = @'
 $sync.configs.preset = @'
 {
   "Standard": [
-    "WPFTweaksAH",
+    "WPFTweaksDeleteTempFiles",
     "WPFTweaksConsumerFeatures",
+    "WPFTweaksTele",
     "WPFTweaksDisableExplorerAutoDiscovery",
     "WPFTweaksDVR",
     "WPFTweaksHiber",
-    "WPFTweaksHome",
     "WPFTweaksLoc",
-    "WPFTweaksServices",
-    "WPFTweaksStorage",
-    "WPFTweaksTele",
     "WPFTweaksWifi",
-    "WPFTweaksDiskCleanup",
-    "WPFTweaksDeleteTempFiles",
-    "WPFTweaksEndTaskOnTaskbar",
-    "WPFTweaksRestorePoint",
     "WPFTweaksPowershell7Tele",
-    "WPFTweaksRemoveCopilot"
+    "WPFTweaksRecallOff",
+    "WPFTweaksServices",
+    "WPFTweaksRemoveOnedrive"
   ],
   "Minimal": [
     "WPFTweaksConsumerFeatures",
@@ -11265,6 +11260,56 @@ $sync.configs.tweaks = @'
         "Type": "String",
         "Value": "hide:home;personalization-background;personalization-textinput;fonts;personalization-lighting;personalization-colors;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;otherusers;emailandaccounts;sync;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
         "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleNews": {
+    "Content": "Remove News and Intrests [BROKEN]",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a215_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds",
+        "OriginalValue": "1",
+        "Name": "ShellFeedsTaskbarViewMode",
+        "Value": "2",
+        "Type": "DWord",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleStartCleanup": {
+    "Content": "Start Menu Cleanup",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a216_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Explorer",
+        "Name": "HideRecentlyAddedApps",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "Type": "DWord",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_AccountNotifications",
+        "Value": "0",
+        "OriginalValue": "1",
+        "Type": "DWord",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_TrackDocs",
+        "Value": "0",
+        "OriginalValue": "1",
+        "Type": "DWord",
         "DefaultState": "false"
       }
     ]

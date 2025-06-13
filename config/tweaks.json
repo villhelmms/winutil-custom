@@ -2983,6 +2983,57 @@
       }
     ]
   },
+  "WPFToggleNews": {
+    "Content": "Remove News and Intrests [BROKEN]",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a215_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds",
+        "OriginalValue": "1",
+        "Name": "ShellFeedsTaskbarViewMode",
+        "Value": "2",
+        "Type": "DWord",
+        "DefaultState": "false"
+      },
+    ]
+  },
+  "WPFToggleStartCleanup": {
+    "Content": "Start Menu Cleanup",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a216_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Explorer",
+        "Name": "HideRecentlyAddedApps",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "Type": "DWord",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_AccountNotifications",
+        "Value": "0",
+        "OriginalValue": "1",
+        "Type": "DWord",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_TrackDocs",
+        "Value": "0",
+        "OriginalValue": "1",
+        "Type": "DWord",
+        "DefaultState": "false"
+      }
+    ]
+  },
+
   "WPFToggleTaskbarAlignment": {
     "Content": "Center Taskbar Items [WIN11]",
     "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
