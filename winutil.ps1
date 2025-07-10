@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.06.13
+    Version        : 25.07.10
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.06.13"
+$sync.version = "25.07.10"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -8148,7 +8148,7 @@ $sync.configs.dns = @'
   },
   "VJCG_Block_DNS": {
     "Primary": "157.180.69.116",
-    "Secondary": "129.159.30.106"
+    "Secondary": "130.61.140.171"
   }
 }
 '@ | ConvertFrom-Json
