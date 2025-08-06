@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.07.10
+    Version        : 25.08.06
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.07.10"
+$sync.version = "25.08.06"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -10930,20 +10930,6 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/essential-tweaks/dvr"
   },
-  "WPFToggleExecutionPolicy": {
-    "Content": "Toggle Execution Policy [BROKEN]",
-    "Description": "NoDesc",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a099_",
-    "Type": "Toggle",
-    "InvokeScript": [
-      "\r\n      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force\r\n      "
-    ],
-    "UndoScript": [
-      "\r\n      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force\r\n      "
-    ]
-  },
   "WPFToggleDarkMode": {
     "Content": "Dark Theme for Windows",
     "Description": "Enable/Disable Dark Mode.",
@@ -10997,11 +10983,11 @@ $sync.configs.tweaks = @'
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/bingsearch"
   },
   "WPFToggleStartMenuRecommendations": {
-    "Content": "Recommendations in Start Menu [RELOG]",
+    "Content": "Start Menu Recommendations [RELOG]",
     "Description": "If disabled then you will not see recommendations in the Start Menu. | Enables 'iseducationenvironment' | Relogin Required. | WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a104_",
+    "Order": "a102_",
     "Type": "Toggle",
     "registry": [
       {
@@ -11036,7 +11022,7 @@ $sync.configs.tweaks = @'
     "Description": "If Enabled then Sticky Keys is activated - Sticky keys is an accessibility feature of some graphical user interfaces which assists users who have physical disabilities or help users reduce repetitive strain injury.",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a110_",
+    "Order": "a103_",
     "Type": "Toggle",
     "registry": [
       {
@@ -11050,12 +11036,69 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/stickykeys"
   },
+  "WPFToggleTaskbarSearch": {
+    "Content": "Search Button in Taskbar",
+    "Description": "If Enabled Search Button will be on the taskbar.",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a104_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+        "Name": "SearchboxTaskbarMode",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ],
+    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarsearch"
+  },
+  "WPFToggleTaskView": {
+    "Content": "Task View Button in Taskbar",
+    "Description": "If Enabled then Task View Button in Taskbar will be shown.",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a105_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowTaskViewButton",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ],
+    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskview"
+  },
+  "WPFToggleTaskbarAlignment": {
+    "Content": "Center Taskbar Items [WIN11]",
+    "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
+    "category": "Customize Preferences",
+    "panel": "2",
+    "Order": "a106_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarAl",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      }
+    ],
+    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
+  },
   "WPFToggleShowExt": {
     "Content": "Show File Extensions",
     "Description": "If enabled then File extensions (e.g., .txt, .jpg) are visible.",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a201_",
+    "Order": "a107_",
     "Type": "Toggle",
     "registry": [
       {
@@ -11075,151 +11118,151 @@ $sync.configs.tweaks = @'
     ],
     "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/showext"
   },
-  "WPFToggleTaskbarSearch": {
-    "Content": "Search Button in Taskbar",
-    "Description": "If Enabled Search Button will be on the taskbar.",
+  "WPFToggleNotifications": {
+    "Content": "Notifications [RELOG]",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a202_",
+    "Order": "a108_",
     "Type": "Toggle",
     "registry": [
       {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
-        "Name": "SearchboxTaskbarMode",
+        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+        "Name": "ScoobeSystemSettingEnabled",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.ActionCenter.SmartOptOut",
+        "Name": "Enabled",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+        "Name": "DisableNotificationCenter",
+        "Value": "0",
+        "OriginalValue": "1",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-310093Enabled",
+        "Value": "1",
+        "OriginalValue": "0",
+        "DefaultState": "true",
+        "Type": "DWord"
+      },
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+        "Name": "ToastEnabled",
         "Value": "1",
         "OriginalValue": "0",
         "DefaultState": "true",
         "Type": "DWord"
       }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarsearch"
-  },
-  "WPFToggleTaskView": {
-    "Content": "Task View Button in Taskbar",
-    "Description": "If Enabled then Task View Button in Taskbar will be shown.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a203_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "ShowTaskViewButton",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskview"
-  },
-  "WPFToggleTaskbarWidgets": {
-    "Content": "Widgets Button in Taskbar [BROKEN]",
-    "Description": "If Enabled then Widgets Button in Taskbar will be shown.",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a204_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "TaskbarDa",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarwidgets"
+    ]
   },
   "WPFToggleCustomization": {
-    "Content": "Toggle Customization Settings",
+    "Content": "Customization Settings",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a205_",
+    "Order": "a109_",
     "Type": "Toggle",
     "registry": [
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
         "Name": "NoAddingComponents",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
         "Name": "NoChangingWallPaper",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\ActiveDesktop",
         "Name": "NoComponents",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
         "Name": "NoThemesTab",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
         "Name": "NoChangingLockScreen",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
         "Name": "NoDispAppearancePage",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
         "Name": "NoDispBackgroundPage",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
         "Name": "NoChangingMousePointers",
-        "Value": "1",
-        "OriginalValue": "0",
+        "Value": "0",
+        "OriginalValue": "1",
         "DefaultState": "false",
         "Type": "DWord"
       },
       {
         "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Control Panel\\Desktop",
         "Name": "ScreenSaveActive",
-        "Value": "0",
-        "OriginalValue": "1",
+        "Value": "1",
+        "OriginalValue": "0",
         "DefaultState": "false",
         "Type": "DWord"
       }
     ]
   },
-  "WPFToggleSoundSettings": {
-    "Content": "Toggle Sound Settings",
+  "WPFToggleHideSettings": {
+    "Content": "Hide Settings",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a211_",
+    "Order": "a110_",
     "Type": "Toggle",
     "registry": [
+      {
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+        "Name": "SettingsPageVisibility",
+        "Type": "String",
+        "Value": "hide:home;personalization-background;personalization-textinput;fonts;personalization-lighting;personalization-colors;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;otherusers;emailandaccounts;sync;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
       {
         "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
         "Name": "NoChangingSoundScheme",
@@ -11230,62 +11273,11 @@ $sync.configs.tweaks = @'
       }
     ]
   },
-  "WPFToggleMSStore": {
-    "Content": "Toggle Microsoft Store [BROKEN]",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a212_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKLM:\\Software\\Policies\\Microsoft\\WindowsStore",
-        "Name": "RemoveWindowsStore",
-        "Value": "1",
-        "OriginalValue": "0",
-        "DefaultState": "true",
-        "Type": "DWord"
-      }
-    ]
-  },
-  "WPFToggleHideSettings": {
-    "Content": "Remove Settings Pages",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a214_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-        "Name": "SettingsPageVisibility",
-        "Type": "String",
-        "Value": "hide:home;personalization-background;personalization-textinput;fonts;personalization-lighting;personalization-colors;themes;personalization;personalization-start-places;lockscreen;taskbar;personalization-touchkeyboard;deviceusage;otherusers;emailandaccounts;sync;workplace;signinoptions;backup;yourinfo;maps;printers;mobile-devices;nightlight;findmydevice;developers;gaming-gamebar;gaming-gamedvr;gaming-gamemode;quietmomentsgame;gaming-trueplay",
-        "OriginalValue": "<RemoveEntry>",
-        "DefaultState": "false"
-      }
-    ]
-  },
-  "WPFToggleNews": {
-    "Content": "Remove News and Intrests [BROKEN]",
-    "category": "Customize Preferences",
-    "panel": "2",
-    "Order": "a215_",
-    "Type": "Toggle",
-    "registry": [
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds",
-        "OriginalValue": "1",
-        "Name": "ShellFeedsTaskbarViewMode",
-        "Value": "2",
-        "Type": "DWord",
-        "DefaultState": "false"
-      }
-    ]
-  },
   "WPFToggleStartCleanup": {
     "Content": "Start Menu Cleanup",
     "category": "Customize Preferences",
     "panel": "2",
-    "Order": "a216_",
+    "Order": "a111_",
     "Type": "Toggle",
     "registry": [
       {
@@ -11314,71 +11306,70 @@ $sync.configs.tweaks = @'
       }
     ]
   },
-  "WPFToggleTaskbarAlignment": {
-    "Content": "Center Taskbar Items [WIN11]",
-    "Description": "[Windows 11] If Enabled then the Taskbar Items will be shown on the Center, otherwise the Taskbar Items will be shown on the Left.",
-    "category": "Customize Preferences",
+  "WPFToggleExecutionPolicy": {
+    "Content": "Execution Policy [BROKEN]",
+    "Description": "NoDesc",
+    "category": "zBroken",
     "panel": "2",
-    "Order": "a204_",
+    "Order": "a150_",
+    "Type": "Toggle",
+    "InvokeScript": [
+      "\r\n      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force\r\n      "
+    ],
+    "UndoScript": [
+      "\r\n      Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted -Force\r\n      "
+    ]
+  },
+  "WPFToggleTaskbarWidgets": {
+    "Content": "Widgets Button in Taskbar [BROKEN]",
+    "Description": "If Enabled then Widgets Button in Taskbar will be shown.",
+    "category": "zBroken",
+    "panel": "2",
+    "Order": "a151_",
     "Type": "Toggle",
     "registry": [
       {
         "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-        "Name": "TaskbarAl",
+        "Name": "TaskbarDa",
         "Value": "1",
         "OriginalValue": "0",
         "DefaultState": "true",
         "Type": "DWord"
       }
     ],
-    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbaralignment"
+    "link": "https://winutil.christitus.com/dev/tweaks/customize-preferences/taskbarwidgets"
   },
-  "WPFToggleNotifications": {
-    "Content": "Toggle Annoying Notifications [RELOG]",
-    "category": "Customize Preferences",
+  "WPFToggleMSStore": {
+    "Content": "Toggle Microsoft Store [BROKEN]",
+    "category": "zBroken",
     "panel": "2",
-    "Order": "a204_",
+    "Order": "a152_",
     "Type": "Toggle",
     "registry": [
       {
-        "Path": "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
-        "Name": "ScoobeSystemSettingEnabled",
-        "Value": "0",
-        "OriginalValue": "1",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Windows.ActionCenter.SmartOptOut",
-        "Name": "Enabled",
-        "Value": "0",
-        "OriginalValue": "1",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
-        "Name": "DisableNotificationCenter",
+        "Path": "HKLM:\\Software\\Policies\\Microsoft\\WindowsStore",
+        "Name": "RemoveWindowsStore",
         "Value": "1",
         "OriginalValue": "0",
         "DefaultState": "true",
         "Type": "DWord"
-      },
+      }
+    ]
+  },
+  "WPFToggleNews": {
+    "Content": "Remove News and Intrests [BROKEN]",
+    "category": "zBroken",
+    "panel": "2",
+    "Order": "a153_",
+    "Type": "Toggle",
+    "registry": [
       {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
-        "Name": "SubscribedContent-310093Enabled",
-        "Value": "0",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Feeds",
         "OriginalValue": "1",
-        "DefaultState": "true",
-        "Type": "DWord"
-      },
-      {
-        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
-        "Name": "ToastEnabled",
-        "Value": "0",
-        "OriginalValue": "1",
-        "DefaultState": "true",
-        "Type": "DWord"
+        "Name": "ShellFeedsTaskbarViewMode",
+        "Value": "2",
+        "Type": "DWord",
+        "DefaultState": "false"
       }
     ]
   },
