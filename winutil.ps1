@@ -6502,6 +6502,9 @@ function Invoke-WPFRemoveAdmin {
     Write-Host "----------------------------------------------"
     Write-Host "----- New User $UsernameNew has been updated -----"
     Write-Host "----------------------------------------------"
+    Write-Host "----------------------------------------------" -ForegroundColor Red
+    Write-Host "----- PLEASE RESTART PC AND CHECK IF USER HAS ADMIN PRIVILAGES -----" -ForegroundColor Red
+    Write-Host "----------------------------------------------" -ForegroundColor Red
 }
 function Invoke-WPFRunAdobeCCCleanerTool {
     <#
