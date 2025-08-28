@@ -12,7 +12,7 @@ function Invoke-WPFDeleteCreateUser {
     $usersPath = "C:\Users"
 
     # Define the folder names to delete
-    $folderNamesToDelete = @("$UsernameDelete*", "Skolnieks", "User", "Admin")
+    $folderNamesToDelete = @("$UsernameDelete*", "Skolnieks", "User")
 
     # Get all folders that match the criteria
     $foldersToDelete = Get-ChildItem -Path $usersPath -Directory | Where-Object {

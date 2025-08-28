@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.08.06
+    Version        : 25.08.28
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.08.06"
+$sync.version = "25.08.28"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -5686,7 +5686,7 @@ function Invoke-WPFDeleteCreateUser {
     $usersPath = "C:\Users"
 
     # Define the folder names to delete
-    $folderNamesToDelete = @("$UsernameDelete*", "Skolnieks", "User", "Admin")
+    $folderNamesToDelete = @("$UsernameDelete*", "Skolnieks", "User")
 
     # Get all folders that match the criteria
     $foldersToDelete = Get-ChildItem -Path $usersPath -Directory | Where-Object {
