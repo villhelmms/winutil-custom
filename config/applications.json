@@ -62,6 +62,14 @@
         "link": "https://www.bcuninstaller.com/",
         "winget": "Klocman.BulkCrapUninstaller"
     },
+    "capcut": {
+        "category": "Browsers",
+        "choco": "capcut",
+        "content": "CapCut",
+        "description": "CapCut",
+        "link": "https://www.capcut.com",
+        "winget": "ByteDance.CapCut"
+    },
     "chrome": {
         "category": "Browsers",
         "choco": "googlechrome",

@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 25.08.28
+    Version        : 26.03.02
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "25.08.28"
+$sync.version = "26.03.02"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -7732,6 +7732,14 @@ $sync.configs.applications = @'
     "description": "Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once.",
     "link": "https://www.bcuninstaller.com/",
     "winget": "Klocman.BulkCrapUninstaller"
+  },
+  "WPFInstallcapcut": {
+    "category": "Browsers",
+    "choco": "capcut",
+    "content": "CapCut",
+    "description": "CapCut",
+    "link": "https://www.capcut.com",
+    "winget": "ByteDance.CapCut"
   },
   "WPFInstallchrome": {
     "category": "Browsers",
