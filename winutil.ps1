@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 26.03.02
+    Version        : 26.03.19
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.02"
+$sync.version = "26.03.19"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -7678,6 +7678,14 @@ $sync.configs.applications = @'
     "link": "https://www.7-zip.org/",
     "winget": "7zip.7zip"
   },
+  "WPFInstallonlyoffice": {
+    "category": "Document",
+    "choco": "onlyoffice",
+    "content": "ONLYOffice Desktop",
+    "description": "ONLYOffice Desktop is a comprehensive office suite for document editing and collaboration.",
+    "link": "https://www.onlyoffice.com/desktop.aspx",
+    "winget": "ONLYOFFICE.DesktopEditors"
+  },
   "WPFInstalladvancedip": {
     "category": "Pro Tools",
     "choco": "advanced-ip-scanner",
@@ -11556,6 +11564,94 @@ $sync.configs.tweaks = @'
         "Name": "PrintingEnabled",
         "Type": "DWord",
         "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "AIModeSettings",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CreateThemesSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "AutofillPredictionSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CreateThemesSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "DevToolsGenAiSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "GeminiActOnWebSettings",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "GenAILocalFoundationalModelSettings",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "GenAiDefaultSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "HelpMeWriteSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "HistorySearchSettings",
+        "Type": "DWord",
+        "Value": "2",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "TabCompareSettings",
+        "Type": "DWord",
+        "Value": "2",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
