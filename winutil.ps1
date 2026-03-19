@@ -12023,6 +12023,55 @@ $sync.configs.tweaks = @'
         "Value": "0",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "AIGenThemesEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "GenAILocalFoundationalModelSettings",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "CopilotPageContext",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeCopilotEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "EdgeEntraCopilotPageContext",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+        "Name": "Microsoft365CopilotChatIconEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge\\Recommended",
+        "Name": "Microsoft365CopilotChatIconEnabled",
+        "Type": "DWord",
+        "Value": "0",
+        "OriginalValue": "<RemoveEntry>"
       }
     ]
   },
@@ -12062,6 +12111,46 @@ $sync.configs.tweaks = @'
         "Name": "AutofillCreditCardEnabled",
         "Type": "DWord",
         "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\GenerativeAI",
+        "Name": "Enabled",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\GenerativeAI",
+        "Name": "Chatbot",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\GenerativeAI",
+        "Name": "LinkPreviews",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\GenerativeAI",
+        "Name": "TabGroups",
+        "Type": "DWord",
+        "Value": "0x0",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Mozilla\\Firefox\\GenerativeAI",
+        "Name": "Locked",
+        "Type": "DWord",
+        "Value": "0x1",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
