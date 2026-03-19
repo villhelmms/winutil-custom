@@ -11654,6 +11654,14 @@ $sync.configs.tweaks = @'
         "Value": "2",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
+      },
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "SearchContentSharingSettings",
+        "Type": "DWord",
+        "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
       }
     ]
   },
