@@ -7,6 +7,14 @@
         "link": "https://www.7-zip.org/",
         "winget": "7zip.7zip"
     },
+    "onlyoffice": {
+        "category": "Document",
+        "choco": "onlyoffice",
+        "content": "ONLYOffice Desktop",
+        "description": "ONLYOffice Desktop is a comprehensive office suite for document editing and collaboration.",
+        "link": "https://www.onlyoffice.com/desktop.aspx",
+        "winget": "ONLYOFFICE.DesktopEditors"
+    },
     "advancedip": {
         "category": "Pro Tools",
         "choco": "advanced-ip-scanner",
