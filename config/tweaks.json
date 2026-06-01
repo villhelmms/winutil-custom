@@ -3371,6 +3371,40 @@
       }
     ],
   },
+"WPFToggleChromePolicies203": {
+    "Content": "[203. kab] Google Chrome Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a084_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CloudManagementEnrollmentToken",
+        "Type": "String",
+        "Value": "cbd6e9b0-35ca-43b4-963f-f758882d1805",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ],
+  },
+  "WPFToggleChromePolicies210": {
+    "Content": "[210. kab] Google Chrome Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a085_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CloudManagementEnrollmentToken",
+        "Type": "String",
+        "Value": "d0fb534f-6bbe-4cd7-9e98-93a74efea8ad",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ],
+  },
   "WPFToggleEdgePolicies": {
     "Content": "Microsoft Edge Policies",
     "category": "Browser Policies",

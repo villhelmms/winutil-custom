@@ -8,7 +8,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 26.03.19
+    Version        : 26.06.01
 #>
 
 param (
@@ -40,7 +40,7 @@ Add-Type -AssemblyName System.Windows.Forms
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
 $sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "26.03.19"
+$sync.version = "26.06.01"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.ProcessRunning = $false
@@ -11660,6 +11660,40 @@ $sync.configs.tweaks = @'
         "Name": "SearchContentSharingSettings",
         "Type": "DWord",
         "Value": "1",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleChromePolicies203": {
+    "Content": "[203. kab] Google Chrome Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a084_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CloudManagementEnrollmentToken",
+        "Type": "String",
+        "Value": "cbd6e9b0-35ca-43b4-963f-f758882d1805",
+        "OriginalValue": "<RemoveEntry>",
+        "DefaultState": "false"
+      }
+    ]
+  },
+  "WPFToggleChromePolicies210": {
+    "Content": "[210. kab] Google Chrome Policies",
+    "category": "Browser Policies",
+    "panel": "2",
+    "Order": "a084_",
+    "Type": "Toggle",
+    "registry": [
+      {
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+        "Name": "CloudManagementEnrollmentToken",
+        "Type": "String",
+        "Value": "d0fb534f-6bbe-4cd7-9e98-93a74efea8ad",
         "OriginalValue": "<RemoveEntry>",
         "DefaultState": "false"
       }
