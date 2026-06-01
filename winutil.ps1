@@ -11686,7 +11686,7 @@ $sync.configs.tweaks = @'
     "Content": "[210. kab] Google Chrome Policies",
     "category": "Browser Policies",
     "panel": "2",
-    "Order": "a084_",
+    "Order": "a085_",
     "Type": "Toggle",
     "registry": [
       {
