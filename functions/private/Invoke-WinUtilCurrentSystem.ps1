@@ -6,7 +6,7 @@ Function Invoke-WinUtilCurrentSystem {
         Checks to see what tweaks have already been applied and what programs are installed, and checks the according boxes
 
     .EXAMPLE
-        Get-WinUtilCheckBoxes "WPFInstall"
+        InvokeWinUtilCurrentSystem -Checkbox "winget"
 
     #>
 
@@ -15,83 +15,102 @@ Function Invoke-WinUtilCurrentSystem {
     )
     if ($CheckBox -eq "choco") {
         $apps = (choco list | Select-String -Pattern "^\S+").Matches.Value
-        $filter = Get-WinUtilVariables -Type Checkbox | Where-Object {$psitem -like "WPFInstall*"}
-        $sync.GetEnumerator() | Where-Object {$psitem.Key -in $filter} | ForEach-Object {
-            $dependencies = @($sync.configs.applications.$($psitem.Key).choco -split ";")
-            if ($dependencies -in $apps) {
-                Write-Output $psitem.name
+        $sync.configs.applicationsHashtable.GetEnumerator() | ForEach-Object {
+            $packageId = ($_.Value.choco -split ";")[-1].Trim()
+            if ($packageId -ne "na" -and $packageId -in $apps) {
+                Write-Output $_.Key
             }
         }
     }
 
     if ($checkbox -eq "winget") {
-
         $originalEncoding = [Console]::OutputEncoding
-        [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
-        $Sync.InstalledPrograms = winget list -s winget | Select-Object -skip 3 | ConvertFrom-String -PropertyNames "Name", "Id", "Version", "Available" -Delimiter '\s{2,}'
-        [Console]::OutputEncoding = $originalEncoding
+        try {
+            [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
+            $installedProgramOutput = @(winget list --accept-source-agreements --disable-interactivity 2>&1)
+            if ($LASTEXITCODE -ne 0) {
+                throw "winget list failed with exit code $LASTEXITCODE."
+            }
+        } finally {
+            [Console]::OutputEncoding = $originalEncoding
+        }
+        $installedProgramText = $installedProgramOutput -join "`n"
 
-        $filter = Get-WinUtilVariables -Type Checkbox | Where-Object {$psitem -like "WPFInstall*"}
-        $sync.GetEnumerator() | Where-Object {$psitem.Key -in $filter} | ForEach-Object {
-            $dependencies = @($sync.configs.applications.$($psitem.Key).winget -split ";")
+        $sync.configs.applicationsHashtable.GetEnumerator() | ForEach-Object {
+            $packageId = (($_.Value.winget -split ";")[-1] -replace "^msstore:", "").Trim()
+            if ([string]::IsNullOrWhiteSpace($packageId) -or $packageId -eq "na") {
+                return
+            }
 
-            if ($dependencies[-1] -in $sync.InstalledPrograms.Id) {
-                Write-Output $psitem.name
+            $packagePattern = "(?im)[^\S\r\n]{2,}$([regex]::Escape($packageId))(?=[^\S\r\n]{2,}|$)"
+            if ($installedProgramText -match $packagePattern) {
+                Write-Output $_.Key
             }
         }
     }
 
-    if($CheckBox -eq "tweaks") {
+    if ($CheckBox -eq "tweaks") {
 
-        if(!(Test-Path 'HKU:\')) {$null = (New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS)}
-        $ScheduledTasks = Get-ScheduledTask
+        if (!(Test-Path 'HKU:\')) {$null = (New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS)}
 
         $sync.configs.tweaks | Get-Member -MemberType NoteProperty | ForEach-Object {
 
             $Config = $psitem.Name
-            #WPFEssTweaksTele
-            $registryKeys = $sync.configs.tweaks.$Config.registry
-            $scheduledtaskKeys = $sync.configs.tweaks.$Config.scheduledtask
-            $serviceKeys = $sync.configs.tweaks.$Config.service
+            $entry = $sync.configs.tweaks.$Config
+            $registryKeys = $entry.registry
+            $serviceKeys = $entry.service
+            $entryType = $entry.Type
 
-            if($registryKeys -or $scheduledtaskKeys -or $serviceKeys) {
+            if (($registryKeys -or $serviceKeys) -and $entryType -ne "Combobox") {
                 $Values = @()
 
+                if ($entryType -eq "Toggle") {
+                    if (-not (Get-WinUtilToggleStatus $Config)) {
+                        $values += $False
+                    }
+                } else {
+                    $registryMatchCount = 0
+                    $registryTotal = 0
 
-                Foreach ($tweaks in $registryKeys) {
-                    Foreach($tweak in $tweaks) {
+                    Foreach ($tweaks in $registryKeys) {
+                        Foreach ($tweak in $tweaks) {
+                            $registryTotal++
+                            $regstate = $null
 
-                        if(test-path $tweak.Path) {
-                            $actualValue = Get-ItemProperty -Name $tweak.Name -Path $tweak.Path -ErrorAction SilentlyContinue | Select-Object -ExpandProperty $($tweak.Name)
-                            $expectedValue = $tweak.Value
-                            if ($expectedValue -notlike $actualValue) {
-                                $values += $False
+                            if (Test-Path $tweak.Path) {
+                                $regstate = Get-ItemProperty -Name $tweak.Name -Path $tweak.Path -ErrorAction SilentlyContinue | Select-Object -ExpandProperty $($tweak.Name)
                             }
-                        } else {
-                            $values += $False
+
+                            if ($null -eq $regstate) {
+                                switch ($tweak.DefaultState) {
+                                    "true" {
+                                        $regstate = $tweak.Value
+                                    }
+                                    "false" {
+                                        $regstate = $tweak.OriginalValue
+                                    }
+                                    default {
+                                        $regstate = $tweak.OriginalValue
+                                    }
+                                }
+                            }
+
+                            if ($regstate -eq $tweak.Value) {
+                                $registryMatchCount++
+                            }
                         }
                     }
-                }
 
-                Foreach ($tweaks in $scheduledtaskKeys) {
-                    Foreach($tweak in $tweaks) {
-                        $task = $ScheduledTasks | Where-Object {$($psitem.TaskPath + $psitem.TaskName) -like "\$($tweak.name)"}
-
-                        if($task) {
-                            $actualValue = $task.State
-                            $expectedValue = $tweak.State
-                            if ($expectedValue -ne $actualValue) {
-                                $values += $False
-                            }
-                        }
+                    if ($registryTotal -gt 0 -and $registryMatchCount -ne $registryTotal) {
+                        $values += $False
                     }
                 }
 
                 Foreach ($tweaks in $serviceKeys) {
-                    Foreach($tweak in $tweaks) {
+                    Foreach ($tweak in $tweaks) {
                         $Service = Get-Service -Name $tweak.Name
 
-                        if($Service) {
+                        if ($Service) {
                             $actualValue = $Service.StartType
                             $expectedValue = $tweak.StartupType
                             if ($expectedValue -ne $actualValue) {
@@ -101,7 +120,7 @@ Function Invoke-WinUtilCurrentSystem {
                     }
                 }
 
-                if($values -notcontains $false) {
+                if ($values -notcontains $false) {
                     Write-Output $Config
                 }
             }

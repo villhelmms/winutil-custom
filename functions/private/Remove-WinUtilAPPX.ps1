@@ -15,19 +15,22 @@ function Remove-WinUtilAPPX {
         $Name
     )
 
-    try {
-        Write-Host "Removing $Name"
-        Get-AppxPackage "*$Name*" | Remove-AppxPackage -ErrorAction SilentlyContinue
-        Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like "*$Name*" | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
-    } catch [System.Exception] {
-        if ($psitem.Exception.Message -like "*The requested operation requires elevation*") {
-            Write-Warning "Unable to uninstall $name due to a Security Exception"
-        } else {
-            Write-Warning "Unable to uninstall $name due to unhandled exception"
-            Write-Warning $psitem.Exception.StackTrace
+    Write-Host "Removing $Name"
+    Write-WinUtilLog -Component "AppX" -Message "Removing AppX package pattern: $Name"
+
+    # We explicitly loop through packages instead of using the pipeline because PowerShell 7 pipeline binding
+    # for Remove-AppxPackage fails silently, and Get-AppxPackage -AllUsers returns duplicate objects for each user profile.
+    $pkgs = Get-AppxPackage "*$Name*" -AllUsers | Sort-Object -Property PackageFullName -Unique
+    if ($null -ne $pkgs) {
+        foreach ($pkg in $pkgs) {
+            try {
+                Remove-AppxPackage -Package $pkg.PackageFullName -AllUsers -ErrorAction Stop
+            }
+            catch {
+                Write-WinUtilLog -Level "ERROR" -Component "AppX" -Message "Failed to remove AppX package $($pkg.PackageFullName): $($_.Exception.Message)"
+            }
         }
-    } catch {
-        Write-Warning "Unable to uninstall $name due to unhandled exception"
-        Write-Warning $psitem.Exception.StackTrace
     }
+
+    Write-WinUtilLog -Component "AppX" -Message "AppX removal completed for package pattern: $Name"
 }

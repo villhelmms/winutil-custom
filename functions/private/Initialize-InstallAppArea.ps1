@@ -6,7 +6,7 @@
                 Used to as part of the Install Tab UI generation
 
             .PARAMETER TargetElement
-                The element to which the AppArea shoud be added
+                The element to which the AppArea should be added
 
         #>
         param($TargetElement)
@@ -17,29 +17,30 @@
         $Border = New-Object Windows.Controls.Border
         $Border.VerticalAlignment = "Stretch"
         $Border.SetResourceReference([Windows.Controls.Control]::StyleProperty, "BorderStyle")
-
         # Add a ScrollViewer, because the ItemsControl does not support scrolling by itself
         $scrollViewer = New-Object Windows.Controls.ScrollViewer
         $scrollViewer.VerticalScrollBarVisibility = 'Auto'
         $scrollViewer.HorizontalAlignment = 'Stretch'
         $scrollViewer.VerticalAlignment = 'Stretch'
         $scrollViewer.CanContentScroll = $true
+        $Border.Child = $scrollViewer
 
         ## Create the ItemsControl, which will be the parent of all the app entries
         $itemsControl = New-Object Windows.Controls.ItemsControl
         $itemsControl.HorizontalAlignment = 'Stretch'
         $itemsControl.VerticalAlignment = 'Stretch'
+        $scrollViewer.Content = $itemsControl
 
-        # Enable virtualization for the ItemsControl to improve performance (It's hard to test if this is actually working, so if you know what you're doing, please check this)
+        # Use WrapPanel to create dynamic columns based on AppEntryWidth and window width
         $itemsPanelTemplate = New-Object Windows.Controls.ItemsPanelTemplate
-        $factory = New-Object Windows.FrameworkElementFactory ([Windows.Controls.VirtualizingStackPanel])
+        $factory = New-Object Windows.FrameworkElementFactory ([Windows.Controls.WrapPanel])
+        $factory.SetValue([Windows.Controls.WrapPanel]::OrientationProperty, [Windows.Controls.Orientation]::Horizontal)
+        $factory.SetValue([Windows.Controls.WrapPanel]::HorizontalAlignmentProperty, [Windows.HorizontalAlignment]::Left)
         $itemsPanelTemplate.VisualTree = $factory
         $itemsControl.ItemsPanel = $itemsPanelTemplate
-        $itemsControl.SetValue([Windows.Controls.VirtualizingStackPanel]::IsVirtualizingProperty, $true)
-        $itemsControl.SetValue([Windows.Controls.VirtualizingStackPanel]::VirtualizationModeProperty, [Windows.Controls.VirtualizationMode]::Recycling)
 
-        $scrollViewer.Content = $itemsControl
-        $Border.Child = $scrollViewer
-        $null = $targetGrid.Children.Add($Border)
+        # Add the Border containing the App Area to the target Grid
+        $targetGrid.Children.Add($Border) | Out-Null
+
         return $itemsControl
     }

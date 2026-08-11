@@ -14,58 +14,91 @@ function Invoke-WPFButton {
 
     # Use this to get the name of the button
     #[System.Windows.MessageBox]::Show("$Button","Chris Titus Tech's Windows Utility","OK","Info")
-    if (-not $sync.ProcessRunning) {
-        Set-WinUtilProgressBar  -label "" -percent 0 -hide $true
+    if (-not $sync.ProcessRunning -and -not $sync.Win11ISOProcessRunning) {
+        Set-WinUtilTweaksProgressIndicator -Visible $false
     }
 
+    # Check if button is defined in feature config with function or InvokeScript
+    if ($sync.configs.feature.$Button) {
+        $buttonConfig = $sync.configs.feature.$Button
+
+        # If button has a function defined, call it
+        if ($buttonConfig.function) {
+            $functionName = $buttonConfig.function
+            if (Get-Command $functionName -ErrorAction SilentlyContinue) {
+                & $functionName
+                return
+            }
+        }
+
+        # If button has InvokeScript defined, execute the scripts
+        if ($buttonConfig.InvokeScript -and $buttonConfig.InvokeScript.Count -gt 0) {
+            foreach ($script in $buttonConfig.InvokeScript) {
+                if (-not [string]::IsNullOrWhiteSpace($script)) {
+                    Invoke-Command -ScriptBlock ([scriptblock]::Create($script)) -ErrorAction Stop
+                }
+            }
+            return
+        }
+    }
+
+    # Fallback to hard-coded switch for buttons not in feature.json
     Switch -Wildcard ($Button) {
         "WPFTab?BT" {Invoke-WPFTab $Button}
         "WPFInstall" {Invoke-WPFInstall}
         "WPFUninstall" {Invoke-WPFUnInstall}
         "WPFInstallUpgrade" {Invoke-WPFInstallUpgrade}
+        "WPFCollapseAllCategories" {Invoke-WPFToggleAllCategories -Action "Collapse"}
+        "WPFExpandAllCategories" {Invoke-WPFToggleAllCategories -Action "Expand"}
         "WPFStandard" {Invoke-WPFPresets "Standard" -checkboxfilterpattern "WPFTweak*"}
         "WPFMinimal" {Invoke-WPFPresets "Minimal" -checkboxfilterpattern "WPFTweak*"}
+        "WPFAdvanced" {Invoke-WPFPresets "Advanced" -checkboxfilterpattern "WPFTweak*"}
         "WPFClearTweaksSelection" {Invoke-WPFPresets -imported $true -checkboxfilterpattern "WPFTweak*"}
         "WPFClearInstallSelection" {Invoke-WPFPresets -imported $true -checkboxfilterpattern "WPFInstall*"}
         "WPFtweaksbutton" {Invoke-WPFtweaksbutton}
         "WPFOOSUbutton" {Invoke-WPFOOSU}
-        "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -State "Enable"}
-        "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance -State "Disable"}
+        "WPFAddUltPerf" {Invoke-WPFUltimatePerformance -Enable}
+        "WPFRemoveUltPerf" {Invoke-WPFUltimatePerformance}
         "WPFundoall" {Invoke-WPFundoall}
-        "WPFFeatureInstall" {Invoke-WPFFeatureInstall}
-        "WPFPanelDISM" {Invoke-WPFSystemRepair}
-        "WPFPanelAutologin" {Invoke-WPFPanelAutologin}
-        "WPFPanelcontrol" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelnetwork" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelpower" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelregion" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelsound" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelprinter" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelsystem" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPaneluser" {Invoke-WPFControlPanel -Panel $button}
-        "WPFPanelGodMode" {Invoke-WPFControlPanel -Panel $button}
-        "WPFUpdatesdefault" {Invoke-WPFFixesUpdate}
-        "WPFFixesUpdate" {Invoke-WPFFixesUpdate}
-        "WPFFixesWinget" {Invoke-WPFFixesWinget}
-        "WPFRunAdobeCCCleanerTool" {Invoke-WPFRunAdobeCCCleanerTool}
-        "WPFFixesNetwork" {Invoke-WPFFixesNetwork}
-        "WPFUpdatesdisable" {Invoke-WPFUpdatesdisable}
+        "WPFUpdatesdefault" {Invoke-WPFUpdatesdefault}
+        "WPFUpdatesdisable" {Invoke-WPFUpdatesdisable} 
         "WPFUpdatessecurity" {Invoke-WPFUpdatessecurity}
-        "WPFWinUtilShortcut" {Invoke-WPFShortcut -ShortcutToAdd "WinUtil" -RunAsAdmin $true}
         "WPFGetInstalled" {Invoke-WPFGetInstalled -CheckBox "winget"}
         "WPFGetInstalledTweaks" {Invoke-WPFGetInstalled -CheckBox "tweaks"}
-        "WPFGetIso" {Invoke-MicrowinGetIso}
-        "WPFMicrowin" {Invoke-Microwin}
-        "WPFCloseButton" {Invoke-WPFCloseButton}
-        "MicrowinScratchDirBT" {Invoke-ScratchDialog}
-        "WPFWinUtilInstallPSProfile" {Invoke-WinUtilInstallPSProfile}
-        "WPFWinUtilUninstallPSProfile" {Invoke-WinUtilUninstallPSProfile}
-        "WPFWinUtilSSHServer" {Invoke-WPFSSHServer}
-        "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
+        "WPFAppxRemoval" {Invoke-WPFTab "WPFTab6BT"}
+        "WPFBackToTweaks" {Invoke-WPFTab "WPFTab2BT"}
+        "WPFInstallSelectedAppx" {Invoke-WPFAppxInstall}
+        "WPFRemoveSelectedAppx" {Invoke-WPFAppxRemoval}
+        "WPFDefaultAppxSelection" {Invoke-WPFPresets "AppxDefault" -checkboxfilterpattern "WPFAppx*"}
+        "WPFVJCGWallpaper" {Invoke-WPFVJCGWallpaper}
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
         "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
-        "WPFVJCGWallpaper" {Invoke-WPFVJCGWallpaper}
         "WPFRemoveAdmin" {Invoke-WPFRemoveAdmin}
+        "WPFDeleteMythware" {Invoke-WPFDeleteMythware}
+        "WPFSelectAllAppx" {
+            $sync.configs.appxHashtable.Keys | ForEach-Object {$sync.$_.IsChecked = $true}
+        }
+        "WPFClearAppxSelection" {
+            $sync.configs.appxHashtable.Keys | ForEach-Object {$sync.$_.IsChecked = $false}
+        }
+        "WPFGetInstalledAppx" {
+            $installedAppxPackages = Get-WinUtilInstalledAPPX
+            foreach ($appx in $sync.configs.appxHashtable.GetEnumerator()) {
+                if ($appx.Value.PackageId -in $installedAppxPackages) {
+                    $sync.$($appx.Key).IsChecked = $true
+                }
+            }
+        }
+        "WPFCloseButton" {$sync.Form.Close(); Write-Host "Bye bye!"}
+        "WPFMinimizeButton" {[Windows.SystemCommands]::MinimizeWindow($sync.Form)}
+        "WPFMaximizeButton" {
+            if ($sync.Form.WindowState -eq [Windows.WindowState]::Normal) {
+                [Windows.SystemCommands]::MaximizeWindow($sync.Form)
+            } else {
+                [Windows.SystemCommands]::RestoreWindow($sync.Form)
+            }
+        }
+        "WPFselectedAppsButton" {$sync.selectedAppsPopup.IsOpen = -not $sync.selectedAppsPopup.IsOpen}
     }
 }

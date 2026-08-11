@@ -12,51 +12,88 @@ function Invoke-WPFtweaksbutton {
     return
   }
 
-  $Tweaks = (Get-WinUtilCheckBoxes)["WPFTweaks"]
+  $Tweaks = $sync.selectedTweaks
+  $dnsProvider = $sync["WPFchangedns"].text
+  if (-not ($dnsProvider)) {
+    $dnsProvider = "Default"
+  }
+  $restorePointTweak = "WPFTweaksRestorePoint"
+  $restorePointSelected = $Tweaks -contains $restorePointTweak
+  $tweaksToRun = @($Tweaks | Where-Object { $_ -ne $restorePointTweak })
+  $totalSteps = [Math]::Max($Tweaks.Count, 1)
+  $completedSteps = 0
+  Write-WinUtilLog -Component "Tweaks" -Message "Tweaks requested: $(@($Tweaks).Count) selected tweak(s), DNS provider: $dnsProvider"
 
-  Set-WinUtilDNS -DNSProvider $sync["WPFchangedns"].text
-
-  if ($tweaks.count -eq 0 -and  $sync["WPFchangedns"].text -eq "Default") {
+  if ($tweaks.count -eq 0 -and $dnsProvider -eq "Default") {
     $msg = "Please check the tweaks you wish to perform."
     [System.Windows.MessageBox]::Show($msg, "Winutil", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
     return
   }
 
-  Write-Debug "Number of tweaks to process: $($Tweaks.Count)"
+  if ($restorePointSelected) {
+    $sync.ProcessRunning = $true
 
-  # The leading "," in the ParameterList is nessecary because we only provide one argument and powershell cannot be convinced that we want a nested loop with only one argument otherwise
-  Invoke-WPFRunspace -ParameterList @(,("tweaks",$tweaks)) -DebugPreference $DebugPreference -ScriptBlock {
-    param(
-      $tweaks,
-      $DebugPreference
-      )
-    Write-Debug "Inside Number of tweaks to process: $($Tweaks.Count)"
+    if ($Tweaks.Count -eq 1) {
+        Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "Indeterminate" -value 0.01 -overlay "logo" }
+    } else {
+        Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "Normal" -value 0.01 -overlay "logo" }
+    }
+
+    Set-WinUtilTweaksProgressIndicator -Visible $true -Label "Creating restore point" -Percent 0
+    Write-WinUtilLog -Component "Tweaks" -Message "Creating restore point before applying selected tweaks."
+    Invoke-WinUtilTweaks $restorePointTweak
+    $completedSteps = 1
+
+    if ($tweaksToRun.Count -eq 0 -and $dnsProvider -eq "Default") {
+      Set-WinUtilTweaksProgressIndicator -Visible $true -Label "Tweaks finished" -Percent 100
+      $sync.ProcessRunning = $false
+      Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "None" -overlay "checkmark" }
+      Write-Host "================================="
+      Write-Host "--     Tweaks are Finished    ---"
+      Write-Host "================================="
+      Write-WinUtilLog -Component "Tweaks" -Message "Tweaks workflow completed after restore point."
+      return
+    }
+  }
+
+  # The leading "," in the ParameterList is necessary because we only provide one argument and powershell cannot be convinced that we want a nested loop with only one argument otherwise
+  Invoke-WPFRunspace -ParameterList @(("tweaks", $tweaksToRun), ("dnsProvider", $dnsProvider), ("completedSteps", $completedSteps), ("totalSteps", $totalSteps)) -ScriptBlock {
+    param($tweaks, $dnsProvider, $completedSteps, $totalSteps)
 
     $sync.ProcessRunning = $true
 
-    if ($Tweaks.count -eq 1) {
-        $sync.form.Dispatcher.Invoke([action]{ Set-WinUtilTaskbaritem -state "Indeterminate" -value 0.01 -overlay "logo" })
-    } else {
-        $sync.form.Dispatcher.Invoke([action]{ Set-WinUtilTaskbaritem -state "Normal" -value 0.01 -overlay "logo" })
+    if ($completedSteps -eq 0) {
+      if ($Tweaks.count -eq 1) {
+        Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "Indeterminate" -value 0.01 -overlay "logo" }
+      } else {
+        Invoke-WPFUIThread -ScriptBlock{ Set-WinUtilTaskbaritem -state "Normal" -value 0.01 -overlay "logo" }
+      }
     }
-    # Execute other selected tweaks
 
-    for ($i = 0; $i -lt $Tweaks.Count; $i++) {
-      Set-WinUtilProgressBar -Label "Applying $($tweaks[$i])" -Percent ($i / $tweaks.Count * 100)
-      Invoke-WinUtilTweaks $tweaks[$i]
-      $sync.form.Dispatcher.Invoke([action]{ Set-WinUtilTaskbaritem -value ($i/$Tweaks.Count) })
+    if ($dnsProvider -ne "Default") {
+      $dnsResult = @(Set-WinUtilDNS -DNSProvider $dnsProvider)
+      if ($dnsResult[-1] -ne $true) {
+        Set-WinUtilTweaksProgressIndicator -Visible $true -Label "DNS change failed" -Percent 100
+        $sync.ProcessRunning = $false
+        Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "Error" -overlay "warning" }
+        Write-WinUtilLog -Level "ERROR" -Component "Tweaks" -Message "Tweaks workflow stopped because the DNS change failed."
+        return
+      }
     }
-    Set-WinUtilProgressBar -Label "Tweaks finished" -Percent 100
+
+    for ($i = 0; $i -lt $tweaks.Count; $i++) {
+      Set-WinUtilTweaksProgressIndicator -Visible $true -Label "Applying $($tweaks[$i]) ($($completedSteps + 1)/$totalSteps)" -Percent ($completedSteps / $totalSteps * 100)
+      Invoke-WinUtilTweaks $tweaks[$i]
+      $completedSteps++
+      $progress = $completedSteps / $totalSteps
+      Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -value $progress }
+    }
+    Set-WinUtilTweaksProgressIndicator -Visible $true -Label "Tweaks finished" -Percent 100
     $sync.ProcessRunning = $false
-    $sync.form.Dispatcher.Invoke([action]{ Set-WinUtilTaskbaritem -state "None" -overlay "checkmark" })
+    Invoke-WPFUIThread -ScriptBlock { Set-WinUtilTaskbaritem -state "None" -overlay "checkmark" }
     Write-Host "================================="
     Write-Host "--     Tweaks are Finished    ---"
     Write-Host "================================="
-
-    # $ButtonType = [System.Windows.MessageBoxButton]::OK
-    # $MessageboxTitle = "Tweaks are Finished "
-    # $Messageboxbody = ("Done")
-    # $MessageIcon = [System.Windows.MessageBoxImage]::Information
-    # [System.Windows.MessageBox]::Show($Messageboxbody, $MessageboxTitle, $ButtonType, $MessageIcon)
-  }
+    Write-WinUtilLog -Component "Tweaks" -Message "Tweaks workflow completed."
+  } | Out-Null
 }

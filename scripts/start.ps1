@@ -7,46 +7,24 @@
 #>
 
 param (
-    [switch]$Debug,
     [string]$Config,
-    [switch]$Run
+    [ValidateSet("Standard", "Minimal", "Advanced", "")]
+    [string]$Preset,
+    [switch]$Offline
 )
 
-# Set DebugPreference based on the -Debug switch
-if ($Debug) {
-    $DebugPreference = "Continue"
+$PARAM_OFFLINE = $false
+if ($Offline) {
+    $PARAM_OFFLINE = $true
 }
 
-if ($Config) {
-    $PARAM_CONFIG = $Config
+if ($ExecutionContext.SessionState.LanguageMode -ne 'FullLanguage') {
+    Write-Host "WinUtil is unable to run on your system. PowerShell execution is restricted by security policies." -ForegroundColor Red
+    return
 }
-
-$PARAM_RUN = $false
-# Handle the -Run switch
-if ($Run) {
-    Write-Host "Running config file tasks..."
-    $PARAM_RUN = $true
-}
-
-# Load DLLs
-Add-Type -AssemblyName PresentationFramework
-Add-Type -AssemblyName System.Windows.Forms
-
-# Variable to sync between runspaces
-$sync = [Hashtable]::Synchronized(@{})
-$sync.PSScriptRoot = $PSScriptRoot
-$sync.version = "#{replaceme}"
-$sync.configs = @{}
-$sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
-$sync.ProcessRunning = $false
-$sync.selectedApps = [System.Collections.Generic.List[string]]::new()
-$sync.currentTab = "Install"
-$sync.selectedAppsStackPanel
-$sync.selectedAppsPopup
-
 
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Output "Winutil needs to be run as Administrator. Attempting to relaunch."
+    Write-Output "WinUtil needs to be run as Administrator. Attempting to relaunch."
     $argList = @()
 
     $PSBoundParameters.GetEnumerator() | ForEach-Object {
@@ -62,7 +40,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     $script = if ($PSCommandPath) {
         "& { & `'$($PSCommandPath)`' $($argList -join ' ') }"
     } else {
-        "&([ScriptBlock]::Create((irm https://raw.githubusercontent.com/villhelmms/winutil-custom/refs/heads/main/winutil.ps1))) $($argList -join ' ')"
+        "&([ScriptBlock]::Create((irm https://github.com/ChrisTitusTech/winutil/releases/latest/download/winutil.ps1))) $($argList -join ' ')"
     }
 
     $powershellCmd = if (Get-Command pwsh -ErrorAction SilentlyContinue) { "pwsh" } else { "powershell" }
@@ -77,12 +55,29 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     break
 }
 
+# Variable to sync between runspaces
+$sync = [Hashtable]::Synchronized(@{})
+$sync.version = "#{replaceme}"
+$sync.configs = @{}
+$sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
+$sync.preferences = @{}
+$sync.ProcessRunning = $false
+$sync.Win11ISOProcessRunning = $false
+$sync.selectedAppx = [System.Collections.Generic.List[string]]::new()
+$sync.selectedApps = [System.Collections.Generic.List[string]]::new()
+$sync.selectedTweaks = [System.Collections.Generic.List[string]]::new()
+$sync.selectedToggles = [System.Collections.Generic.List[string]]::new()
+$sync.selectedFeatures = [System.Collections.Generic.List[string]]::new()
+$sync.currentTab = "Install"
+
 $dateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+$winutildir = "$env:LocalAppData\winutil"
+$sync.winutildir = $winutildir
 
-$logdir = "$env:localappdata\winutil\logs"
-[System.IO.Directory]::CreateDirectory("$logdir") | Out-Null
-Start-Transcript -Path "$logdir\winutil_$dateTime.log" -Append -NoClobber | Out-Null
+$logdir = "$winutildir\logs"
+$sync.logPath = "$logdir\winutil_$dateTime.log"
+$sync.transcriptPath = $sync.logPath
+Start-Transcript -Path $sync.logPath -Append -NoClobber | Out-Null
 
-# Set PowerShell window title
-$Host.UI.RawUI.WindowTitle = "WinUtil (Admin)"
-clear-host
+$Host.UI.RawUI.WindowTitle = "WinUtil"
+Clear-Host

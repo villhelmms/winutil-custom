@@ -5,46 +5,8 @@
         "content": "7-Zip",
         "description": "7-Zip is a free and open-source file archiver utility. It supports several compression formats and provides a high compression ratio, making it a popular choice for file compression.",
         "link": "https://www.7-zip.org/",
-        "winget": "7zip.7zip"
-    },
-    "onlyoffice": {
-        "category": "Document",
-        "choco": "onlyoffice",
-        "content": "ONLYOffice Desktop",
-        "description": "ONLYOffice Desktop is a comprehensive office suite for document editing and collaboration.",
-        "link": "https://www.onlyoffice.com/desktop.aspx",
-        "winget": "ONLYOFFICE.DesktopEditors"
-    },
-    "advancedip": {
-        "category": "Pro Tools",
-        "choco": "advanced-ip-scanner",
-        "content": "Advanced IP Scanner",
-        "description": "Advanced IP Scanner is a fast and easy-to-use network scanner. It is designed to analyze LAN networks and provides information about connected devices.",
-        "link": "https://www.advanced-ip-scanner.com/",
-        "winget": "Famatech.AdvancedIPScanner"
-    },
-    "angryipscanner": {
-        "category": "Pro Tools",
-        "choco": "angryip",
-        "content": "Angry IP Scanner",
-        "description": "Angry IP Scanner is an open-source and cross-platform network scanner. It is used to scan IP addresses and ports, providing information about network connectivity.",
-        "link": "https://angryip.org/",
-        "winget": "angryziber.AngryIPScanner"
-    },
-    "anydesk": {
-        "category": "Utilities",
-        "choco": "anydesk",
-        "content": "AnyDesk",
-        "description": "AnyDesk is a remote desktop software that enables users to access and control computers remotely. It is known for its fast connection and low latency.",
-        "link": "https://anydesk.com/",
-        "winget": "AnyDeskSoftwareGmbH.AnyDesk"
-    },
-    "arduino": {
-        "category": "Development",
-        "choco": "arduino",
-        "content": "Arduino",
-        "link": "https://www.arduino.cc/",
-        "winget": "ArduinoSA.IDE.stable"
+        "winget": "7zip.7zip",
+        "foss": true
     },
     "audacity": {
         "category": "Multimedia Tools",
@@ -52,31 +14,16 @@
         "content": "Audacity",
         "description": "Audacity is a free and open-source audio editing software known for its powerful recording and editing capabilities.",
         "link": "https://www.audacityteam.org/",
-        "winget": "Audacity.Audacity"
+        "winget": "Audacity.Audacity",
+        "foss": true
     },
-    "autoruns": {
-        "category": "Microsoft Tools",
-        "choco": "autoruns",
-        "content": "Autoruns",
-        "description": "This utility shows you what programs are configured to run during system bootup or login",
-        "link": "https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns",
-        "winget": "Microsoft.Sysinternals.Autoruns"
-    },
-    "bulkcrapuninstaller": {
-        "category": "Utilities",
-        "choco": "bulk-crap-uninstaller",
-        "content": "Bulk Crap Uninstaller",
-        "description": "Bulk Crap Uninstaller is a free and open-source uninstaller utility for Windows. It helps users remove unwanted programs and clean up their system by uninstalling multiple applications at once.",
-        "link": "https://www.bcuninstaller.com/",
-        "winget": "Klocman.BulkCrapUninstaller"
-    },
-    "capcut": {
-        "category": "Browsers",
-        "choco": "capcut",
-        "content": "CapCut",
-        "description": "CapCut",
-        "link": "https://www.capcut.com",
-        "winget": "ByteDance.CapCut"
+    "arduino": {
+        "category": "Development",
+        "choco": "arduino",
+        "content": "Arduino",
+        "link": "https://www.arduino.cc/",
+        "winget": "ArduinoSA.IDE.stable",
+        "foss": false
     },
     "chrome": {
         "category": "Browsers",
@@ -84,71 +31,8 @@
         "content": "Chrome",
         "description": "Google Chrome is a widely used web browser known for its speed, simplicity, and seamless integration with Google services.",
         "link": "https://www.google.com/chrome/",
-        "winget": "Google.Chrome"
-    },
-    "chromium": {
-        "category": "Browsers",
-        "choco": "chromium",
-        "content": "Chromium",
-        "description": "Chromium is the open-source project that serves as the foundation for various web browsers, including Chrome.",
-        "link": "https://github.com/Hibbiki/chromium-win64",
-        "winget": "Hibbiki.Chromium"
-    },
-    "edge": {
-        "category": "Browsers",
-        "choco": "microsoft-edge",
-        "content": "Edge",
-        "description": "Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.",
-        "link": "https://www.microsoft.com/edge",
-        "winget": "Microsoft.Edge"
-    },
-    "esearch": {
-        "category": "Utilities",
-        "choco": "everything",
-        "content": "Everything Search",
-        "description": "Everything Search is a fast and efficient file search utility for Windows.",
-        "link": "https://www.voidtools.com/",
-        "winget": "voidtools.Everything"
-    },
-    "ffmpeg": {
-        "category": "Multimedia Tools",
-        "choco": "ffmpeg-full",
-        "content": "FFmpeg (full)",
-        "description": "FFmpeg is a powerful multimedia processing tool that enables users to convert, edit, and stream audio and video files with a vast range of codecs and formats.",
-        "link": "https://ffmpeg.org/",
-        "winget": "Gyan.FFmpeg"
-    },
-    "fileconverter": {
-        "category": "Utilities",
-        "choco": "file-converter",
-        "content": "File-Converter",
-        "description": "File Converter is a very simple tool which allows you to convert and compress one or several file(s) using the context menu in windows explorer.",
-        "link": "https://file-converter.io/",
-        "winget": "AdrienAllard.FileConverter"
-    },
-    "firefox": {
-        "category": "Browsers",
-        "choco": "firefox",
-        "content": "Firefox",
-        "description": "Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.",
-        "link": "https://www.mozilla.org/en-US/firefox/new/",
-        "winget": "Mozilla.Firefox"
-    },
-    "lightshot": {
-        "category": "Multimedia Tools",
-        "choco": "lightshot",
-        "content": "Lightshot (Screenshots)",
-        "description": "Ligthshot is an Easy-to-use, light-weight screenshot software tool, where you can optionally edit your screenshots using different tools, share them via Internet and/or save to disk, and customize the available options.",
-        "link": "https://app.prntscr.com/",
-        "winget": "Skillbrains.Lightshot"
-    },
-    "gimp": {
-        "category": "Multimedia Tools",
-        "choco": "gimp",
-        "content": "GIMP (Image Editor)",
-        "description": "GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition.",
-        "link": "https://www.gimp.org/",
-        "winget": "GIMP.GIMP.3"
+        "winget": "Google.Chrome",
+        "foss": false
     },
     "git": {
         "category": "Development",
@@ -158,13 +42,75 @@
         "link": "https://git-scm.com/",
         "winget": "Git.Git"
     },
-    "handbrake": {
+    "capcut": {
         "category": "Multimedia Tools",
-        "choco": "handbrake",
-        "content": "HandBrake",
-        "description": "HandBrake is an open-source video transcoder, allowing you to convert video from nearly any format to a selection of widely supported codecs.",
-        "link": "https://handbrake.fr/",
-        "winget": "HandBrake.HandBrake"
+        "choco": "capcut",
+        "content": "CapCut",
+        "description": "CapCut",
+        "link": "https://www.capcut.com",
+        "winget": "ByteDance.CapCut"
+    },
+    "edge": {
+        "category": "Browsers",
+        "choco": "microsoft-edge",
+        "content": "Edge",
+        "description": "Microsoft Edge is a modern web browser built on Chromium, offering performance, security, and integration with Microsoft services.",
+        "link": "https://www.microsoft.com/edge",
+        "winget": "Microsoft.Edge",
+        "foss": false
+    },
+    "firefox": {
+        "category": "Browsers",
+        "choco": "firefox",
+        "content": "Firefox",
+        "description": "Mozilla Firefox is an open-source web browser known for its customization options, privacy features, and extensions.",
+        "link": "https://www.mozilla.org/en-US/firefox/new/",
+        "winget": "Mozilla.Firefox",
+        "foss": true
+    },
+    "fileconverter": {
+        "category": "Utilities",
+        "choco": "file-converter",
+        "content": "File-Converter",
+        "description": "File Converter is a very simple tool which allows you to convert and compress one or several file(s) using the context menu in windows explorer.",
+        "link": "https://file-converter.io/",
+        "winget": "AdrienAllard.FileConverter"
+    },
+    "gimp": {
+        "category": "Multimedia Tools",
+        "choco": "gimp",
+        "content": "GIMP (Image Editor)",
+        "description": "GIMP is a versatile open-source raster graphics editor used for tasks such as photo retouching, image editing, and image composition.",
+        "link": "https://www.gimp.org/",
+        "winget": "GIMP.GIMP.3",
+        "foss": true
+    },
+    "libreoffice": {
+        "category": "Document",
+        "choco": "libreoffice-fresh",
+        "content": "LibreOffice",
+        "description": "LibreOffice is a powerful and free office suite, compatible with other major office suites.",
+        "link": "https://www.libreoffice.org/",
+        "winget": "TheDocumentFoundation.LibreOffice",
+        "foss": true
+    },
+    "notepadplus": {
+        "category": "Multimedia Tools",
+        "choco": "notepadplusplus",
+        "content": "Notepad++",
+        "description": "Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.",
+        "link": "https://notepad-plus-plus.org/",
+        "winget": "Notepad++.Notepad++",
+        "foss": true
+    },
+    "onlyoffice": {
+        "category": "Document",
+        "choco": "onlyoffice",
+        "content": "ONLYOFFICE Desktop",
+        "description": "ONLYOFFICE Desktop is a comprehensive office suite for document editing and collaboration.",
+        "link": "https://www.onlyoffice.com/desktop.aspx",
+        "winget": "ONLYOFFICE.DesktopEditors",
+        "foss": true
     },
     "inkscape": {
         "category": "Multimedia Tools",
@@ -174,117 +120,14 @@
         "link": "https://inkscape.org/",
         "winget": "Inkscape.Inkscape"
     },
-    "libreoffice": {
-        "category": "Document",
-        "choco": "libreoffice-fresh",
-        "content": "LibreOffice",
-        "description": "LibreOffice is a powerful and free office suite, compatible with other major office suites.",
-        "link": "https://www.libreoffice.org/",
-        "winget": "TheDocumentFoundation.LibreOffice"
-    },
-    "localsend": {
-        "category": "Utilities",
-        "choco": "localsend.install",
-        "content": "LocalSend",
-        "description": "An open source cross-platform alternative to AirDrop.",
-        "link": "https://localsend.org/",
-        "winget": "LocalSend.LocalSend"
-    },
-    "malwarebytes": {
-        "category": "Utilities",
-        "choco": "malwarebytes",
-        "content": "Malwarebytes",
-        "description": "Malwarebytes is an anti-malware software that provides real-time protection against threats.",
-        "link": "https://www.malwarebytes.com/",
-        "winget": "Malwarebytes.Malwarebytes"
-    },
-    "mullvadvpn": {
-        "category": "Pro Tools",
-        "choco": "mullvad-app",
-        "content": "Mullvad VPN",
-        "description": "This is the VPN client software for the Mullvad VPN service.",
-        "link": "https://github.com/mullvad/mullvadvpn-app",
-        "winget": "MullvadVPN.MullvadVPN"
-    },
-    "neofetchwin": {
-        "category": "Utilities",
-        "choco": "na",
-        "content": "Neofetch",
-        "description": "Neofetch is a command-line utility for displaying system information in a visually appealing way.",
-        "link": "https://github.com/nepnep39/neofetch-win",
-        "winget": "nepnep.neofetch-win"
-    },
-    "nmap": {
-        "category": "Pro Tools",
-        "choco": "nmap",
-        "content": "Nmap",
-        "description": "Nmap (Network Mapper) is an open-source tool for network exploration and security auditing. It discovers devices on a network and provides information about their ports and services.",
-        "link": "https://nmap.org/",
-        "winget": "Insecure.Nmap"
-    },
-    "notepadplus": {
-        "category": "Document",
-        "choco": "notepadplusplus",
-        "content": "Notepad++",
-        "description": "Notepad++ is a free, open-source code editor and Notepad replacement with support for multiple languages.",
-        "link": "https://notepad-plus-plus.org/",
-        "winget": "Notepad++.Notepad++"
-    },
-    "OVirtualBox": {
-        "category": "Utilities",
-        "choco": "virtualbox",
-        "content": "Oracle VirtualBox",
-        "description": "Oracle VirtualBox is a powerful and free open-source virtualization tool for x86 and AMD64/Intel64 architectures.",
-        "link": "https://www.virtualbox.org/",
-        "winget": "Oracle.VirtualBox"
-    },
-    "Paintdotnet": {
-        "category": "Multimedia Tools",
-        "choco": "paint.net",
-        "content": "Paint.NET",
-        "description": "Paint.NET is a free image and photo editing software for Windows. It features an intuitive user interface and supports a wide range of powerful editing tools.",
-        "link": "https://www.getpaint.net/",
-        "winget": "dotPDN.PaintDotNet"
-    },
-    "piimager": {
-        "category": "Utilities",
-        "choco": "rpi-imager",
-        "content": "Raspberry Pi Imager",
-        "description": "Raspberry Pi Imager is a utility for writing operating system images to SD cards for Raspberry Pi devices.",
-        "link": "https://www.raspberrypi.com/software/",
-        "winget": "RaspberryPiFoundation.RaspberryPiImager"
-    },
-    "posh": {
-        "category": "Development",
-        "choco": "oh-my-posh",
-        "content": "Oh My Posh (Prompt)",
-        "description": "Oh My Posh is a cross-platform prompt theme engine for any shell.",
-        "link": "https://ohmyposh.dev/",
-        "winget": "JanDeDobbeleer.OhMyPosh"
-    },
-    "powertoys": {
+    "powershell": {
         "category": "Microsoft Tools",
-        "choco": "powertoys",
-        "content": "PowerToys",
-        "description": "PowerToys is a set of utilities for power users to enhance productivity, featuring tools like FancyZones, PowerRename, and more.",
-        "link": "https://github.com/microsoft/PowerToys",
-        "winget": "Microsoft.PowerToys"
-    },
-    "spotify": {
-        "category": "Multimedia Tools",
-        "choco": "spotify",
-        "content": "Spotify",
-        "description": "Spotify is a digital music service that gives you access to millions of songs, podcasts, and videos from artists all over the world.",
-        "link": "https://www.spotify.com/",
-        "winget": "Spotify.Spotify"
-    },
-    "putty": {
-        "category": "Pro Tools",
-        "choco": "putty",
-        "content": "PuTTY",
-        "description": "PuTTY is a free and open-source terminal emulator, serial console, and network file transfer application. It supports various network protocols such as SSH, Telnet, and SCP.",
-        "link": "https://www.chiark.greenend.org.uk/~sgtatham/putty/",
-        "winget": "PuTTY.PuTTY"
+        "choco": "powershell-core",
+        "content": "PowerShell",
+        "description": "PowerShell is a task automation framework and scripting language designed for system administrators, offering powerful command-line capabilities.",
+        "link": "https://github.com/PowerShell/PowerShell",
+        "winget": "Microsoft.PowerShell",
+        "foss": true
     },
     "python3": {
         "category": "Development",
@@ -292,39 +135,8 @@
         "content": "Python3",
         "description": "Python is a versatile programming language used for web development, data analysis, artificial intelligence, and more.",
         "link": "https://www.python.org/",
-        "winget": "Python.Python.3.12"
-    },
-    "rufus": {
-        "category": "Utilities",
-        "choco": "rufus",
-        "content": "Rufus Imager",
-        "description": "Rufus is a utility that helps format and create bootable USB drives, such as USB keys or pen drives.",
-        "link": "https://rufus.ie/",
-        "winget": "Rufus.Rufus"
-    },
-    "rustdesk": {
-        "category": "Pro Tools",
-        "choco": "rustdesk.portable",
-        "content": "RustDesk",
-        "description": "RustDesk is a free and open-source remote desktop application. It provides a secure way to connect to remote machines and access desktop environments.",
-        "link": "https://rustdesk.com/",
-        "winget": "RustDesk.RustDesk"
-    },
-    "sublimetext": {
-        "category": "Development",
-        "choco": "sublimetext4",
-        "content": "Sublime Text",
-        "description": "Sublime Text is a sophisticated text editor for code, markup, and prose.",
-        "link": "https://www.sublimetext.com/",
-        "winget": "SublimeHQ.SublimeText.4"
-    },
-    "tcpview": {
-        "category": "Microsoft Tools",
-        "choco": "tcpview",
-        "content": "SysInternals TCPView",
-        "description": "SysInternals TCPView is a network monitoring tool that displays a detailed list of all TCP and UDP endpoints on your system.",
-        "link": "https://docs.microsoft.com/en-us/sysinternals/downloads/tcpview",
-        "winget": "Microsoft.Sysinternals.TCPView"
+        "winget": "Python.Python.3.14",
+        "foss": true
     },
     "terminal": {
         "category": "Microsoft Tools",
@@ -332,15 +144,8 @@
         "content": "Windows Terminal",
         "description": "Windows Terminal is a modern, fast, and efficient terminal application for command-line users, supporting multiple tabs, panes, and more.",
         "link": "https://aka.ms/terminal",
-        "winget": "Microsoft.WindowsTerminal"
-    },
-    "ventoy": {
-        "category": "Pro Tools",
-        "choco": "ventoy",
-        "content": "Ventoy",
-        "description": "Ventoy is an open-source tool for creating bootable USB drives. It supports multiple ISO files on a single USB drive, making it a versatile solution for installing operating systems.",
-        "link": "https://www.ventoy.net/",
-        "winget": "Ventoy.Ventoy"
+        "winget": "Microsoft.WindowsTerminal",
+        "foss": true
     },
     "vlc": {
         "category": "Multimedia Tools",
@@ -348,7 +153,8 @@
         "content": "VLC (Video Player)",
         "description": "VLC Media Player is a free and open-source multimedia player that supports a wide range of audio and video formats. It is known for its versatility and cross-platform compatibility.",
         "link": "https://www.videolan.org/vlc/",
-        "winget": "VideoLAN.VLC"
+        "winget": "VideoLAN.VLC",
+        "foss": true
     },
     "vscode": {
         "category": "Development",
@@ -356,62 +162,16 @@
         "content": "VS Code",
         "description": "Visual Studio Code is a free, open-source code editor with support for multiple programming languages.",
         "link": "https://code.visualstudio.com/",
-        "winget": "Microsoft.VisualStudioCode"
-    },
-    "winscp": {
-        "category": "Pro Tools",
-        "choco": "winscp",
-        "content": "WinSCP",
-        "description": "WinSCP is a popular open-source SFTP, FTP, and SCP client for Windows. It allows secure file transfers between a local and a remote computer.",
-        "link": "https://winscp.net/",
-        "winget": "WinSCP.WinSCP"
-    },
-    "wireshark": {
-        "category": "Pro Tools",
-        "choco": "wireshark",
-        "content": "Wireshark",
-        "description": "Wireshark is a widely-used open-source network protocol analyzer. It allows users to capture and analyze network traffic in real-time, providing detailed insights into network activities.",
-        "link": "https://www.wireshark.org/",
-        "winget": "WiresharkFoundation.Wireshark"
-    },
-    "wizfile": {
-        "category": "Utilities",
-        "choco": "na",
-        "content": "WizFile",
-        "description": "Find files by name on your hard drives almost instantly.",
-        "link": "https://antibody-software.com/wizfile/",
-        "winget": "AntibodySoftware.WizFile"
-    },
-    "wiztree": {
-        "category": "Utilities",
-        "choco": "wiztree",
-        "content": "WizTree",
-        "description": "WizTree is a fast disk space analyzer that helps you quickly find the files and folders consuming the most space on your hard drive.",
-        "link": "https://wiztreefree.com/",
-        "winget": "AntibodySoftware.WizTree"
+        "winget": "Microsoft.VisualStudioCode",
+        "foss": true
     },
     "zoom": {
         "category": "Communications",
         "choco": "zoom",
         "content": "Zoom",
         "description": "Zoom is a popular video conferencing and web conferencing service for online meetings, webinars, and collaborative projects.",
-        "link": "http,s://zoom.us/",
-        "winget": "Zoom.Zoom"
-    },
-    "zoomit": {
-        "category": "Utilities",
-        "choco": "na",
-        "content": "ZoomIt",
-        "description": "A screen zoom, annotation, and recording tool for technical presentations and demos",
-        "link": "https://learn.microsoft.com/en-us/sysinternals/downloads/zoomit",
-        "winget": "Microsoft.Sysinternals.ZoomIt"
-    },
-    "ZenBrowser": {
-        "category": "Browsers",
-        "choco": "na",
-        "content": "Zen Browser",
-        "description": "The modern, privacy-focused, performance-driven browser built on Firefox",
-        "link": "https://zen-browser.app/",
-        "winget": "Zen-Team.Zen-Browser"
+        "link": "https://zoom.us/",
+        "winget": "Zoom.Zoom",
+        "foss": false
     }
 }

@@ -8,20 +8,14 @@ function Invoke-WinutilThemeChange {
         modifying various UI elements such as colors, margins, corner radii, font families, etc.
         If the '-init' switch is used, it initializes the theme based on the system's current dark mode setting.
 
-    .PARAMETER init
-        A switch parameter. If set to $true, the function initializes the theme based on the system’s current dark mode setting.
-
     .EXAMPLE
         Invoke-WinutilThemeChange
         # Toggles the theme between 'Light' and 'Dark'.
 
-    .EXAMPLE
-        Invoke-WinutilThemeChange -init
-        # Initializes the theme based on the system's dark mode and applies the shared theme.
+
     #>
     param (
-        [switch]$init = $false,
-        [string]$theme
+        [string]$theme = "Auto"
     )
 
     function Set-WinutilTheme {
@@ -97,81 +91,67 @@ function Invoke-WinutilThemeChange {
 
         # Retrieve all theme properties from the theme configuration
         $themeProperties = $sync.configs.themes.$currentTheme.PSObject.Properties
-        foreach ($_ in $themeProperties) {
+        foreach ($themeProperty in $themeProperties) {
             # Apply properties that deal with colors
-            if ($_.Name -like "*color*") {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "ColorBrush"
+            if ($themeProperty.Name -like "*color*") {
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "ColorBrush"
                 # For certain color properties, also set complementary values (e.g., BorderColor -> CBorderColor) This is required because e.g DropShadowEffect requires a <Color> and not a <SolidColorBrush> object
-                if ($_.Name -in @("BorderColor", "ButtonBackgroundMouseoverColor")) {
-                    Set-ThemeResourceProperty -Name "C$($_.Name)" -Value $_.Value -Type "Color"
+                if ($themeProperty.Name -in @("BorderColor", "ButtonBackgroundMouseoverColor")) {
+                    Set-ThemeResourceProperty -Name "C$($themeProperty.Name)" -Value $themeProperty.Value -Type "Color"
                 }
             }
             # Apply corner radius properties
-            elseif ($_.Name -like "*Radius*") {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "CornerRadius"
+            elseif ($themeProperty.Name -like "*Radius*") {
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "CornerRadius"
             }
             # Apply row height properties
-            elseif ($_.Name -like "*RowHeight*") {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "GridLength"
+            elseif ($themeProperty.Name -like "*RowHeight*") {
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "GridLength"
             }
             # Apply thickness or margin properties
-            elseif (($_.Name -like "*Thickness*") -or ($_.Name -like "*margin")) {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "Thickness"
+            elseif (($themeProperty.Name -like "*Thickness*") -or ($themeProperty.Name -like "*margin")) {
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "Thickness"
             }
             # Apply font family properties
-            elseif ($_.Name -like "*FontFamily*") {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "FontFamily"
+            elseif ($themeProperty.Name -like "*FontFamily*") {
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "FontFamily"
             }
             # Apply any other properties as doubles (numerical values)
             else {
-                Set-ThemeResourceProperty -Name $_.Name -Value $_.Value -Type "Double"
+                Set-ThemeResourceProperty -Name $themeProperty.Name -Value $themeProperty.Value -Type "Double"
             }
         }
     }
 
-    $LightPreferencePath = "$env:LOCALAPPDATA\winutil\LightTheme.ini"
-    $DarkPreferencePath = "$env:LOCALAPPDATA\winutil\DarkTheme.ini"
+    $sync.preferences.theme = $theme
+    Set-WinutilTheme -currentTheme "shared"
 
-    if ($init) {
-        Set-WinutilTheme -currentTheme "shared"
-        if (Test-Path $LightPreferencePath) {
-            $theme = "Light"
-        }
-        elseif (Test-Path $DarkPreferencePath) {
-            $theme = "Dark"
-        }
-        else {
-            $theme = "Auto"
-        }
-    }
-
-    switch ($theme) {
+    switch ($sync.preferences.theme) {
         "Auto" {
             $systemUsesDarkMode = Get-WinUtilToggleStatus WPFToggleDarkMode
             if ($systemUsesDarkMode) {
-                Set-WinutilTheme  -currentTheme "Dark"
+                $theme = "Dark"
             }
             else{
-                Set-WinutilTheme  -currentTheme "Light"
+                $theme = "Light"
             }
 
-
+            Set-WinutilTheme -currentTheme $theme
             $themeButtonIcon = [char]0xF08C
-            Remove-Item $LightPreferencePath -Force -ErrorAction SilentlyContinue
-            Remove-Item $DarkPreferencePath -Force -ErrorAction SilentlyContinue
         }
         "Dark" {
-            Set-WinutilTheme  -currentTheme $theme
+            Set-WinutilTheme -currentTheme $sync.preferences.theme
             $themeButtonIcon = [char]0xE708
-            $null = New-Item $DarkPreferencePath -Force
-            Remove-Item $LightPreferencePath -Force -ErrorAction SilentlyContinue
            }
         "Light" {
-            Set-WinutilTheme  -currentTheme $theme
+            Set-WinutilTheme -currentTheme $sync.preferences.theme
             $themeButtonIcon = [char]0xE706
-            $null = New-Item $LightPreferencePath -Force
-            Remove-Item $DarkPreferencePath -Force -ErrorAction SilentlyContinue
         }
+    }
+
+    # Reapply font scaling if it was previously set (theme change resets shared resources)
+    if ($sync.ContainsKey("FontScaleFactor") -and $sync.FontScaleFactor -ne 1.0) {
+        Invoke-WinUtilFontScaling -ScaleFactor $sync.FontScaleFactor
     }
 
     # Update the theme selector button with the appropriate icon
