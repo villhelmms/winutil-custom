@@ -3,7 +3,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 26.08.11
+    Version        : 26.08.12
 #>
 
 param (
@@ -57,7 +57,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
-$sync.version = "26.08.11"
+$sync.version = "26.08.12"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -9644,7 +9644,6 @@ $sync.configs.tweaks = @'
                                     "Content":  "Google Chrome Policies",
                                     "category":  "Browser Policies",
                                     "panel":  "2",
-                                    "Order":  "a080_",
                                     "Type":  "Toggle",
                                     "registry":  [
                                                      {
@@ -9913,79 +9912,10 @@ $sync.configs.tweaks = @'
                                                      }
                                                  ]
                                 },
-    "WPFToggleChromePolicies203":  {
-                                       "Content":  "[203. kab] Google Chrome Policies",
-                                       "category":  "Browser Policies",
-                                       "panel":  "2",
-                                       "Order":  "a084_",
-                                       "Type":  "Toggle",
-                                       "registry":  [
-                                                        {
-                                                            "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
-                                                            "Name":  "CloudManagementEnrollmentToken",
-                                                            "Type":  "String",
-                                                            "Value":  "cbd6e9b0-35ca-43b4-963f-f758882d1805",
-                                                            "OriginalValue":  "\u003cRemoveEntry\u003e",
-                                                            "DefaultState":  "false"
-                                                        }
-                                                    ]
-                                   },
-    "WPFToggleChromePolicies210":  {
-                                       "Content":  "[210. kab] Google Chrome Policies",
-                                       "category":  "Browser Policies",
-                                       "panel":  "2",
-                                       "Order":  "a085_",
-                                       "Type":  "Toggle",
-                                       "registry":  [
-                                                        {
-                                                            "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
-                                                            "Name":  "CloudManagementEnrollmentToken",
-                                                            "Type":  "String",
-                                                            "Value":  "d0fb534f-6bbe-4cd7-9e98-93a74efea8ad",
-                                                            "OriginalValue":  "\u003cRemoveEntry\u003e",
-                                                            "DefaultState":  "false"
-                                                        }
-                                                    ]
-                                   },
-    "WPFToggleChromePolicies34":  {
-                                      "Content":  "[3/4] Google Chrome Policies",
-                                      "category":  "Browser Policies",
-                                      "panel":  "2",
-                                      "Order":  "a085_",
-                                      "Type":  "Toggle",
-                                      "registry":  [
-                                                       {
-                                                           "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
-                                                           "Name":  "CloudManagementEnrollmentToken",
-                                                           "Type":  "String",
-                                                           "Value":  "2a764aba-a89f-41f9-8b19-2ca9f168f040",
-                                                           "OriginalValue":  "\u003cRemoveEntry\u003e",
-                                                           "DefaultState":  "false"
-                                                       }
-                                                   ]
-                                  },
-    "WPFToggleChromePolicies03":  {
-                                      "Content":  "[0/3] Google Chrome Policies",
-                                      "category":  "Browser Policies",
-                                      "panel":  "2",
-                                      "Order":  "a085_",
-                                      "Type":  "Toggle",
-                                      "registry":  [
-                                                       {
-                                                           "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
-                                                           "Name":  "CloudManagementEnrollmentToken",
-                                                           "Type":  "String",
-                                                           "Value":  "a0e057c1-6d62-4f00-9aa7-ee98ef0364a0",
-                                                           "OriginalValue":  "\u003cRemoveEntry\u003e",
-                                                           "DefaultState":  "false"
-                                                       }
-                                                   ]
-                                  },
     "WPFToggleEdgePolicies":  {
                                   "Content":  "Microsoft Edge Policies",
                                   "category":  "Browser Policies",
                                   "panel":  "2",
-                                  "Order":  "a081_",
                                   "Type":  "Toggle",
                                   "registry":  [
                                                    {
@@ -10395,7 +10325,6 @@ $sync.configs.tweaks = @'
                                      "Content":  "Mozilla Forefox Policies",
                                      "category":  "Browser Policies",
                                      "panel":  "2",
-                                     "Order":  "a082_",
                                      "Type":  "Toggle",
                                      "registry":  [
                                                       {
@@ -10472,27 +10401,107 @@ $sync.configs.tweaks = @'
                                                       }
                                                   ]
                                  },
-    "WPFVJCGWallpaper":  {
-                             "Content":  "Set VJCG Wallpaper",
-                             "category":  "Customize Preferences",
-                             "panel":  "2",
-                             "Order":  "a070_",
-                             "Type":  "Button",
-                             "ButtonWidth":  "300"
-                         },
+    "WPFToggleChromePolicies203":  {
+                                       "Content":  "1 [203. kab] Google Chrome Policies",
+                                       "category":  "Browser Policies",
+                                       "panel":  "2",
+                                       "Type":  "Toggle",
+                                       "registry":  [
+                                                        {
+                                                            "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+                                                            "Name":  "CloudManagementEnrollmentToken",
+                                                            "Type":  "String",
+                                                            "Value":  "cbd6e9b0-35ca-43b4-963f-f758882d1805",
+                                                            "OriginalValue":  "\u003cRemoveEntry\u003e",
+                                                            "DefaultState":  "false"
+                                                        }
+                                                    ]
+                                   },
+    "WPFToggleChromePolicies210":  {
+                                       "Content":  "2 [210. kab] Google Chrome Policies",
+                                       "category":  "Browser Policies",
+                                       "panel":  "2",
+                                       "Type":  "Toggle",
+                                       "registry":  [
+                                                        {
+                                                            "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+                                                            "Name":  "CloudManagementEnrollmentToken",
+                                                            "Type":  "String",
+                                                            "Value":  "d0fb534f-6bbe-4cd7-9e98-93a74efea8ad",
+                                                            "OriginalValue":  "\u003cRemoveEntry\u003e",
+                                                            "DefaultState":  "false"
+                                                        }
+                                                    ]
+                                   },
+    "WPFToggleChromePolicies03":  {
+                                      "Content":  "3 [0/3] Google Chrome Policies",
+                                      "category":  "Browser Policies",
+                                      "panel":  "2",
+                                      "Type":  "Toggle",
+                                      "registry":  [
+                                                       {
+                                                           "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+                                                           "Name":  "CloudManagementEnrollmentToken",
+                                                           "Type":  "String",
+                                                           "Value":  "a0e057c1-6d62-4f00-9aa7-ee98ef0364a0",
+                                                           "OriginalValue":  "\u003cRemoveEntry\u003e",
+                                                           "DefaultState":  "false"
+                                                       }
+                                                   ]
+                                  },
+    "WPFToggleChromePolicies34":  {
+                                      "Content":  "4 [3/4] Google Chrome Policies",
+                                      "category":  "Browser Policies",
+                                      "panel":  "2",
+                                      "Type":  "Toggle",
+                                      "registry":  [
+                                                       {
+                                                           "Path":  "HKLM:\\SOFTWARE\\Policies\\Google\\Chrome",
+                                                           "Name":  "CloudManagementEnrollmentToken",
+                                                           "Type":  "String",
+                                                           "Value":  "2a764aba-a89f-41f9-8b19-2ca9f168f040",
+                                                           "OriginalValue":  "\u003cRemoveEntry\u003e",
+                                                           "DefaultState":  "false"
+                                                       }
+                                                   ]
+                                  },
     "WPFDeleteMythware":  {
                               "Content":  "Delete Mythware",
                               "category":  "Customize Preferences",
                               "panel":  "2",
-                              "Order":  "a071_",
+                              "Order":  "a200_",
                               "Type":  "Button",
                               "ButtonWidth":  "300"
                           },
+    "WPFVJCGWallpaper":  {
+                             "Content":  "Set VJCG Wallpaper",
+                             "category":  "Customize Preferences",
+                             "panel":  "2",
+                             "Order":  "a201_",
+                             "Type":  "Button",
+                             "ButtonWidth":  "300"
+                         },
+    "WPFDeleteCreateUser":  {
+                                "Content":  "1 Delete and Create User (Skolens)",
+                                "category":  "Users",
+                                "panel":  "2",
+                                "Order":  "a202_",
+                                "Type":  "Button",
+                                "ButtonWidth":  "300"
+                            },
+    "WPFRemoveAdmin":  {
+                           "Content":  "2 Removes Admin Group From User (Skolens)",
+                           "category":  "Users",
+                           "panel":  "2",
+                           "Order":  "a203_",
+                           "Type":  "Button",
+                           "ButtonWidth":  "300"
+                       },
     "WPFCreateUser":  {
                           "Content":  "Create New User (Skolens)",
                           "category":  "Users",
                           "panel":  "2",
-                          "Order":  "a070_",
+                          "Order":  "a204_",
                           "Type":  "Button",
                           "ButtonWidth":  "300"
                       },
@@ -10500,28 +10509,12 @@ $sync.configs.tweaks = @'
                           "Content":  "Delete User (Skolens)",
                           "category":  "Users",
                           "panel":  "2",
-                          "Order":  "a071_",
+                          "Order":  "a205_",
                           "Type":  "Button",
                           "ButtonWidth":  "300"
                       },
-    "WPFDeleteCreateUser":  {
-                                "Content":  "Delete and Create User (Skolens)",
-                                "category":  "Users",
-                                "panel":  "2",
-                                "Order":  "a068_",
-                                "Type":  "Button",
-                                "ButtonWidth":  "300"
-                            },
-    "WPFRemoveAdmin":  {
-                           "Content":  "Removes Admin Group From User (Skolens)",
-                           "category":  "Users",
-                           "panel":  "2",
-                           "Order":  "a069_",
-                           "Type":  "Button",
-                           "ButtonWidth":  "300"
-                       },
     "WPFToggleShowExt":  {
-                             "Content":  "File Explorer File Extensions",
+                             "Content":  "3 File Explorer File Extensions",
                              "Description":  "Shows .file extensions in Explorer (.exe, .png, etc.)",
                              "category":  "Customize Preferences",
                              "panel":  "2",
@@ -10545,10 +10538,9 @@ $sync.configs.tweaks = @'
                              "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/showext"
                          },
     "WPFToggleCustomization":  {
-                                   "Content":  "Customization Settings",
+                                   "Content":  "1 Customization Settings",
                                    "category":  "Customize Preferences",
                                    "panel":  "2",
-                                   "Order":  "a109_",
                                    "Type":  "Toggle",
                                    "registry":  [
                                                     {
@@ -10626,7 +10618,7 @@ $sync.configs.tweaks = @'
                                                 ]
                                },
     "WPFToggleHideSettings":  {
-                                  "Content":  "Hide Settings",
+                                  "Content":  "91 Hide Settings",
                                   "category":  "Customize Preferences",
                                   "panel":  "2",
                                   "Order":  "a110_",
@@ -10650,26 +10642,8 @@ $sync.configs.tweaks = @'
                                                    }
                                                ]
                               },
-    "WPFToggleHideSettingsHome":  {
-                                      "Content":  "Settings Home Page",
-                                      "Description":  "Toggles the Home Page in the Windows Settings app.",
-                                      "category":  "Customize Preferences",
-                                      "panel":  "2",
-                                      "Type":  "Toggle",
-                                      "registry":  [
-                                                       {
-                                                           "Path":  "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-                                                           "Name":  "SettingsPageVisibility",
-                                                           "Value":  "show:home",
-                                                           "Type":  "String",
-                                                           "OriginalValue":  "hide:home",
-                                                           "DefaultState":  "true"
-                                                       }
-                                                   ],
-                                      "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/hidesettingshome"
-                                  },
     "WPFToggleBingSearch":  {
-                                "Content":  "Start Menu Bing Search",
+                                "Content":  "2 Start Menu Bing Search",
                                 "Description":  "Toggles Bing web search results in Windows Search.",
                                 "category":  "Customize Preferences",
                                 "panel":  "2",
@@ -10687,7 +10661,7 @@ $sync.configs.tweaks = @'
                                 "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/bingsearch"
                             },
     "WPFToggleStartMenuRecommendations":  {
-                                              "Content":  "Start Menu Recommendations",
+                                              "Content":  "9 Start Menu Recommendations",
                                               "Description":  "Toggles the recommendations section in the Start Menu. WARNING: This will also disable Windows Spotlight on your Lock Screen as a side effect.",
                                               "category":  "Customize Preferences",
                                               "panel":  "2",
@@ -10727,7 +10701,7 @@ $sync.configs.tweaks = @'
                                               "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/startmenurecommendations"
                                           },
     "WPFToggleStickyKeys":  {
-                                "Content":  "Sticky Keys",
+                                "Content":  "8 Sticky Keys",
                                 "Description":  "Toggles the Sticky Keys, which activate when clicking shift rapidly.",
                                 "category":  "Customize Preferences",
                                 "panel":  "2",
@@ -10745,7 +10719,7 @@ $sync.configs.tweaks = @'
                                 "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/stickykeys"
                             },
     "WPFToggleTaskbarAlignment":  {
-                                      "Content":  "Taskbar Centered Icons",
+                                      "Content":  "7 Taskbar Centered Icons",
                                       "Description":  "Toggles the Taskbar alignment either to the left or center.",
                                       "category":  "Customize Preferences",
                                       "panel":  "2",
@@ -10769,7 +10743,7 @@ $sync.configs.tweaks = @'
                                       "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/taskbaralignment"
                                   },
     "WPFToggleTaskbarSearch":  {
-                                   "Content":  "Taskbar Search Icon",
+                                   "Content":  "6 Taskbar Search Icon",
                                    "Description":  "Toggles the Search Button on the Taskbar.",
                                    "category":  "Customize Preferences",
                                    "panel":  "2",
@@ -10787,7 +10761,7 @@ $sync.configs.tweaks = @'
                                    "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/taskbarsearch"
                                },
     "WPFToggleTaskView":  {
-                              "Content":  "Taskbar Task View Icon",
+                              "Content":  "5 Taskbar Task View Icon",
                               "Description":  "Toggles the Task View Button in the Taskbar.",
                               "category":  "Customize Preferences",
                               "panel":  "2",
@@ -10805,7 +10779,7 @@ $sync.configs.tweaks = @'
                               "link":  "https://winutil.christitus.com/code-reference/tweaks/customize-preferences/taskview"
                           },
     "WPFToggleGameMode":  {
-                              "Content":  "Game Mode",
+                              "Content":  "4 Game Mode",
                               "Description":  "Toggles Windows prioritizes gaming performance by allocating system resources to games.",
                               "category":  "Customize Preferences",
                               "panel":  "2",
