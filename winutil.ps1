@@ -3,7 +3,7 @@
     Author         : Chris Titus @christitustech
     Runspace Author: @DeveloperDurp
     GitHub         : https://github.com/ChrisTitusTech
-    Version        : 26.08.12
+    Version        : 26.09.11
 #>
 
 param (
@@ -57,7 +57,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 # Variable to sync between runspaces
 $sync = [Hashtable]::Synchronized(@{})
-$sync.version = "26.08.12"
+$sync.version = "26.09.11"
 $sync.configs = @{}
 $sync.Buttons = [System.Collections.Generic.List[PSObject]]::new()
 $sync.preferences = @{}
@@ -5595,6 +5595,7 @@ function Invoke-WPFButton {
         "WPFVJCGWallpaper" {Invoke-WPFVJCGWallpaper}
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
+        "WPFDeleteQWE" {Invoke-WPFDeleteQWE}
         "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
         "WPFRemoveAdmin" {Invoke-WPFRemoveAdmin}
         "WPFDeleteMythware" {Invoke-WPFDeleteMythware}
@@ -5776,6 +5777,30 @@ function Invoke-WPFDeleteMythware {
     Write-Host "----- Mythware removal complete -----"
     Write-Host "----------------------------------------------"
 }
+function Invoke-WPFDeleteQWE {
+    # Enter existing account username
+    $UsernameDelete = "qwe"
+
+    $adsiDelete = [ADSI]"WinNT://$env:COMPUTERNAME"
+    $existingDelete = $adsiDelete.Children | Where-Object {$_.SchemaClassName -eq 'user' -and $_.Name -eq $UsernameDelete }
+
+    # Check if the user exists
+    if ($null -ne $existingDelete) {
+        # If user existss
+        # delete old user
+        Write-Host "-----> Deleting user "$UsernameDelete"..." -ForegroundColor Yellow
+        & NET USER $UsernameDelete /delete | Out-Null
+        Write-Host "-----> User "$UsernameDelete" deleted successfully!" -ForegroundColor Green
+        Write-Host "----------------------------------------------"
+        Write-Host "----- User $UsernameDelete has been deleted -----"
+        Write-Host "----------------------------------------------"
+
+    # If user does not exist
+    } else {
+        Write-Host "-----> User "$UsernameDelete" does not exist!" -ForegroundColor Red
+    }
+}
+
 function Invoke-WPFDeleteUser {
     # Enter existing account username
     $UsernameDelete = "Skolens"
@@ -10513,6 +10538,14 @@ $sync.configs.tweaks = @'
                           "Type":  "Button",
                           "ButtonWidth":  "300"
                       },
+    "WPFDeleteQWE":  {
+                         "Content":  "Delete User (qwe)",
+                         "category":  "Users",
+                         "panel":  "2",
+                         "Order":  "a206_",
+                         "Type":  "Button",
+                         "ButtonWidth":  "300"
+                     },
     "WPFToggleShowExt":  {
                              "Content":  "3 File Explorer File Extensions",
                              "Description":  "Shows .file extensions in Explorer (.exe, .png, etc.)",

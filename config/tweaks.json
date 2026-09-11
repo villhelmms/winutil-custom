@@ -1451,6 +1451,14 @@
     "Type": "Button",
     "ButtonWidth": "300"
   },
+  "WPFDeleteQWE": {
+    "Content": "Delete User (qwe)",
+    "category": "Users",
+    "panel": "2",
+    "Order": "a206_",
+    "Type": "Button",
+    "ButtonWidth": "300"
+  },
   "WPFToggleShowExt": {
     "Content": "3 File Explorer File Extensions",
     "Description": "Shows .file extensions in Explorer (.exe, .png, etc.)",

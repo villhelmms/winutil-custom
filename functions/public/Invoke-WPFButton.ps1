@@ -73,6 +73,7 @@ function Invoke-WPFButton {
         "WPFVJCGWallpaper" {Invoke-WPFVJCGWallpaper}
         "WPFCreateUser" {Invoke-WPFCreateUser}
         "WPFDeleteUser" {Invoke-WPFDeleteUser}
+        "WPFDeleteQWE" {Invoke-WPFDeleteQWE}
         "WPFDeleteCreateUser" {Invoke-WPFDeleteCreateUser}
         "WPFRemoveAdmin" {Invoke-WPFRemoveAdmin}
         "WPFDeleteMythware" {Invoke-WPFDeleteMythware}
